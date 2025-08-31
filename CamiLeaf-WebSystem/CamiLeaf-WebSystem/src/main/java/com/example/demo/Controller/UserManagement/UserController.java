@@ -21,7 +21,22 @@ public class UserController {
 
     @GetMapping(value = "/getAll")
     public Iterable<User> getAllUsers(){
-
         return userServices.getUsers();
+    }
+
+    @PutMapping(value = "/edit/{id}")
+    public User updateUser(@RequestBody User users, @PathVariable (name = "id")String id){
+
+        return userServices.updateUser(id, users);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public void deleteUser(@PathVariable (name = "id")String id){
+        userServices.deleteUser(id);
+    }
+
+    @RequestMapping("/user/{id}")
+    public User getUser(@PathVariable (name = "id")String id){
+        return userServices.getUserById(id);
     }
 }
