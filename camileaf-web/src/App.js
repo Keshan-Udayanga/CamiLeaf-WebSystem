@@ -1,23 +1,21 @@
-import logo from './logo.svg';
 import './App.css';
+import Navbar from "./navbar";
+import Carousel from "./homePage/carousel";
+import ProductsCarousel from "./homePage/homePage";
+import AboutTeaFactory from "./homePage/home_aboutUs";
+import Footer from "./footer";
+import TeaTimeline from "./homePage/teaTimeLine";
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{ overflowX: "hidden" }}>
+      <Navbar />
+      <Carousel />
+      <AboutTeaFactory />
+      <ProductsCarousel />
+      <TeaTimeline/>
+      <Footer />
     </div>
   );
 }
