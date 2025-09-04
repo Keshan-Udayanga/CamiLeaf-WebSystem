@@ -5,7 +5,7 @@ import teaPro2 from "../assets/teaPro2.jpg";
 
 function AboutTeaFactory() {
   return (
-    <Box
+    <Box id="home_about"
       sx={{
         position: "relative",
         width: "100%",
