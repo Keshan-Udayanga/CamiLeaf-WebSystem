@@ -35,7 +35,7 @@ export default function Footer() {
           <Typography variant="h6" gutterBottom>Pages</Typography>
           <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
             <Link href="/" underline="hover" color="inherit">Home</Link>
-            <Link href="/#home_about" underline="hover" color="inherit">About</Link>
+            <Link href="/about" underline="hover" color="inherit">About</Link>
             <Link href="/services" underline="hover" color="inherit">Services</Link>
             <Link href="/contact" underline="hover" color="inherit">Contact</Link>
           </Box>
