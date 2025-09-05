@@ -27,7 +27,7 @@ function App() {
             </>
           } />
 
-          <Route path="/admin" element={<AdminPanel />} />
+          <Route path="/admin/*" element={<AdminPanel />} />
         </Routes>
       </div>
     </Router>

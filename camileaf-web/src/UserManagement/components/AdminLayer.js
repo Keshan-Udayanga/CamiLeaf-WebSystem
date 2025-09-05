@@ -1,14 +1,29 @@
 import React from 'react';
-import '../styles/AdminLayer.css';
+import { Routes, Route } from "react-router-dom";
 import Sidebar from './Sidebar';
 import Dashboard from './AdminDashboard';
+import UserManagement from './UserManagement';
 
 
 function App() {
   return (
-     <div className="app-container">
+     <div style={{
+      display: "flex",
+      height: "100vh",        
+      overflow: "hidden"      
+    }}>
       <Sidebar />
-      <Dashboard />
+
+      <main style={{
+        flex: 1,
+        padding: "20px",
+        overflowY: "auto"     
+      }}>
+        <Routes>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="user-management" element={<UserManagement />} />
+        </Routes>
+      </main>
     </div>
   );
 }

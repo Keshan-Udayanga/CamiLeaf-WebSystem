@@ -1,0 +1,83 @@
+.user-management-container {
+  padding: 40px;
+  font-family: 'Poppins', sans-serif;
+  background-color: #f9f9f9;
+}
+
+.user-management-header {
+  text-align: center;
+  font-size: 32px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.user-management-subtitle {
+  text-align: center;
+  font-size: 14px;
+  color: #777;
+  margin-bottom: 30px;
+}
+
+.user-management-filters {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.filters-left {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.filters-right {
+  display: flex;
+  align-items: center;
+}
+
+.add-user-button {
+  background-color: #d5a924 !important;
+  color: white !important;
+  border-radius: 20px !important;
+  padding: 5px 20px !important;
+}
+
+.user-table {
+  background-color: white;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.user-table-header {
+  background-color: #f0f0f0;
+  font-weight: bold;
+}
+
+.user-pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.rows-info {
+  font-size: 14px;
+  color: #555;
+}
+
+.pagination-buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pagination-buttons button {
+  min-width: 32px;
+  height: 32px;
+  padding: 0;
+  border-radius: 6px;
+  font-size: 14px;
+}

@@ -1,3 +1,5 @@
+import {Link} from 'react-router-dom';
+
 import React from 'react';
 import '../styles/AdminDashboard.css';
 import userManagement from '../assests/usermg.jpg'
@@ -9,10 +11,15 @@ function Dashboard() {
     <div className="dashboard">
       <h1>Welcome to Admin Panel</h1>
       <div className="cards-container">
-        <div className="card">
+        <Link
+          to="/admin/user-management"
+          className="card"  // Add class here
+          style={{ textDecoration: "none", color: "inherit" }}
+    >
           <img src={userManagement} alt="User Management" />
           <h3>User Management</h3>
-        </div>
+        
+        </Link>
         <div className="card">
           <img src={productManagement} alt="Product Management" />
           <h3>Product Management</h3>
