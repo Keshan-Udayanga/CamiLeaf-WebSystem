@@ -13,7 +13,7 @@ function Dashboard() {
       <div className="cards-container">
         <Link
           to="/admin/user-management"
-          className="card"  // Add class here
+          className="card"  
           style={{ textDecoration: "none", color: "inherit" }}
     >
           <img src={userManagement} alt="User Management" />

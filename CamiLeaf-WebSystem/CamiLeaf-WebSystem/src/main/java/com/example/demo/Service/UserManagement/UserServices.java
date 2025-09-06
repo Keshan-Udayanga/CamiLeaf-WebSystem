@@ -5,13 +5,19 @@ import com.example.demo.Repo.UserManagement.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 @Service
 public class UserServices {
 
     @Autowired
     private UserRepository userRepo;
 
+
     public void createUser(User users) {
+        Date now = new Date();
+        users.setCreatedAt(now);
+        users.setLastLogin(null);
         userRepo.save(users);
     }
 
