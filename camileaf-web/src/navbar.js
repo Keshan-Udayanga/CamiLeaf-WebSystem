@@ -1,76 +1,137 @@
 import React, { useState, useEffect } from "react";
-import { AppBar, Toolbar, Box, TextField } from "@mui/material";
+import {
+  AppBar,
+  Toolbar,
+  Box,
+  TextField,
+  IconButton,
+  Drawer,
+  List,
+  ListItem,
+  ListItemText,
+  useMediaQuery,
+} from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
 import logo from "./assets/logo.png";
 
-function Navbar() {
+function Navbar({ className }) {
   const [scrolled, setScrolled] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const isMobile = useMediaQuery("(max-width:768px)");
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 10);
-    };
-
+    const handleScroll = () => setScrolled(window.scrollY > 10);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  return (
-    <AppBar
-      position="fixed"
-      elevation={0}
-      enableColorOnDark
-      sx={{
-        backgroundColor: scrolled ? "rgba(0,0,0,0.9)" : "transparent",
-        transition: "background-color 0.3s ease",
-        backdropFilter: scrolled ? "blur(8px)" : "none",
-      }}
-    >
-      <Toolbar sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        {/* Left - Logo */}
-        <Box component="img" src={logo} alt="Company Logo" sx={{ height: 80, width: "auto" }} />
+  const navLinks = [
+    { name: "Home", path: "/" },
+    { name: "About", path: "/about" },
+    { name: "Services", path: "/services" },
+    { name: "Products", path: "/products" },
+    { name: "Contact", path: "/contact" },
+  ];
 
-        {/* Center - Nav Links */}
-        <Box
-          component="ul"
+  return (
+    <>
+      <AppBar
+        position="fixed"
+        elevation={0}
+        className={className}
+        sx={{
+          backgroundColor: className
+            ? undefined
+            : scrolled
+            ? "rgba(0,0,0,0.9)"
+            : "transparent",
+          transition: "background-color 0.3s ease",
+          backdropFilter: scrolled ? "blur(8px)" : "none",
+        }}
+      >
+        <Toolbar
           sx={{
             display: "flex",
-            justifyContent: "center",
+            justifyContent: "space-between",
             alignItems: "center",
-            listStyle: "none",
-            gap: 10,
-            m: 0,
-            px: 10,
-            py: 2,
-            border: "1px solid white",
-            borderRadius: "50px",
-            "& li a": {
-              fontFamily: "Poppins, sans-serif",
-              fontSize: "16px",
-              textDecoration: "none",
-              color: "#fff",
-              "&:hover": { color: "#d5a924" },
-            },
+            flexWrap: isMobile ? "wrap" : "nowrap",
           }}
         >
-          <li><a href="/">Home</a></li>
-          <li><a href="/about">About</a></li>
-          <li><a href="/services">Services</a></li>
-          <li><a href="/contact">Contact</a></li>
-        </Box>
+          {/* First row: Logo + Menu Icon */}
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              width: "75%",
+            }}
+          >
+            <Box component="img" src={logo} alt="Logo" sx={{ height: 60, width: "auto", p: 1 }} />
+            {isMobile && (
+              <IconButton color="inherit" onClick={() => setDrawerOpen(true)}>
+                <MenuIcon />
+              </IconButton>
+            )}
+            {!isMobile && (
+              <Box
+                component="ul"
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  listStyle: "none",
+                  gap: 10,
+                  m: 0,
+                  px: 10,
+                  py: 2,
+                  border: "1px solid white",
+                  borderRadius: "50px",
+                  "& li a": {
+                    fontFamily: "Poppins, sans-serif",
+                    fontSize: "16px",
+                    textDecoration: "none",
+                    color: "#fff",
+                    "&:hover": { color: "#d5a924" },
+                  },
+                }}
+              >
+                {navLinks.map((link) => (
+                  <li key={link.name}>
+                    <a href={link.path}>{link.name}</a>
+                  </li>
+                ))}
+              </Box>
+            )}
+          </Box>
 
-        {/* Right - Search */}
-        <TextField
-          variant="outlined"
-          size="small"
-          placeholder="Search..."
-          sx={{
-            backgroundColor: "#fff",
-            borderRadius: "20px",
-            width: "200px",
-          }}
-        />
-      </Toolbar>
-    </AppBar>
+          {/* Second row: Search bar */}
+          <Box sx={{ width: isMobile ? "100%" : "auto", mt: isMobile ? 1 : 0 }}>
+            <TextField
+              variant="outlined"
+              size="small"
+              placeholder="Search..."
+              fullWidth={isMobile}
+              sx={{
+                backgroundColor: "#fff",
+                borderRadius: "20px",
+                width: isMobile ? "100%" : 200,
+              }}
+            />
+          </Box>
+        </Toolbar>
+      </AppBar>
+
+      {/* Drawer for mobile menu */}
+      <Drawer anchor="right" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
+        <List sx={{ width: 250 }}>
+          {navLinks.map((link) => (
+            <ListItem button key={link.name} onClick={() => setDrawerOpen(false)}>
+              <ListItemText primary={link.name} />
+            </ListItem>
+          ))}
+        </List>
+      </Drawer>
+    </>
   );
 }
 

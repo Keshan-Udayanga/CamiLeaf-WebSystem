@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Typography, Link, IconButton, Grid } from "@mui/material";
 import { Facebook, Twitter, Instagram, LinkedIn } from "@mui/icons-material";
 
-export default function Footer() {
+function Footer() {
   return (
     <Box
       component="footer"
@@ -62,3 +62,5 @@ export default function Footer() {
     </Box>
   );
 }
+
+export default Footer;
