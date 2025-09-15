@@ -1,7 +1,9 @@
 package com.example.demo.Entity.UserManagement;
 
 import org.bson.types.ObjectId;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
@@ -19,13 +21,17 @@ public class User {
     private String address;
     private String role;
     private String status;
+
+    @CreatedDate
     private Date createdAt;
+
+    @LastModifiedDate
     private Date lastLogin;
 
     public User() {
     }
 
-    public User(String email, String password, String firstName, String lastName, String phoneNumber, String address, String role, String status, Date createdAt, Date lastLogin) {
+    public User(String email, String password, String firstName, String lastName, String phoneNumber, String address, String role, String status) {
         this.email = email;
         this.password = password;
         this.firstName = firstName;
@@ -34,11 +40,9 @@ public class User {
         this.address = address;
         this.role = role;
         this.status = status;
-        this.createdAt = createdAt;
-        this.lastLogin = lastLogin;
     }
 
-    public User(String id, String email, String password, String firstName, String lastName, String phoneNumber, String address, String role, String status, Date createdAt, Date lastLogin) {
+    public User(String id, String email, String password, String firstName, String lastName, String phoneNumber, String address, String role, String status) {
         this.id = id;
         this.email = email;
         this.password = password;
@@ -48,8 +52,6 @@ public class User {
         this.address = address;
         this.role = role;
         this.status = status;
-        this.createdAt = createdAt;
-        this.lastLogin = lastLogin;
     }
 
     public String getId() {

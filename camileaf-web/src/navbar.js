@@ -41,7 +41,7 @@ function Navbar() {
             m: 0,
             px: 10,
             py: 2,
-            border: "1px solid white",
+            border: "1px solid ",
             borderRadius: "50px",
             "& li a": {
               fontFamily: "Poppins, sans-serif",
@@ -53,7 +53,7 @@ function Navbar() {
           }}
         >
           <li><a href="/">Home</a></li>
-          <li><a href="/about">About</a></li>
+          <li><a href="/#about">About</a></li>
           <li><a href="/services">Services</a></li>
           <li><a href="/contact">Contact</a></li>
         </Box>
@@ -67,6 +67,17 @@ function Navbar() {
             backgroundColor: "#fff",
             borderRadius: "20px",
             width: "200px",
+            "& .MuiOutlinedInput-root": {
+              "& fieldset": {
+                border: "none", 
+              },
+              "&:hover fieldset": {
+                border: "none", 
+              },
+              "&.Mui-focused fieldset": {
+                border: "none", 
+              },
+            }
           }}
         />
       </Toolbar>
