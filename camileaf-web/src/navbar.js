@@ -27,7 +27,7 @@ function Navbar({ className }) {
 
   const navLinks = [
     { name: "Home", path: "/" },
-    { name: "About", path: "/about" },
+    { name: "About", path: "/#about" },
     { name: "Services", path: "/services" },
     { name: "Products", path: "/products" },
     { name: "Contact", path: "/contact" },
@@ -57,7 +57,7 @@ function Navbar({ className }) {
             flexWrap: isMobile ? "wrap" : "nowrap",
           }}
         >
-          {/* First row: Logo + Menu Icon */}
+          {/* Left: Logo + Menu Icon / NavLinks */}
           <Box
             sx={{
               display: "flex",
@@ -67,11 +67,7 @@ function Navbar({ className }) {
             }}
           >
             <Box component="img" src={logo} alt="Logo" sx={{ height: 60, width: "auto", p: 1 }} />
-            {isMobile && (
-              <IconButton color="inherit" onClick={() => setDrawerOpen(true)}>
-                <MenuIcon />
-              </IconButton>
-            )}
+            
             {!isMobile && (
               <Box
                 component="ul"
@@ -102,9 +98,15 @@ function Navbar({ className }) {
                 ))}
               </Box>
             )}
+
+            {isMobile && (
+              <IconButton color="inherit" onClick={() => setDrawerOpen(true)}>
+                <MenuIcon />
+              </IconButton>
+            )}
           </Box>
 
-          {/* Second row: Search bar */}
+          {/* Right: Search */}
           <Box sx={{ width: isMobile ? "100%" : "auto", mt: isMobile ? 1 : 0 }}>
             <TextField
               variant="outlined"
@@ -115,6 +117,11 @@ function Navbar({ className }) {
                 backgroundColor: "#fff",
                 borderRadius: "20px",
                 width: isMobile ? "100%" : 200,
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": { border: "none" },
+                  "&:hover fieldset": { border: "none" },
+                  "&.Mui-focused fieldset": { border: "none" },
+                },
               }}
             />
           </Box>
