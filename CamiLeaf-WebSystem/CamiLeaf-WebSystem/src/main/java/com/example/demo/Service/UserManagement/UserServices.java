@@ -3,6 +3,7 @@ package com.example.demo.Service.UserManagement;
 import com.example.demo.Entity.UserManagement.User;
 import com.example.demo.Repo.UserManagement.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -13,11 +14,19 @@ public class UserServices {
     @Autowired
     private UserRepository userRepo;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
 
     public void createUser(User users) {
         Date now = new Date();
         users.setCreatedAt(now);
         users.setLastLogin(null);
+
+        if (users.getPassword() != null) {
+            users.setPassword(passwordEncoder.encode(users.getPassword()));
+        }
+
         userRepo.save(users);
     }
 
