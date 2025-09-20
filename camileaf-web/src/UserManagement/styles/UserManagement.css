@@ -1,7 +1,7 @@
 .user-management-container {
   padding: 40px;
   font-family: 'Poppins', sans-serif;
-  background-color: #f9f9f9;
+  background-color: #f2f7f3;
 }
 
 .user-management-header {
@@ -41,7 +41,7 @@
   color: white !important;
   border-radius: 20px !important;
   padding: 5px 20px !important;
-  display: flex;
+  display: flex; 
   align-items: center;
   justify-content: center;
 }

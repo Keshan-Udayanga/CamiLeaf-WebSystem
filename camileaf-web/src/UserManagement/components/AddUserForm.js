@@ -177,6 +177,7 @@ const AddUserForm = () => {
         <option value="" disabled>Select Role</option>
         <option value="Resource Manager">Resource Manager</option>
         <option value="Leaf Clerk">Leaf Clerk</option>
+        {/*<option value="Admin">Admin</option>*/}
       </select>
       {formErrors.role && <span className="error">{formErrors.role}</span>}
 
