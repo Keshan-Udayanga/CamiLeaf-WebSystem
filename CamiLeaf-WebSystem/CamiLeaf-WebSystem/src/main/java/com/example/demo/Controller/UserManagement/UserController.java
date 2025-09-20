@@ -26,7 +26,6 @@ public class UserController {
 
     @PutMapping(value = "/edit/{id}")
     public User updateUser(@RequestBody User user, @PathVariable (name = "id")String id){
-        System.out.println(id);
         return userServices.updateUser(id, user);
     }
 

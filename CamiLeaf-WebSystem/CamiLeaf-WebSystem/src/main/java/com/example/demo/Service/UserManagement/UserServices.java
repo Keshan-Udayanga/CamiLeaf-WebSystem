@@ -7,6 +7,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.Optional;
 
 @Service
 public class UserServices {
@@ -54,5 +55,9 @@ public class UserServices {
 
     public User getUserById(String id) {
         return userRepo.findById(id).get();
+    }
+
+    public Optional<User> getUserByEmail(String email){
+        return userRepo.findByEmail(email);
     }
 }
