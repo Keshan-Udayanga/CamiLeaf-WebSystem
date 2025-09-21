@@ -1,5 +1,6 @@
 package com.example.demo.Service.UserManagement;
 
+import com.example.demo.Entity.UserManagement.Customer;
 import com.example.demo.Entity.UserManagement.User;
 import com.example.demo.Repo.UserManagement.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,5 +60,16 @@ public class UserServices {
 
     public Optional<User> getUserByEmail(String email){
         return userRepo.findByEmail(email);
+    }
+
+    public User signupCustomer(Customer customer){
+
+        if(userRepo.existsByEmail(customer.getEmail())){
+            throw new RuntimeException("Email already registered");
+        }
+
+        customer.setPassword(passwordEncoder.encode(customer.getPassword()));
+
+        return userRepo.save(customer);
     }
 }

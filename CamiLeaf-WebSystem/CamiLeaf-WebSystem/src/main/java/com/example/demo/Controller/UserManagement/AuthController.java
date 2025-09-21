@@ -1,6 +1,8 @@
 package com.example.demo.Controller.UserManagement;
 
 import com.example.demo.DTO.LoginRequest;
+import com.example.demo.DTO.SignUpRequest;
+import com.example.demo.Entity.UserManagement.Customer;
 import com.example.demo.Entity.UserManagement.User;
 import com.example.demo.Service.UserManagement.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +51,30 @@ public class AuthController {
             response.put("success", false);
             response.put("message", "Invalid email or password");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+        }
+    }
+
+    @PostMapping("/signup")
+    public ResponseEntity<?> signupCustomer(@RequestBody SignUpRequest request){
+        try{
+            Customer customer = new Customer();
+            customer.setEmail(request.getEmail());
+            customer.setPassword(request.getPassword());
+            customer.setFirstName(request.getFirstName());
+            customer.setLastName(request.getLastName());
+            customer.setPhoneNumber(request.getPhone());
+            customer.setAddress(request.getAddress());
+            customer.setCountry(request.getCountry());
+            customer.setRole("Customer");
+            customer.setStatus("Active");
+
+
+            User newUser = userServices.signupCustomer(customer);
+
+            return ResponseEntity.ok().body(newUser);
+        }catch (RuntimeException e){
+            System.out.println(e.getMessage());
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 }
