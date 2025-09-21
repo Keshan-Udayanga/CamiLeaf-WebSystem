@@ -2,7 +2,7 @@
 
 import React, {useEffect, useState} from "react";
 import "../styles/UserManagement.css";
-import { TextField, Select, MenuItem, Button, Table, TableHead, TableRow, TableCell, TableBody, Checkbox, IconButton } from "@mui/material";
+import { TextField, Select, MenuItem, Button, Table, TableHead, TableRow, TableCell, TableBody, IconButton } from "@mui/material";
 import { Add, Edit, Delete } from "@mui/icons-material";
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
@@ -32,7 +32,6 @@ useEffect(() => {
       "http://localhost:8080/api/v1/user/getAll"
     )
     setUser(result.data);
-    console.log(result.data);
   }
 
   const handleEditClick = (user) => {
@@ -103,6 +102,7 @@ useEffect(() => {
             <MenuItem value="">All Roles</MenuItem>
             <MenuItem value="Resource Manager">Resource Manager</MenuItem>
             <MenuItem value="Leaf Clerk">Leaf Clerk</MenuItem>
+            <MenuItem value="Customer">Customer</MenuItem>
           </Select>
           <Select
             value={status}

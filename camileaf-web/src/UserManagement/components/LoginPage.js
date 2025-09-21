@@ -2,8 +2,7 @@
 import React, { useState } from "react";
 import "../styles/LoginPage.css";
 import LoginImage from "../assests/teaLogin.jpg"
-import { speedDialActionClasses } from "@mui/material/SpeedDialAction";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 
 function LoginPage() {
@@ -88,6 +87,12 @@ function LoginPage() {
 
             <button type="submit" className="btn-login">Login</button>
 
+            <p>
+              Don't have an account?{" "}
+              <Link to="/signup" style={{ color: "blue", textDecoration: "underline" }}>
+                Sign Up
+              </Link>
+            </p>
             {error && <p className="error">{error}</p>}
           </form>
         </div>

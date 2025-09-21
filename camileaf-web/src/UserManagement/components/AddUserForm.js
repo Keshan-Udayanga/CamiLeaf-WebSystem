@@ -20,8 +20,8 @@ const AddUserForm = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [formErrors, setFormErrors] = useState({});
-  const [showPassword, setShowPassword] = useState(false);
-
+  const isCustomer = formData.role === "Customer";
+  
 
   useEffect(() => {
     if(location.state?.user){
@@ -125,7 +125,6 @@ const AddUserForm = () => {
       );
 
       if (response.status === 200) {
-        console.log('Submitting:', formData);
 
         alert('User added successfully!');
         setFormData({
@@ -157,34 +156,34 @@ const AddUserForm = () => {
 
       {!isEditMode && (
         <>
-        <input type="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange}  />
+        <input type="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange}  readOnly={isCustomer}/>
       {formErrors.password && <span className="error">{formErrors.password}</span>}
       </>
       )}
-      <input type="text" name="firstName" placeholder="First Name" value={formData.firstName} onChange={handleChange}  />
+      <input type="text" name="firstName" placeholder="First Name" value={formData.firstName} onChange={handleChange}  readOnly={isCustomer}/>
       {formErrors.firstName && <span className="error">{formErrors.firstName}</span>}
 
-      <input type="text" name="lastName" placeholder="Last Name" value={formData.lastName} onChange={handleChange}  />
+      <input type="text" name="lastName" placeholder="Last Name" value={formData.lastName} onChange={handleChange}  readOnly={isCustomer}/>
       {formErrors.lastName && <span className="error">{formErrors.lastName}</span>}
 
-      <input type="text" name="phoneNumber" placeholder="Phone Number" value={formData.phoneNumber} onChange={handleChange} maxLength={10}  />
+      <input type="text" name="phoneNumber" placeholder="Phone Number" value={formData.phoneNumber} onChange={handleChange} maxLength={10}  readOnly={isCustomer}/>
       {formErrors.phoneNumber && <span className="error">{formErrors.phoneNumber}</span>}
 
-      <input type="text" name="address" placeholder="Address" value={formData.address} onChange={handleChange}  />
+      <input type="text" name="address" placeholder="Address" value={formData.address} onChange={handleChange}  readOnly={isCustomer}/>
       {formErrors.address && <span className="error">{formErrors.address}</span>}
 
-      <select name="role" value={formData.role} onChange={handleChange} >
+      <select name="role" value={formData.role} onChange={handleChange} disabled={isCustomer}>
         <option value="" disabled>Select Role</option>
         <option value="Resource Manager">Resource Manager</option>
         <option value="Leaf Clerk">Leaf Clerk</option>
-        {/*<option value="Admin">Admin</option>*/}
+        
       </select>
       {formErrors.role && <span className="error">{formErrors.role}</span>}
 
       <select name="status" value={formData.status} onChange={handleChange} >
         <option value="" disabled>Select Status</option>
-        <option value="active">Active</option>
-        <option value="inactive">Inactive</option>
+        <option value="Active">Active</option>
+        <option value="Inactive">Inactive</option>
       </select>
       {formErrors.status && <span className="error">{formErrors.status}</span>}
 

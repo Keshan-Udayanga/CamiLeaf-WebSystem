@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
 import PhoneInput from "react-phone-number-input";
+import { useNavigate } from 'react-router-dom';
 import { parsePhoneNumberFromString } from 'libphonenumber-js';
+import countries from 'i18n-iso-countries';
+import enLocale from 'i18n-iso-countries/langs/en.json';
 import "react-phone-number-input/style.css";
 import "../styles/CustomerSignUp.css"
 
@@ -18,6 +21,9 @@ const CustomerSignUp = () => {
     const [passerror, setPassError] = useState("");
     const [success, setSuccess] = useState("");
     const [phoneError, setPhoneError] = useState('');
+    const navigate = useNavigate();
+
+    countries.registerLocale(enLocale);
 
     
     const handlePhoneChange = (value) => {
@@ -26,24 +32,26 @@ const CustomerSignUp = () => {
             return;
 
         const [countryCode, phoneNumber] = value.split(" ");
-
+        
         const sanitizedPhoneNumber = phoneNumber ? phoneNumber.replace(/\D/g, '') : '';
 
         const phoneNumberObj = parsePhoneNumberFromString(value);
         if (phoneNumberObj && phoneNumberObj.isValid()) {
             const nationalNumberLength = phoneNumberObj.nationalNumber.length;
-            
+            const isoCode = phoneNumberObj.country;
+
+            const countryName = isoCode ? countries.getName(isoCode, "en") : "";
             
             if (sanitizedPhoneNumber.length <= nationalNumberLength) {
                 setPhone(`+${countryCode.replace('+', '')}${sanitizedPhoneNumber}`);
             }
             setPhoneError("");
+            setCountry(countryName || "");
         } else {
             
             setPhoneError("Invalid phone number.");
         }
 
-        setCountry(countryCode || "");
     };
 
     const handlePasswordChange = (e) => {
@@ -73,14 +81,20 @@ const CustomerSignUp = () => {
             const response = await axios.post("http://localhost:8080/api/auth/signup", {
                 email,
                 password,
+                firstName,
+                lastName,
                 phone,
                 address,
                 country
             });
 
+            if (response.status === 200) {
+
+                alert('Registered successfully!');
+        
+                navigate('/login')
+            }
             
-            setSuccess("Signup successful! Please log in.");
-            setError("");
         } catch (err) {
             
             setError("An error occurred during signup.");
@@ -95,8 +109,6 @@ const CustomerSignUp = () => {
 
                 <form onSubmit={handleSubmit}>
                     <h2 >Customer Signup</h2>
-                {error && <div style={{ color: "red" }}>{error}</div>}
-                {success && <div style={{ color: "green" }}>{success}</div>}
 
                     <div>
                         <label>Email:</label>
@@ -184,6 +196,8 @@ const CustomerSignUp = () => {
                             placeholder="Country will be auto-detected from phone number"
                         />
                     </div>
+                    {error && <div style={{ color: "red" }}>{error}</div>}
+                {success && <div style={{ color: "green" }}>{success}</div>}
 
                     <button type="submit">Sign Up</button>
                 </form>
