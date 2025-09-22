@@ -5,7 +5,7 @@ import Dashboard from './AdminDashboard';
 import UserManagement from './UserManagement';
 import AddUserForm from './AddUserForm';
 import AdminProductTable from "../../ProductManagement/components/ProductManagement";
-
+import ResourceManagement from "../../ResourceManagement/components/ResourceManagement";
 
 function App() {
   return (
@@ -26,6 +26,7 @@ function App() {
           <Route path="user-management" element={<UserManagement />} />
           <Route path="add-user" element={<AddUserForm />} />
           <Route path="/product-management/*" element={<AdminProductTable />} />
+          <Route path="/resource-management" element={<ResourceManagement />} />
         </Routes>
       </main>
     </div>

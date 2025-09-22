@@ -1,5 +1,3 @@
-
-
 import React, {useState} from "react";
 import "../styles/UserManagement.css";
 import { TextField, Select, MenuItem, Button, Table, TableHead, TableRow, TableCell, TableBody, Checkbox, IconButton } from "@mui/material";

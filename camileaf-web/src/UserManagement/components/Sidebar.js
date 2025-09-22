@@ -1,7 +1,6 @@
 import React from 'react';
-import '../styles/Sidebar.css';
 import { NavLink, Link } from 'react-router-dom';
-
+import '../styles/Sidebar.css';
 
 function Sidebar() {
   return (
@@ -10,19 +9,28 @@ function Sidebar() {
         <h2 className="sidebar-title">Admin Panel</h2>
       </Link>
       <ul>
-        <li><NavLink
+        <li>
+          <NavLink
             to="/admin/user-management"
             className={({ isActive }) => isActive ? "sidebar-link active" : "sidebar-link"}
           >
             User Management
           </NavLink>
-          </li>
+        </li>
         <li>
           <NavLink
             to="/admin/product-management"
             className={({ isActive }) => isActive ? "sidebar-link active" : "sidebar-link"}
           >
             Product Management
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            to="/admin/resource-management"
+            className={({ isActive }) => isActive ? "sidebar-link active" : "sidebar-link"}
+          >
+            Resource Management
           </NavLink>
         </li>
         <li>
