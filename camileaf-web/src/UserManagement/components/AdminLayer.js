@@ -26,7 +26,7 @@ function App() {
           <Route path="user-management" element={<UserManagement />} />
           <Route path="add-user" element={<AddUserForm />} />
           <Route path="/product-management/*" element={<AdminProductTable />} />
-          <Route path="/resource-management" element={<ResourceManagement />} />
+          <Route path="/resource-management/*" element={<ResourceManagement />} />
         </Routes>
       </main>
     </div>

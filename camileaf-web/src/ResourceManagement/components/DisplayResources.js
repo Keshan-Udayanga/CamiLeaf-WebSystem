@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import "../styles/displayResources.css"
 
 const ResourceTablePage = () => {
   const [resources, setResources] = useState([]);
