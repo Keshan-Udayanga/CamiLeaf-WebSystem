@@ -23,7 +23,7 @@ function ProductsCarousel() {
     dots: false,
     infinite: true,
     speed: 1000,
-    slidesToShow: 4,      // 4 products visible at a time
+    slidesToShow: 5,      // 4 products visible at a time
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 2500,
@@ -32,7 +32,15 @@ function ProductsCarousel() {
   };
 
   return (
-    <Box sx={{ width: "90%", margin: "auto", py: 5, height: "400px", backgroundColor: "#c795278b" ,borderRadius:"25px"}}>
+    <Box sx={{ 
+      width: "90%", 
+      margin: "auto",
+      marginBottom:"50px",
+      py: 5, 
+      height: "400px", 
+      backgroundColor: "#ffffffff" ,
+      borderRadius:"25px"
+      }}>
         {/* Heading */}
     <Typography
       variant="h3"
@@ -77,6 +85,7 @@ function ProductsCarousel() {
             <Typography
               variant="subtitle1"
               sx={{
+                color:"black",
                 fontWeight: "bold",
                 fontFamily: "Poppins, sans-serif",
                 textAlign: "center",

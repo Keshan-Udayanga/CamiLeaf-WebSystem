@@ -1,0 +1,176 @@
+.admin-products-container {
+  padding: 20px;
+  max-width: 1100px;
+  margin: auto;
+}
+
+h2 {
+  color: #45a049;
+  text-align: center;
+  margin-bottom: 20px;
+  font-family: "Poppins", sans-serif;
+}
+
+/* 🔝 Top Actions */
+.top-actions {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* Add Product Button */
+.btn-add {
+  background: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: 0.3s;
+}
+.btn-add:hover {
+  background: #45a049;
+}
+
+/* Search Box */
+.search-box {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: #fff;
+  flex: 1;
+  max-width: 250px;
+}
+.search-box input {
+  border: none;
+  outline: none;
+  margin-left: 6px;
+  flex: 1;
+}
+
+/* Sort Dropdown */
+.sort-box {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.sort-box select {
+  padding: 6px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+/* Table */
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.admin-table thead {
+  height: 40px;
+}
+.admin-table td,
+.admin-table th {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: center;
+  font-size: 14px;
+  color: black;
+}
+.admin-table th {
+  background: #d0a15e;
+  color: white;
+  font-weight: 600;
+}
+
+/* Product Image */
+.product-img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+/* Action Buttons */
+.btn-edit,
+.btn-delete {
+  border: none;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 0 3px;
+  transition: 0.3s;
+  font-size: 13px;
+}
+.btn-edit {
+  background: #2196f3;
+  color: white;
+}
+.btn-edit:hover {
+  background: #1976d2;
+}
+.btn-delete {
+  background: #f44336;
+  color: white;
+}
+.btn-delete:hover {
+  background: #d32f2f;
+}
+
+/* Pagination */
+.pagination {
+  margin-top: 15px;
+  text-align: center;
+}
+.pagination button {
+  border: none;
+  background: #ddd;
+  padding: 6px 12px;
+  margin: 0 3px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: 0.3s;
+}
+.pagination button.active,
+.pagination button:hover {
+  background: #333;
+  color: white;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .admin-table td,
+  .admin-table th {
+    font-size: 12px;
+    padding: 8px;
+  }
+
+  .btn-add {
+    font-size: 12px;
+    padding: 8px 10px;
+  }
+
+  .product-img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .top-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

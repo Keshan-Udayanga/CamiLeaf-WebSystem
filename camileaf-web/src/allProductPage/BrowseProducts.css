@@ -1,3 +1,4 @@
+/* Container & General */
 .browse-container {
   padding: 30px;
   max-width: 1200px;
@@ -6,6 +7,7 @@
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+/* Header */
 .header-section {
   text-align: center;
   margin-bottom: 40px;
@@ -17,7 +19,6 @@
   margin-bottom: 10px;
   position: relative;
   display: inline-block;
-
   background: linear-gradient(90deg, #143e18, #59ec81, #2B8433);
   background-size: 300% auto;
   background-clip: text; 
@@ -27,15 +28,9 @@
 }
 
 @keyframes shine {
-  0% {
-    background-position: 0% center;
-  }
-  50% {
-    background-position: 100% center;
-  }
-  100% {
-    background-position: 0% center;
-  }
+  0% { background-position: 0% center; }
+  50% { background-position: 100% center; }
+  100% { background-position: 0% center; }
 }
 
 .browse-title::after {
@@ -50,13 +45,13 @@
   border-radius: 2px;
 }
 
-
 .browse-subtitle {
   color: #5a6d6e;
   font-size: 1.1rem;
   margin-top: 15px;
 }
 
+/* Filters */
 .filters-container {
   display: flex;
   justify-content: center;
@@ -85,9 +80,10 @@
   border-radius: 30px;
   font-size: 1rem;
   transition: all 0.3s ease;
+  outline: none; /* removes focus outline */
   width: 300px;
   background: white;
-  box-shadow: 0 2px 10px rgba(43, 132, 51, 0.05);
+  box-shadow: 0 2px 10px rgba(43, 132, 51, 0.3);
 }
 
 .search-input:focus, .category-select:focus {
@@ -106,6 +102,15 @@
   background-size: 16px;
 }
 
+.search-box{
+  margin-right: 50px;
+}
+
+.search-icon{
+  padding-left: 20px;
+}
+
+/* Results Info */
 .results-info {
   text-align: center;
   margin-bottom: 25px;
@@ -113,6 +118,7 @@
   font-style: italic;
 }
 
+/* Products Grid */
 .products-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -186,6 +192,11 @@
   margin: 0 0 15px 0;
 }
 
+.product-stock, .product-discount, .product-date {
+  margin: 3px 0;
+  color: #5a6d6e;
+}
+
 .add-to-cart-btn {
   background: #2B8433;
   color: white;
@@ -212,6 +223,7 @@
   font-size: 1.1rem;
 }
 
+/* No Results */
 .no-results {
   grid-column: 1 / -1;
   text-align: center;
@@ -237,35 +249,7 @@
   color: #5a6d6e;
 }
 
-/* Responsive design */
-@media (max-width: 768px) {
-  .browse-container {
-    padding: 20px 15px;
-  }
-  
-  .browse-title {
-    font-size: 2rem;
-  }
-  
-  .filters-container {
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .search-input, .category-select {
-    width: 100%;
-    max-width: 300px;
-  }
-  
-  .products-grid {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 15px;
-  }
-}
-
-
-
-/* Quantity Popup Styles */
+/* Quantity Popup */
 .popup-overlay {
   position: fixed;
   top: 0;
@@ -359,6 +343,5 @@
 }
 
 .confirm-btn:hover {
-  background: linear-gradient(90deg, #2B8433, #94894a);
   background: #236b2a;
 }

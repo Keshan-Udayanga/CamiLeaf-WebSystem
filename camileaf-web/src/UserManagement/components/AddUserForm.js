@@ -23,7 +23,7 @@ const AddUserForm = () => {
 
     try {
       const response = await axios.post(
-        'http://localhost:8080/api/v1/user/save',
+        'http://localhost:8081/api/v1/user/save',
         formData  // send plain user object
       );
 

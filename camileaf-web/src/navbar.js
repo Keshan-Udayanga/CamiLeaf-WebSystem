@@ -25,13 +25,14 @@ function Navbar({ className }) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const navLinks = [
-    { name: "Home", path: "/" },
-    { name: "About", path: "/#about" },
-    { name: "Services", path: "/services" },
-    { name: "Products", path: "/products" },
-    { name: "Contact", path: "/contact" },
-  ];
+ const navLinks = [
+  { name: "Home", path: "/" },
+  { name: "About", path: "/about" },
+  { name: "Services", path: "/services" },
+  { name: "Products", path: "/products" },
+  { name: "Contact", path: "/contact" }, 
+];
+
 
   return (
     <>

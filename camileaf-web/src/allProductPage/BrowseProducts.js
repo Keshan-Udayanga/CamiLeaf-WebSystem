@@ -1,40 +1,44 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import "./BrowseProducts.css";
 
 function BrowseProducts({ addToCart }) {
-  const [products] = useState([
-    { id: 1, name: "Broken Pekoe One (BP1)", category: "CTC", price: 1200, image: "bp-1.png" },
-    { id: 2, name: "Pekoe Fannings One (PF1)", category: "CTC", price: 950, image: "pf-1.png" },
-    { id: 3, name: "Pekoe Dust (PD)", category: "CTC", price: 2500, image: "pd.png" },
-    { id: 13, name: "PEK", category: "Orthodox", price: 2800, image: "pek.png" },
-    { id: 4, name: "Flowery Broken Orange Pekoe Fannings (FBOPF)", category: "Orthodox", price: 1500, image: "fbopf.png" },
-    { id: 5, name: "Flowery Broken Orange Pekoe Fannings One (FBOPF1)", category: "Orthodox", price: 1800, image: "fbopf-1.png" },
-    { id: 6, name: "Flowery Broken Orange Pekoe Fannings Extra Special (FBOPF Ex.Sp)", category: "Orthodox", price: 700, image: "fbopf-ex-sp.png" },
-    { id: 7, name: "Broken Orange Pekoe (BOP)", category: "Orthodox", price: 2200, image: "bop.png" },
-    { id: 8, name: "Broken Orange Pekoe One (BOP1)", category: "Orthodox", price: 3200, image: "bop-1.png" },
-    { id: 9, name: "Flowery Broken Orange Pekoe (FBOP)", category: "Orthodox", price: 2800, image: "fbop.png" },
-    { id: 10, name: "Flowery Broken Orange Pekoe One (FBOP1)", category: "Orthodox", price: 2800, image: "fbopf-1.png" },
-    { id: 11, name: "Orange Pekoe (OP)", category: "Orthodox", price: 2800, image: "op.png" },
-    { id: 12, name: "Orange Pekoe One (OP1)", category: "Orthodox", price: 2800, image: "op1.png" },
-  ]);
-
+  const [products, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [showQuantityPopup, setShowQuantityPopup] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
 
+  // ✅ Fetch all products from backend
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get("http://localhost:8081/api/v1/product/getAll");
+        setProducts(response.data);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
+    fetchProducts();
+  }, []);
+
+  // 🔎 Search + Category Filter
   const filteredProducts = products.filter((product) => {
     const search = searchTerm.toLowerCase().trim();
     const matchesSearch =
-      product.name.toLowerCase().includes(search) ||
-      product.category.toLowerCase().includes(search) ||
-      product.price.toString().includes(search);
+      product.productName.toLowerCase().includes(search) ||
+      product.price.toString().includes(search) ||
+      product.discount.toString().includes(search);
+
+    // If category not available in backend, keep only "All"
     const matchesCategory =
       selectedCategory === "All" || product.category === selectedCategory;
+
     return matchesSearch && matchesCategory;
   });
 
+  // 🛒 Add to Cart Popup
   const handleAddToCartClick = (product) => {
     setSelectedProduct(product);
     setQuantity(1);
@@ -46,10 +50,6 @@ function BrowseProducts({ addToCart }) {
       addToCart({ ...selectedProduct, qty: quantity });
       setShowQuantityPopup(false);
       setSelectedProduct(null);
-    } else {
-      console.error("addToCart function is not available");
-      setShowQuantityPopup(false);
-      setSelectedProduct(null);
     }
   };
 
@@ -59,15 +59,13 @@ function BrowseProducts({ addToCart }) {
   };
 
   return (
-
-    
     <div className="browse-container">
       {/* Quantity Selection Popup */}
       {showQuantityPopup && (
         <div className="popup-overlay">
           <div className="quantity-popup">
             <h3>Select Quantity</h3>
-            <p>{selectedProduct?.name}</p>
+            <p>{selectedProduct?.productName}</p>
             <div className="quantity-controls">
               <button onClick={() => setQuantity(Math.max(1, quantity - 1))}>-</button>
               <span>{quantity}</span>
@@ -83,14 +81,12 @@ function BrowseProducts({ addToCart }) {
 
       <div className="header-section">
         <h1 className="browse-title">Browse Your Favourite Tea Products Here!</h1>
-        <p className="browse-subtitle">
-          Discover our premium selection of teas
-        </p>
+        <p className="browse-subtitle">Discover our premium selection of teas</p>
       </div>
 
       {/* 🔍 Search & Filter */}
       <div className="filters-container">
-        <div className="search-box">
+        <div className="search-box" style={{ border: "none" }}>
           <span className="search-icon">🔍</span>
           <input
             type="text"
@@ -110,7 +106,7 @@ function BrowseProducts({ addToCart }) {
           >
             <option value="All">All Categories</option>
             <option value="CTC">CTC</option>
-            <option value="Orthodox">Orthodox Products</option>
+            <option value="Orthodox">Orthodox</option>
           </select>
         </div>
       </div>
@@ -128,15 +124,22 @@ function BrowseProducts({ addToCart }) {
           filteredProducts.map((product) => (
             <div key={product.id} className="product-card">
               <div className="product-image-container">
-                <img src={product.image} alt={product.name} />
-                <span className="product-category">{product.category}</span>
+                <img src={product.productImg} alt={product.productName} />
+                {product.category && (
+                  <span className="product-category">{product.category}</span>
+                )}
               </div>
               <div className="product-info">
-                <h3>{product.name}</h3>
+                <h3>{product.productName}</h3>
                 <p className="product-price">
                   Rs. {product.price.toLocaleString()}
                 </p>
-                <button 
+                <p className="product-stock">Stock: {product.stock}</p>
+                <p className="product-discount">Discount: {product.discount}%</p>
+                <p className="product-date">
+                  Added: {new Date(product.addedDate).toLocaleDateString()}
+                </p>
+                <button
                   className="add-to-cart-btn"
                   onClick={() => handleAddToCartClick(product)}
                 >

@@ -4,6 +4,7 @@ import Sidebar from './Sidebar';
 import Dashboard from './AdminDashboard';
 import UserManagement from './UserManagement';
 import AddUserForm from './AddUserForm';
+import AdminProductTable from "../../ProductManagement/components/ProductManagement";
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
           <Route path="/" element={<Dashboard />} />
           <Route path="user-management" element={<UserManagement />} />
           <Route path="add-user" element={<AddUserForm />} />
+          <Route path="/product-management/*" element={<AdminProductTable />} />
         </Routes>
       </main>
     </div>

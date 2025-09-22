@@ -11,19 +11,23 @@ function Dashboard() {
     <div className="dashboard">
       <h1>Welcome to Admin Panel</h1>
       <div className="cards-container">
-        <Link
+        <Link 
           to="/admin/user-management"
           className="card"  
-          style={{ textDecoration: "none", color: "inherit" }}
+          style={{ textDecoration: "none" }}
     >
           <img src={userManagement} alt="User Management" />
           <h3>User Management</h3>
         
         </Link>
-        <div className="card">
+        <Link
+          to="/admin/product-management"
+          className="card"
+          style={{ textDecoration: "none" }}
+        >
           <img src={productManagement} alt="Product Management" />
           <h3>Product Management</h3>
-        </div>
+        </Link>
         <div className="card">
           <img src={reports} alt="Product Management" />
           <h3>Company Reports</h3>
