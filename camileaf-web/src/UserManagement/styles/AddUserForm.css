@@ -1,3 +1,8 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 
 
 .user-form {
@@ -20,8 +25,8 @@
 .user-form input,
 .user-form select {
   width: 100%;
-  padding: 0.75rem;
-  margin-bottom: 1.2rem;
+  padding: 10px;
+  margin-bottom: 1rem;
   border: 1px solid #ccc;
   border-radius: 6px;
   background-color: #f7f7f7;
@@ -31,9 +36,9 @@
 
 .user-form input:focus,
 .user-form select:focus {
-  border-color: #d0a15e;
+  border-color: #1c3c1e; 
   outline: none;
-  box-shadow: 0 0 0 2px rgba(208, 161, 94, 0.3);
+  box-shadow: 0 0 0 2px rgba(28, 60, 30, 0.3);
 }
 
 .user-form button {
@@ -56,14 +61,13 @@
   color: #999;
 }
 
-
-.user-form input,
-.user-form select {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+.error {
+  color: red;
+  font-size: 0.9em;
+  margin-top: -10px;
+  margin-bottom: 10px;
+  display: block;
 }
+
 
 
