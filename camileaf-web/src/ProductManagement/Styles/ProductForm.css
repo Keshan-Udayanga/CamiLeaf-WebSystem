@@ -1,57 +1,60 @@
-.product-form-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.product-form {
-  background: white;
-  padding: 25px;
+.product-form-container {
+  max-width: 700px;
+  margin: 20px auto; /* center in main content */
+  background: #fff;
+  padding: 25px 30px;
   border-radius: 10px;
-  width: 400px;
-  max-width: 95%;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
+/* Heading */
+.product-form-container h3 {
+  margin-bottom: 15px;
+  font-family: Poppins, sans-serif;
+  font-size: 1.6rem;
+  color: #333;
+}
+
+/* Labels */
+.product-form-container label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+
+/* Inputs & Select */
+.product-form-container input,
+.product-form-container select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 4px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+}
+
+.product-form-container input:focus,
+.product-form-container select:focus {
+  border-color: #4caf50;
+}
+
+/* Image Preview */
 .image-preview {
   margin: 10px 0;
   text-align: center;
 }
 
 .image-preview img {
-  max-width: 100px;
-  max-height: 100px;
+  max-width: 120px;
+  max-height: 120px;
   border-radius: 6px;
   border: 1px solid #ccc;
   object-fit: cover;
 }
 
-.product-form h3 {
-  margin-bottom: 15px;
-  font-family: Poppins, sans-serif;
-}
-
-.product-form label {
-  display: block;
-  margin-bottom: 10px;
-  font-weight: 500;
-}
-
-.product-form input {
-  width: 100%;
-  padding: 8px;
-  margin-top: 4px;
-  margin-bottom: 12px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-}
-
+/* Buttons */
 .form-actions {
   display: flex;
   justify-content: flex-end;
@@ -66,6 +69,7 @@
   border-radius: 6px;
   cursor: pointer;
 }
+
 .btn-save:hover {
   background: #45a049;
 }
@@ -77,6 +81,7 @@
   border-radius: 6px;
   cursor: pointer;
 }
+
 .btn-cancel:hover {
   background: #aaa;
 }

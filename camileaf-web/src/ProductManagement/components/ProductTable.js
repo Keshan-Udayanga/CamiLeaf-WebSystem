@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../Styles/ProductTable.css";
-import ProductForm from "./AddProductForm"; 
 import { FaPlus } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 const AdminProductTable = () => {
   const [products, setProducts] = useState([]);
-  const [showForm, setShowForm] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const [sortType, setSortType] = useState("");
@@ -70,7 +68,7 @@ const AdminProductTable = () => {
 
       {/* Top Actions */}
       <div className="top-actions">
-        <button className="btn-add" onClick={() => setShowForm(true)}>
+        <button className="btn-add" onClick={() => navigate(`/admin/product-management/addProduct`)}>
           <FaPlus /> Add Product
         </button>
 
@@ -94,13 +92,6 @@ const AdminProductTable = () => {
         </div>
       </div>
 
-      {/* Product Form Modal */}
-      {showForm && (
-        <ProductForm
-          onClose={() => setShowForm(false)}
-          onAdd={fetchProducts} // refresh table after add
-        />
-      )}
 
       {/* Product Table */}
       <div className="table-wrapper">

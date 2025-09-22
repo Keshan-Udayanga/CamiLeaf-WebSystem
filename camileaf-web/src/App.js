@@ -15,7 +15,6 @@ function App() {
   return (
     <Router>
       <div style={{ overflowX: "hidden" }}>
-        <Navbar />
 
         <Routes>
           {/* Home Page */}
@@ -23,6 +22,7 @@ function App() {
             path="/"
             element={
               <>
+                <Navbar />
                 <Carousel />
                 <AboutTeaFactory />
                 <ProductsCarousel />

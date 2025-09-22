@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import "../Styles/EditForm.css"
 import axios from "axios";
 
 const EditProductForm = () => {
@@ -18,7 +19,8 @@ const EditProductForm = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await axios.get(`http://localhost:8081/api/v1/product/get/${id}`);
+        console.log(id);
+        const response = await axios.get(`http://localhost:8081/api/v1/product/get/` + id);
         setForm(response.data);
       } catch (error) {
         console.error("Error fetching product:", error);
@@ -46,74 +48,73 @@ const EditProductForm = () => {
   };
 
   return (
-    <div className="product-form-overlay">
-      <div className="product-form">
-        <h3>Edit Product</h3>
-        <form onSubmit={handleSubmit}>
-          <label>
-            Product ID
-            <input type="text" value={id} disabled />
-          </label>
-          <label>
-            Product Name
-            <input
-              type="text"
-              name="productName"
-              value={form.productName}
-              onChange={handleChange}
-              required
-            />
-          </label>
-          <label>
-            Price (LKR)
-            <input
-              type="number"
-              name="price"
-              value={form.price}
-              onChange={handleChange}
-              required
-            />
-          </label>
-          <label>
-            Stock Count
-            <input
-              type="number"
-              name="stock"
-              value={form.stock}
-              onChange={handleChange}
-              required
-            />
-          </label>
-          <label>
-            Discount (%)
-            <input
-              type="number"
-              name="discount"
-              value={form.discount}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
-            Category
-            <select
-              name="category"
-              value={form.category}
-              onChange={handleChange}
-              required
-            >
-              <option value="CTC">CTC</option>
-              <option value="Orthodox">Orthodox</option>
-            </select>
-          </label>
-          <div className="form-actions">
-            <button type="submit" className="btn-save">Update</button>
-            <button type="button" className="btn-cancel" onClick={() => navigate("/admin/products")}>
-              Cancel
-            </button>
-          </div>
-        </form>
-      </div>
+    <div className="edit-product-form-container">
+  <h3>Edit Product</h3>
+  <form onSubmit={handleSubmit}>
+    <label>
+      Product ID
+      <input type="text" value={id} disabled />
+    </label>
+    <label>
+      Product Name
+      <input
+        type="text"
+        name="productName"
+        value={form.productName}
+        onChange={handleChange}
+        required
+      />
+    </label>
+    <label>
+      Price (LKR)
+      <input
+        type="number"
+        name="price"
+        value={form.price}
+        onChange={handleChange}
+        required
+      />
+    </label>
+    <label>
+      Stock Count
+      <input
+        type="number"
+        name="stock"
+        value={form.stock}
+        onChange={handleChange}
+        required
+      />
+    </label>
+    <label>
+      Discount (%)
+      <input
+        type="number"
+        name="discount"
+        value={form.discount}
+        onChange={handleChange}
+      />
+    </label>
+    <label>
+      Category
+      <select
+        name="category"
+        value={form.category}
+        onChange={handleChange}
+        required
+      >
+        <option value="CTC">CTC</option>
+        <option value="Orthodox">Orthodox</option>
+      </select>
+    </label>
+    <div className="form-actions">
+      <button type="submit" className="btn-save">Update</button>
+      <button type="button" className="btn-cancel" onClick={() => navigate("/admin/products")}>
+        Cancel
+      </button>
     </div>
+  </form>
+</div>
+
   );
 };
 
