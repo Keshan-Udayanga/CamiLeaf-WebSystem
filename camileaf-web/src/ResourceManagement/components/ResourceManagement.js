@@ -1,17 +1,15 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import ResourceTablePage from "./DisplayResources";
+import ResourceReleaseForm from "./ResourceReleaseForm";
+import AddResources from "./AddResources"
 
 function App() {
   return (
-    <>
-      
-      <div style={{ marginLeft: "220px", padding: "20px" }}>
-        <Routes>
-          <Route path="/" element={<ResourceTablePage />} />
-        </Routes>
-        
-      </div>
-    </>
+    <Routes>
+      <Route path="/" element={<ResourceTablePage />} />
+      <Route path="/release/:id" element={<ResourceReleaseForm />} />
+      <Route path="/add" element={<AddResources />} />
+    </Routes>
   );
 }
 

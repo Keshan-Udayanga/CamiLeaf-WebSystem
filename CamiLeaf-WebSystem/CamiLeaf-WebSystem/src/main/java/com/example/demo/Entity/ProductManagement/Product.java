@@ -1,4 +1,4 @@
-package com.example.demo.Entity.ResourceManagement;
+package com.example.demo.Entity.ProductManagement;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;

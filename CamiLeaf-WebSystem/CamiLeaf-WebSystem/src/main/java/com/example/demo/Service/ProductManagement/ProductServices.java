@@ -1,7 +1,6 @@
 package com.example.demo.Service.ProductManagement;
 
-import com.example.demo.Entity.ResourceManagement.Product;
-import com.example.demo.Entity.UserManagement.User;
+import com.example.demo.Entity.ProductManagement.Product;
 import com.example.demo.Repo.ProductManagement.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
