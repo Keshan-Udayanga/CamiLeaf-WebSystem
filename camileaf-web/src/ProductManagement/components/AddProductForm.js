@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import axios from "axios";
 import "../Styles/ProductForm.css";
+import api from "../../axiosConfig";
 
 const ProductForm = ({ onClose, onAdd }) => {
   const [form, setForm] = useState({
@@ -8,7 +8,7 @@ const ProductForm = ({ onClose, onAdd }) => {
     price: "",
     stock: "",
     discount: "",
-    category: "CTC", // default
+    category: "CTC", 
     productImg: null,
     imagePreview: "",
   });
@@ -47,15 +47,15 @@ const ProductForm = ({ onClose, onAdd }) => {
       };
 
       try {
-        const response = await axios.post(
-          "http://localhost:8081/api/v1/product/add",
+        const response = await api.post(
+          "/api/v1/product/add",
           product
         );
 
         if (response.status === 200) {
           const savedProduct = { ...product, _id: response.data }; // Backend returns ID
 
-          // ✅ only call if onAdd is provided
+          
           if (typeof onAdd === "function") {
             onAdd(savedProduct);
           }

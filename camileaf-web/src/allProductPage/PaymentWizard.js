@@ -1,12 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import axios from "axios";
 import "./PaymentWizard.css";
+import api from "../axiosConfig";
 
 function PaymentWizard() {
   const location = useLocation();
   const navigate = useNavigate();
-const onBackToCart = () => navigate(-1); 
+const onBackToCart = () => navigate(-1);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const role = localStorage.getItem("role");
+
+    if (!token || role !== "CUSTOMER") {
+      
+      navigate("/login");
+    }
+  }, [navigate]);
 
 
    const cartItems = location.state?.cartItems || [];
@@ -138,10 +148,10 @@ const onBackToCart = () => navigate(-1);
   };
 
   try {
-    const response = await axios.post("http://localhost:8081/api/v1/order/add", orderData);
+    const response = await api.post("/api/v1/order/add", orderData);
     alert("✅ Order placed successfully! Order ID: " + response.data);
     setIsSubmitting(false);
-    navigate("/"); // go back to home or another page
+    navigate("/"); 
   } catch (error) {
     console.error("Error placing order:", error);
     alert("❌ Failed to place order");

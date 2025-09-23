@@ -1,12 +1,12 @@
-// src/LoginPage.jsx
 import React, { useState } from "react";
 import "../styles/LoginPage.css";
 import LoginImage from "../assests/teaLogin.jpg"
-import { useNavigate, Link } from "react-router-dom";
-import axios from "axios";
+import { useNavigate, Link, useLocation } from "react-router-dom";
+import api from "../../axiosConfig";
 
 function LoginPage() {
     const navigate = useNavigate();
+    const location = useLocation();
     const [email, setemail] = useState("");
     const [password, setpassword] = useState("");
     const [error, seterror] = useState("");
@@ -15,7 +15,7 @@ function LoginPage() {
         e.preventDefault();
 
         try{
-            const response = await axios.post("http://localhost:8081/api/auth/login",{
+            const response = await api.post("/api/auth/login",{
                 email: email,
                 password: password
             });
@@ -25,6 +25,8 @@ function LoginPage() {
             if(data.success){
               localStorage.setItem("token", data.token);
               localStorage.setItem("role", data.role);
+
+              const from = location.state?.from?.pathname || "/";
               
               switch(data.role){
                 case "ADMIN":
@@ -37,7 +39,7 @@ function LoginPage() {
                       navigate("/resourcemanager");
                       break;
                   case "CUSTOMER":
-                      navigate("/customer");
+                      navigate(from, { replace: true }); 
                       break;
                   default:
                       navigate("/login");

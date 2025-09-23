@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../styles/AddUserForm.css';
 import { useNavigate, useLocation } from 'react-router-dom';
+import api from '../../axiosConfig';
 
 
 const AddUserForm = () => {
@@ -109,8 +110,8 @@ const AddUserForm = () => {
 
     try {
       if(isEditMode){
-        const response = await axios.put(
-          'http://localhost:8081/api/v1/user/edit/' + formData.id,
+        const response = await api.put(
+          '/api/v1/user/edit/' + formData.id,
           formData
         );
 
@@ -119,8 +120,8 @@ const AddUserForm = () => {
           navigate('/admin/user-management');
         }
       }else{
-      const response = await axios.post(
-        'http://localhost:8081/api/v1/user/save',
+      const response = await api.post(
+        '/api/v1/user/save',
         formData  
       );
 

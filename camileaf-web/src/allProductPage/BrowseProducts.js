@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import api from "../axiosConfig";
 import { useNavigate } from "react-router-dom";
 import "./BrowseProducts.css";
 
 function BrowseProducts() {
   const [products, setProducts] = useState([]);
-  const [cart, setCart] = useState([]); // ✅ add cart state here
+  const [cart, setCart] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [showQuantityPopup, setShowQuantityPopup] = useState(false);
@@ -17,7 +17,7 @@ function BrowseProducts() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get("http://localhost:8081/api/v1/product/getAll");
+        const response = await api.get("/api/v1/product/getAll");
         setProducts(response.data);
       } catch (error) {
         console.error("Error fetching products:", error);
@@ -47,8 +47,8 @@ function BrowseProducts() {
 
   const handleQuantityConfirm = () => {
     if (selectedProduct) {
-      const newItem = { ...selectedProduct, qty: quantity }; // ✅ define newItem
-      setCart([...cart, newItem]); // ✅ update cart state
+      const newItem = { ...selectedProduct, qty: quantity }; 
+      setCart([...cart, newItem]); 
       setShowQuantityPopup(false);
       setSelectedProduct(null);
     }
@@ -63,7 +63,7 @@ function BrowseProducts() {
     <div className="browse-container">
       <div style={{ textAlign: "right", marginBottom: "15px" }}>
         <button
-          onClick={() => navigate("/cart", { state: { cart } })} // send cart to CartPage
+          onClick={() => navigate("/cart", { state: { cart } })} 
           style={{
             background: "#2e7d32",
             color: "white",

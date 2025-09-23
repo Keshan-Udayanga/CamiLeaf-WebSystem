@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import axios from "axios";
 import PhoneInput from "react-phone-number-input";
 import { useNavigate } from 'react-router-dom';
 import { parsePhoneNumberFromString } from 'libphonenumber-js';
 import countries from 'i18n-iso-countries';
 import enLocale from 'i18n-iso-countries/langs/en.json';
 import "react-phone-number-input/style.css";
-import "../styles/CustomerSignUp.css"
+import "../styles/CustomerSignUp.css";
+import api from "../../axiosConfig";
 
 const CustomerSignUp = () => {
     const [firstName, setFName] = useState("");
@@ -78,7 +78,7 @@ const CustomerSignUp = () => {
 
         try {
             
-            const response = await axios.post("http://localhost:8081/api/auth/signup", {
+            const response = await api.post("/api/auth/signup", {
                 email,
                 password,
                 firstName,

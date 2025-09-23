@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import api from "../../axiosConfig";
 import "../Styles/ProductTable.css";
 import { FaPlus } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
@@ -10,13 +10,13 @@ const AdminProductTable = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [sortType, setSortType] = useState("");
 
-  const navigate = useNavigate(); // navigate hook
+  const navigate = useNavigate(); 
   const rowsPerPage = 10;
 
   // Fetch all products
   const fetchProducts = async () => {
     try {
-      const response = await axios.get("http://localhost:8081/api/v1/product/getAll");
+      const response = await api.get("/api/v1/product/getAll");
       setProducts(response.data);
     } catch (error) {
       console.error("Error fetching products:", error);
@@ -33,7 +33,7 @@ const AdminProductTable = () => {
     if (!confirmDelete) return;
 
     try {
-      await axios.delete(`http://localhost:8081/api/v1/product/delete/${productId}`);
+      await api.delete(`/api/v1/product/delete/${productId}`);
       alert("Product deleted successfully!");
       fetchProducts(); // refresh table
     } catch (error) {

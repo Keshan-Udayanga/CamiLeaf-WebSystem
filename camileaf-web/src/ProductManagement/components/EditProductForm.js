@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "../Styles/EditForm.css"
-import axios from "axios";
+import api from "../../axiosConfig";
 
 const EditProductForm = () => {
   const { id } = useParams();
@@ -20,7 +20,7 @@ const EditProductForm = () => {
     const fetchProduct = async () => {
       try {
         console.log(id);
-        const response = await axios.get(`http://localhost:8081/api/v1/product/get/` + id);
+        const response = await api.get(`/api/v1/product/get/` + id);
         setForm(response.data);
       } catch (error) {
         console.error("Error fetching product:", error);
@@ -38,9 +38,9 @@ const EditProductForm = () => {
     if (!window.confirm("Are you sure you want to update?")) return;
 
     try {
-      await axios.put(`http://localhost:8081/api/v1/product/update/${id}`, form);
+      await api.put(`/api/v1/product/update/${id}`, form);
       alert("Product updated successfully!");
-      navigate("/admin/products");
+      navigate("/admin/product-management");
     } catch (error) {
       console.error("Error updating product:", error);
       alert("Failed to update product.");

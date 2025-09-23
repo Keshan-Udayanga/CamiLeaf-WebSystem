@@ -1,12 +1,24 @@
-import {Link} from 'react-router-dom';
+import {useNavigate, Link} from 'react-router-dom';
 
-import React from 'react';
+import React, {useEffect} from 'react';
 import '../styles/AdminDashboard.css';
 import userManagement from '../assests/usermg.jpg'
 import productManagement from '../assests/product.jpg'
 import reports from '../assests/report.webp'
 
+
 function Dashboard() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+  const role = localStorage.getItem("role");
+  const token = localStorage.getItem("token");
+
+  if(!token || role !== "ADMIN"){
+    navigate("/login");
+  }
+}, []);
+
   return (
     <div className="dashboard">
       <h1>Welcome to Admin Panel</h1>
