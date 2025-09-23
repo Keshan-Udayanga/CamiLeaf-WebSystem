@@ -22,24 +22,30 @@ function LoginPage() {
 
             const data = await response.data;
             
-            localStorage.setItem("role", data.role);
-            
-            switch(data.role){
-              case "ADMIN":
-                    navigate("/admin");
-                    break;
-                case "LEAF CLERK":
-                    navigate("/leafclerk");
-                    break;
-                case "RESOURCE MANAGER":
-                    navigate("/resourcemanager");
-                    break;
-                case "CUSTOMER":
-                    navigate("/customer");
-                    break;
-                default:
-                    navigate("/login");
+            if(data.success){
+              localStorage.setItem("token", data.token);
+              localStorage.setItem("role", data.role);
+              
+              switch(data.role){
+                case "ADMIN":
+                      navigate("/admin");
+                      break;
+                  case "LEAF CLERK":
+                      navigate("/leafclerk");
+                      break;
+                  case "RESOURCE MANAGER":
+                      navigate("/resourcemanager");
+                      break;
+                  case "CUSTOMER":
+                      navigate("/customer");
+                      break;
+                  default:
+                      navigate("/login");
+              }
+            }else{
+              seterror('Login Failed');
             }
+            
         }catch(err){
             if (err.response && err.response.status === 401) {
         seterror("Invalid email or password");
