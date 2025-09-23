@@ -3,7 +3,7 @@ import Navbar from "../navbar";
 import Footer from "../footer";
 import BrowseProducts from "./BrowseProducts";
 import "./navBar.css"; 
-// import CartPage from "./CartPage";
+
 
 function Products() {
   return (

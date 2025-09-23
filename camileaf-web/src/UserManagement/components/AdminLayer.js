@@ -7,6 +7,7 @@ import AddUserForm from './AddUserForm';
 import AdminProductTable from "../../ProductManagement/components/ProductManagement";
 import OrederManagement from "../../OrderManagement/components/OrderManagementTable";
 
+import ResourceManagement from "../../ResourceManagement/components/ResourceManagement";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route path="add-user" element={<AddUserForm />} />
           <Route path="/product-management/*" element={<AdminProductTable />} />
           <Route path="/order-management/*" element={<OrederManagement />} />
+          <Route path="/resource-management/*" element={<ResourceManagement />} />
         </Routes>
       </main>
     </div>

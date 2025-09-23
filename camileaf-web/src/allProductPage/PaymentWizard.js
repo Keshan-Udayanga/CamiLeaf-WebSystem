@@ -1,7 +1,17 @@
 import React, { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
 import "./PaymentWizard.css";
 
-function PaymentWizard({ cartItems, total, onBackToCart }) {
+function PaymentWizard() {
+  const location = useLocation();
+  const navigate = useNavigate();
+const onBackToCart = () => navigate(-1); 
+
+
+   const cartItems = location.state?.cartItems || [];
+  const total = location.state?.total || 0;
+
   const [step, setStep] = useState(1);
   const [shipping, setShipping] = useState({
     fullName: "",
@@ -113,11 +123,31 @@ function PaymentWizard({ cartItems, total, onBackToCart }) {
     setPayment((p) => ({ ...p, method }));
 
   const handleConfirm = async () => {
-    setIsSubmitting(true);
-    await new Promise((r) => setTimeout(r, 1500));
-    alert("✅ Order placed successfully!");
-    setIsSubmitting(false);
+  setIsSubmitting(true);
+
+  const orderData = {
+    ordertype: "Online",       // or any type
+    fullName: shipping.fullName,
+    email: shipping.email,
+    address: shipping.address,
+    city: shipping.city,
+    zip: parseInt(shipping.zip),   // make sure it's a number
+    paymentMethod: payment.method,
+    status: "Pending",
+    total: total
   };
+
+  try {
+    const response = await axios.post("http://localhost:8081/api/v1/order/add", orderData);
+    alert("✅ Order placed successfully! Order ID: " + response.data);
+    setIsSubmitting(false);
+    navigate("/"); // go back to home or another page
+  } catch (error) {
+    console.error("Error placing order:", error);
+    alert("❌ Failed to place order");
+    setIsSubmitting(false);
+  }
+};
 
   // Steps
   const steps = ["Shipping", "Payment", "Review"];

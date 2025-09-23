@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";   // 🟢 import navigate
+import { useNavigate } from "react-router-dom";
 import "./BrowseProducts.css";
 
-function BrowseProducts({ addToCart }) {
+function BrowseProducts() {
   const [products, setProducts] = useState([]);
+  const [cart, setCart] = useState([]); // ✅ add cart state here
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [showQuantityPopup, setShowQuantityPopup] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
 
-  const navigate = useNavigate(); // 🟢 create navigate function
+  const navigate = useNavigate();
 
-  // ✅ Fetch all products
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -26,7 +26,6 @@ function BrowseProducts({ addToCart }) {
     fetchProducts();
   }, []);
 
-  // 🔎 Filter
   const filteredProducts = products.filter((product) => {
     const search = searchTerm.toLowerCase().trim();
     const matchesSearch =
@@ -40,7 +39,6 @@ function BrowseProducts({ addToCart }) {
     return matchesSearch && matchesCategory;
   });
 
-  // 🛒 Add to cart
   const handleAddToCartClick = (product) => {
     setSelectedProduct(product);
     setQuantity(1);
@@ -48,8 +46,9 @@ function BrowseProducts({ addToCart }) {
   };
 
   const handleQuantityConfirm = () => {
-    if (selectedProduct && addToCart) {
-      addToCart({ ...selectedProduct, qty: quantity });
+    if (selectedProduct) {
+      const newItem = { ...selectedProduct, qty: quantity }; // ✅ define newItem
+      setCart([...cart, newItem]); // ✅ update cart state
       setShowQuantityPopup(false);
       setSelectedProduct(null);
     }
@@ -62,10 +61,9 @@ function BrowseProducts({ addToCart }) {
 
   return (
     <div className="browse-container">
-      {/* 🟢 Cart Button */}
       <div style={{ textAlign: "right", marginBottom: "15px" }}>
         <button
-          onClick={() => navigate("/cart")}
+          onClick={() => navigate("/cart", { state: { cart } })} // send cart to CartPage
           style={{
             background: "#2e7d32",
             color: "white",
@@ -76,11 +74,10 @@ function BrowseProducts({ addToCart }) {
             fontSize: "16px",
           }}
         >
-          🛒 Go to Cart
+          🛒 Go to Cart ({cart.length})
         </button>
       </div>
 
-      {/* Quantity Selection Popup */}
       {showQuantityPopup && (
         <div className="popup-overlay">
           <div className="quantity-popup">
@@ -104,7 +101,6 @@ function BrowseProducts({ addToCart }) {
         <p className="browse-subtitle">Discover our premium selection of teas</p>
       </div>
 
-      {/* 🔍 Search & Filter */}
       <div className="filters-container">
         <div className="search-box" style={{ border: "none" }}>
           <span className="search-icon">🔍</span>
@@ -131,23 +127,19 @@ function BrowseProducts({ addToCart }) {
         </div>
       </div>
 
-      {/* Results count */}
       <div className="results-info">
         <p>
           Showing {filteredProducts.length} of {products.length} products
         </p>
       </div>
 
-      {/* 🛒 Products Grid */}
       <div className="products-grid">
         {filteredProducts.length > 0 ? (
           filteredProducts.map((product) => (
             <div key={product.id} className="product-card">
               <div className="product-image-container">
                 <img src={product.productImg} alt={product.productName} />
-                {product.category && (
-                  <span className="product-category">{product.category}</span>
-                )}
+                {product.category && <span className="product-category">{product.category}</span>}
               </div>
               <div className="product-info">
                 <h3>{product.productName}</h3>
