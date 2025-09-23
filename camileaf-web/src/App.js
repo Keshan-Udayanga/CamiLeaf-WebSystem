@@ -7,14 +7,16 @@ import ProductsCarousel from "./homePage/homePage";
 import AboutTeaFactory from "./homePage/home_aboutUs";
 import Footer from "./footer";
 import TeaTimeline from "./homePage/teaTimeLine";
-import AllProduct from "./allProductPage/productPage";
-import ContactUs from "./ContactUs/ContactUsPage"; 
-import AdminPanel from "./UserManagement/components/AdminLayer";
+import AllProduct from "./allProductPage/productPage";  //  import products page
+import AdminPanel from "./UserManagement/components/AdminLayer"
+import LoginPage from './UserManagement/components/LoginPage';
+import CustomerSignUp from './UserManagement/components/CustomerSignUp';
 
 function App() {
   return (
     <Router>
       <div style={{ overflowX: "hidden" }}>
+        
 
         <Routes>
           {/* Home Page */}
@@ -22,7 +24,7 @@ function App() {
             path="/"
             element={
               <>
-                <Navbar />
+              <Navbar />
                 <Carousel />
                 <AboutTeaFactory />
                 <ProductsCarousel />
@@ -37,12 +39,10 @@ function App() {
 
           {/* About Page */}
           <Route path="/about" element={<h1>About Page</h1>} />
-
-          {/* Contact Page */}
-          <Route path="/contact" element={<ContactUs />} />
-
-          {/* Admin Panel */}
+          <Route path="/contact" element={<h1>Contact Page</h1>} />
           <Route path="/admin/*" element={<AdminPanel />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<CustomerSignUp />} />
         </Routes>
       </div>
     </Router>
