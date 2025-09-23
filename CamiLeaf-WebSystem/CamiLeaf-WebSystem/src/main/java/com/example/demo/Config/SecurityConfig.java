@@ -38,11 +38,14 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+                .cors(withDefaults()) // <- this enables CORS using your CorsGlobalConfig
                 .csrf(csrf -> csrf.disable()) // disable CSRF
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/api/customer/**").hasRole("CUSTOMER")
+                        .requestMatchers("/api/v1/product/getAll").permitAll()
+                        .requestMatchers("/api/v1/user/**").hasRole("ADMIN")
+                        .requestMatchers("/api/v1/product/**").hasRole("ADMIN")
+                        .requestMatchers("/api/v1/order/**").hasRole("CUSTOMER")
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session
