@@ -3,10 +3,10 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/ReleaseForm.css";
 
-const ResourceReleaseForm = () => {
+const ResourceReleaseForm = ({ onUpdate }) => {
   const location = useLocation();
   const navigate = useNavigate();
-  const resource = location.state; // passed from table
+  const resource = location.state;
 
   const [release, setRelease] = useState({
     resourceId: resource?.id || "",
@@ -36,7 +36,7 @@ const ResourceReleaseForm = () => {
     }
 
     try {
-      const response = await axios.get(
+      const response = await axios.put(
         `http://localhost:8081/api/v1/resource/release/${release.resourceId}`,
         { releaseQuantity: qtyToRelease }
       );
@@ -45,8 +45,18 @@ const ResourceReleaseForm = () => {
         `Released ${qtyToRelease} ${resource.unit} of ${resource.resourceType} successfully!`
       );
 
-      // Navigate back and pass updated resource to table page
-      navigate("/admin/resource-management", { state: { updatedResource: response.data } });
+      // Update current quantity locally
+      setRelease({
+        ...release,
+        currentQuantity: response.data.quantity,
+        releaseQuantity: "",
+      });
+
+      // Optionally, call a parent callback to refresh the table
+      if (onUpdate) onUpdate(response.data);
+
+      // Navigate back if needed
+      navigate("/admin/resource-management");
     } catch (error) {
       console.error("Error releasing resource:", error);
       alert("Failed to release resource. Please try again.");
@@ -89,7 +99,9 @@ const ResourceReleaseForm = () => {
         </label>
 
         <div className="form-actions">
-          <button type="submit" className="btn-save">Submit</button>
+          <button type="submit" className="btn-save">
+            Submit
+          </button>
           <button
             type="button"
             className="btn-cancel"
