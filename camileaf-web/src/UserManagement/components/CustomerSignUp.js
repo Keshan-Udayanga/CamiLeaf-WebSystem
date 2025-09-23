@@ -78,7 +78,7 @@ const CustomerSignUp = () => {
 
         try {
             
-            const response = await axios.post("http://localhost:8080/api/auth/signup", {
+            const response = await axios.post("http://localhost:8081/api/auth/signup", {
                 email,
                 password,
                 firstName,

@@ -110,7 +110,7 @@ const AddUserForm = () => {
     try {
       if(isEditMode){
         const response = await axios.put(
-          'http://localhost:8080/api/v1/user/edit/' + formData.id,
+          'http://localhost:8081/api/v1/user/edit/' + formData.id,
           formData
         );
 
@@ -120,7 +120,7 @@ const AddUserForm = () => {
         }
       }else{
       const response = await axios.post(
-        'http://localhost:8080/api/v1/user/save',
+        'http://localhost:8081/api/v1/user/save',
         formData  
       );
 

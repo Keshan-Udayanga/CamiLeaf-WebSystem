@@ -29,7 +29,7 @@ useEffect(() => {
 
   async function Load() {
     const result = await axios.get(
-      "http://localhost:8080/api/v1/user/getAll"
+      "http://localhost:8081/api/v1/user/getAll"
     )
     setUser(result.data);
   }
@@ -44,7 +44,7 @@ useEffect(() => {
     if(!confirmDelete) return;
 
     try{
-      await axios.delete("http://localhost:8080/api/v1/user/delete/" + userId);
+      await axios.delete("http://localhost:8081/api/v1/user/delete/" + userId);
       alert('User deleted successfully!');
       await Load();
     }catch(error){
