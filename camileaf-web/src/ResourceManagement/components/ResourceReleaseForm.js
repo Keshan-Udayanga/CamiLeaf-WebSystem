@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
 import "../styles/ReleaseForm.css";
 
-const ResourceReleaseForm = () => {
+const ResourceReleaseForm = ({ onUpdate }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const resource = location.state;
@@ -10,9 +11,8 @@ const ResourceReleaseForm = () => {
   const [release, setRelease] = useState({
     resourceId: resource?.id || "",
     resourceType: resource?.resourceType || "",
-    releaseDate: "",
+    currentQuantity: resource?.quantity || 0,
     releaseQuantity: "",
-    currentQuantity: resource?.quantity || "",
     status: "Pending",
   });
 
@@ -20,17 +20,47 @@ const ResourceReleaseForm = () => {
     setRelease({ ...release, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Release record:", release);
 
-    // Example: simulate reducing stock at the end of the day
-    alert(
-      `Release request created for ${release.releaseQuantity} ${resource.unitOfMeasure} of ${resource.resourceType}.`
-    );
+    const qtyToRelease = parseInt(release.releaseQuantity, 10);
 
-    // Redirect to Resource Table page after submit
-    navigate("/admin/resource-management");
+    if (qtyToRelease <= 0) {
+      alert("Release quantity must be greater than 0!");
+      return;
+    }
+
+    if (qtyToRelease > release.currentQuantity) {
+      alert("Not enough stock to release!");
+      return;
+    }
+
+    try {
+      const response = await axios.put(
+        `http://localhost:8081/api/v1/resource/release/${release.resourceId}`,
+        { releaseQuantity: qtyToRelease }
+      );
+
+      alert(
+        `Released ${qtyToRelease} ${resource.unit} of ${resource.resourceType} successfully!`
+      );
+
+      // Update current quantity locally
+      setRelease({
+        ...release,
+        currentQuantity: response.data.quantity,
+        releaseQuantity: "",
+      });
+
+      // Optionally, call a parent callback to refresh the table
+      if (onUpdate) onUpdate(response.data);
+
+      // Navigate back if needed
+      navigate("/admin/resource-management");
+    } catch (error) {
+      console.error("Error releasing resource:", error);
+      alert("Failed to release resource. Please try again.");
+    }
   };
 
   return (
@@ -39,27 +69,21 @@ const ResourceReleaseForm = () => {
       <form onSubmit={handleSubmit}>
         <label>
           Resource ID
-          <input type="text" name="resourceId" value={release.resourceId} disabled />
+          <input type="text" value={release.resourceId} disabled />
         </label>
 
         <label>
           Resource Type
-          <input type="text" name="resourceType" value={release.resourceType} disabled />
+          <input type="text" value={release.resourceType} disabled />
         </label>
 
         <label>
           Current Quantity
-          <input
-            type="number"
-            name="releaseDate"
-            value={release.currentQuantity}
-            onChange={handleChange}
-            required
-         disabled />
+          <input type="number" value={release.currentQuantity} disabled />
         </label>
 
         <label>
-          Quantity to Release
+          Quantity to Release ({resource.unit})
           <input
             type="number"
             name="releaseQuantity"
@@ -75,7 +99,9 @@ const ResourceReleaseForm = () => {
         </label>
 
         <div className="form-actions">
-          <button type="submit" className="btn-save">Submit</button>
+          <button type="submit" className="btn-save">
+            Submit
+          </button>
           <button
             type="button"
             className="btn-cancel"

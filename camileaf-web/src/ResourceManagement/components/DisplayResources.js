@@ -99,8 +99,7 @@ const ResourceTablePage = () => {
                     }
                   >
                     Release
-                  </button>
-                  <Button className="edit-button">Edit</Button>
+                  </button> 
                   <Button
                     className="delete-btn"
                     onClick={() => handleDelete(res.id)}
