@@ -47,4 +47,7 @@ public class ProductController {
     public Product updateProduct(@PathVariable String id, @RequestBody Product product) {
         return productServices.updateProducts(id, product);
     }
+
+
+
 }
