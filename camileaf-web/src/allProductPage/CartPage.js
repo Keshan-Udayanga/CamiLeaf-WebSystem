@@ -1,42 +1,42 @@
-import React from "react";
+import React, { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import "./CartPage.css";
 
-function CartPage({ cartItems, setCartItems, removeFromCart }) {
+function CartPage() {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const [cartItems, setCartItems] = useState(location.state?.cart || []);
+
   const increaseQty = (id) => {
-    setCartItems(
-      cartItems.map((item) =>
-        item.id === id ? { ...item, qty: item.qty + 1 } : item
-      )
-    );
+    setCartItems(cartItems.map(item => item.id === id ? { ...item, qty: item.qty + 1 } : item));
   };
 
   const decreaseQty = (id) => {
-    setCartItems(
-      cartItems.map((item) =>
-        item.id === id && item.qty > 1 ? { ...item, qty: item.qty - 1 } : item
-      )
-    );
+    setCartItems(cartItems.map(item => item.id === id && item.qty > 1 ? { ...item, qty: item.qty - 1 } : item));
   };
 
   const removeItem = (id) => {
-    removeFromCart(id);
+    setCartItems(cartItems.filter(item => item.id !== id));
   };
 
   const total = cartItems.reduce((sum, item) => sum + item.price * item.qty, 0);
 
+  const handleProceed = () => {
+    navigate("/payment", { state: { cartItems, total } });
+  };
+
   return (
     <div className="cart-container">
       <h1 className="cart-title"> Your Shopping Cart</h1>
-
       {cartItems.length > 0 ? (
         <div className="cart-layout">
-          {/* Left Side - Items */}
           <div className="cart-items">
-            {cartItems.map((item) => (
+            {cartItems.map(item => (
               <div className="cart-card" key={item.id}>
-                <img src={item.image} alt={item.name} className="cart-image" />
+                <img src={item.productImg} alt={item.productName} className="cart-image" />
                 <div className="cart-details">
-                  <h3>{item.name}</h3>
+                  <h3>{item.productName}</h3>
                   <p className="cart-price">Rs. {item.price.toLocaleString()}</p>
                   <div className="quantity-controls">
                     <button onClick={() => decreaseQty(item.id)}>-</button>
@@ -45,26 +45,17 @@ function CartPage({ cartItems, setCartItems, removeFromCart }) {
                   </div>
                 </div>
                 <div className="cart-actions">
-                  <p className="item-total">
-                    Rs. {(item.price * item.qty).toLocaleString()}
-                  </p>
-                  <button
-                    className="remove-btn"
-                    onClick={() => removeItem(item.id)}
-                  >
-                    ❌ Remove
-                  </button>
+                  <p className="item-total">Rs. {(item.price * item.qty).toLocaleString()}</p>
+                  <button className="remove-btn" onClick={() => removeItem(item.id)}>❌ Remove</button>
                 </div>
               </div>
             ))}
           </div>
-
-          {/* Right Side - Summary */}
           <div className="cart-summary">
             <h2>Order Summary</h2>
             <p>Total Items: {cartItems.reduce((sum, i) => sum + i.qty, 0)}</p>
             <h3>Grand Total: Rs. {total.toLocaleString()}</h3>
-            <button className="checkout-btn">Proceed</button>
+            <button className="checkout-btn" onClick={handleProceed}>Proceed</button>
           </div>
         </div>
       ) : (
@@ -77,4 +68,4 @@ function CartPage({ cartItems, setCartItems, removeFromCart }) {
   );
 }
 
-export default CartPage;
+export default CartPage
