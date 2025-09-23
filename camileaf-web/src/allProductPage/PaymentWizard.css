@@ -1,0 +1,407 @@
+/* PaymentWizard.css */
+.payment-wizard {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Progress Bar */
+.progress-container {
+  position: relative;
+  margin-bottom: 40px;
+}
+
+.progress-bar {
+  position: absolute;
+  top: 24px;
+  left: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #2B8433, #8BC34A);
+  transition: width 0.3s ease;
+  z-index: 1;
+}
+
+.steps {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  z-index: 2;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.step-number {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #f3f4f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  margin-bottom: 8px;
+  border: 3px solid #f3f4f6;
+  transition: all 0.3s ease;
+}
+
+.step.active .step-number {
+  background: #2B8433;
+  color: white;
+  border-color: #2B8433;
+  box-shadow: 0 0 0 4px rgba(43, 132, 51, 0.2);
+}
+
+.step.completed .step-number {
+  background: #10b981;
+  color: white;
+  border-color: #10b981;
+}
+
+.step.completed .step-number::after {
+  content: "✓";
+}
+
+.step-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #6b7280;
+}
+
+.step.active .step-label {
+  color: #2B8433;
+}
+
+.step.completed .step-label {
+  color: #10b981;
+}
+
+/* Wizard Content */
+.wizard-content {
+  background: white;
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.wizard-step h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 8px;
+}
+
+.step-description {
+  color: #6b7280;
+  margin-bottom: 24px;
+}
+
+/* Form Styles */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.full-width {
+  grid-column: 1 / -1;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-group input {
+  padding: 14px 16px;
+  border: 2px solid #e5e7eb;
+  border-radius: 10px;
+  font-size: 16px;
+  transition: all 0.2s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: #2B8433;
+  box-shadow: 0 0 0 3px rgba(43, 132, 51, 0.2);
+}
+
+.input-group input.error {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
+}
+
+.error-text {
+  color: #ef4444;
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+/* Payment Methods */
+.payment-methods {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.payment-method {
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.payment-method:hover {
+  border-color: #2B8433;
+}
+
+.payment-method.active {
+  border-color: #2B8433;
+  background-color: #f0fdf4;
+}
+
+.method-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.method-header input[type="radio"] {
+  width: 20px;
+  height: 20px;
+  accent-color: #2B8433;
+}
+
+.method-title {
+  font-weight: 600;
+  font-size: 18px;
+}
+
+/* Card Form */
+.card-form {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.input-with-icon {
+  position: relative;
+  width: 100%;
+}
+
+.input-with-icon input {
+  padding-right: 60px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.card-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 24px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.card-icon.visa {
+  background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA3OCA0OCI+PHBhdGggZmlsbD0iIzFhMTk2ZiIgZD0iTTM2Ljc0IDM1LjY1SDMwLjdMMzQuMjIgNi42Mmg2LjA0bC0zLjUyIDI5LjAzeiIvPjxwYXRoIGZpbGw9IiMxYTE5NmYiIGQ9Ik02My4xNiA2LjYyaDUuNjNsLTMuNjMgMTMuMjYgMy40OS0xMS44Yy4zOS0xLjA2IDEuMzEtMS43NiAyLjUyLTEuNzZ2LS4zSDU5Ljg4Yy0xLjE1IDAtMS44NS42Mi0yLjA3IDEuNDdsLS4wNC4xMi03LjgxIDI4LjloNi42MmwxLjEtMy4wOGg2LjQ4Yy4xNSAwIC4yOC0uMDcuMzQtLjJsMS42Mi01LjA4Yy4wNS0uMTQuMDItLjI4LS4xLS4zNi0uMTItLjA4LS4zLS4xLS40NC0uMWgtMi43NmwyLjM0LTguMTljLjA2LS4yNC4yNi0uNC41Mi0uNC4yNi0uMDEuNTIuMTUuNTguMzl2LjA0bDIuMjUgNy43NWgzLjAybDMuMjQtOC4xOWMuMDYtLjI0LjI2LS40LjUyLS40LjI2LS4wMS41Mi4xNS41OC4zOXYuMDRsMi4yNSA3Ljc1SDc0bC0zLjI0LTEzLjI2ek01Ni42OCAyNS40bDEuMzYtMy43NWMuMDgtLjIyLjE0LS40Ny4yLS43M2wuMTEuNTNzLjMyIDEuNjIuNCAyLjAzbDEuMTIgMy4wOGgtMy4xOXoiLz48cGF0aCBmaWxsPSIjZmEwMDEwIiBkPSJNMzMuMDkgNi42MmwtOS40MiAyOS4wM0gxMS41NGwtNS44NS0yMy42Yy0uMjItLjg1LS45My0xLjQ3LTIuMDgtMS40N0gwbC4wNC4yMmMxLjA3LjI1IDE3LjUyIDMuNTMgMTcuNTIgMy41M0wxOC43IDI3LjFsMTAuMTItMjAuNDhIMzMuMXoiLz48cGF0aCBmaWxsPSIjZmU2MDEyIiBkPSJNMTguNyAyNy4xTDE1LjY3IDYuNjJoLS4wNGMtLjIyIDAtLjQzLjA2LS42Mi4xN0EyNS43IDI1LjcgMCAwIDAgMCA2Ljg0di4wN2MxLjA3LjI1IDE3LjUyIDMuNTMgMTcuNTIgMy41M2wtLjA0LS4wNHoiLz48L3N2Zz4=');
+}
+
+.card-icon.mastercard {
+  background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA3OCA0OCI+PHBhdGggZmlsbD0iIzZmNzI4MCIgZD0iTTQ4IDI0YzAtNi4wNzQtNC45MjYtMTEtMTEtMTFzLTExIDQuOTI2LTExIDExIDQuOTI2IDExIDExIDExIDExLTQuOTI2IDExLTExeiIvPjxwYXRoIGZpbGw9IiNlZjUwMTUiIGQ9Ik0zNyAyNGMwLTMuMzE0LTEuNTItNi4yODMtMy45LTguMjgzQTM1LjQ0IDM1LjQ0IDAgMCAwIDI0IDZjLTkuOTQgMC0xOCA4LjA2LTE4IDE4czguMDYgMTggMTggMThjMy4zNCAwIDYuNDctLjkyIDkuMTctMi41MiAyLjM4LTIgMy45LTQuOTcgMy45LTguMjh6Ii8+PHBhdGggZmlsbD0iI2Y3OTQwMCIgZD0iTTYwIDZjLTkuOTQgMC0xOCA4LjA2LTE4IDE4czguMDYgMTggMTggMTggMTgtOC4wNiAxOC0xOC04LjA2LTE4LTE4LTE4em0wIDI5Yy02LjA3NCAwLTExLTQuOTI2LTExLTExczQuOTI2LTExIDExLTExIDExIDQuOTI2IDExIDExLTQuOTI2IDExLTExIDExeiIvPjwvc3ZnPg==');
+}
+
+.card-icon.amex {
+  background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA3OCA0OCI+PHBhdGggZmlsbD0iIzAwN2JiYyIgZD0iTTAgMGg3OHY0OEgweiIvPjxwYXRoIGZpbGw9IiNmZmYiIGQ9Ik0yNC4xIDI0LjdsMy4zLTguNGg0LjRsMy4zIDguNGgtNC4ybC0uNi0xLjdoLTMuNmwtLjYgMS43aC00LjJ6bTUuMi0zLjlsLS44LTIuMWMtLjItLjUtLjQtMS4xLS42LTEuN2gtLjFjLS4yLjYtLjQgMS4xLS42IDEuN2wtLjggMi4xaDIuOXptMTEuNSA0LjFjLTEuMSAwLTEuOS0uMy0yLjUtLjktLjYtLjYtLjktMS40LS45LTIuNCAwLTEuMS4zLTEuOS45LTIuNS42LS42IDEuNS0uOSAyLjUtLjkgMS4xIDAgMS45LjMgMi41LjkuNi42LjkgMS40LjkgMi41IDAgMS4xLS4zIDEuOS0uOSAyLjUtLjYuNi0xLjQuOS0yLjUuOXptMC0zLjhjLS41IDAtLjguMi0xIC41LS4yLjMtLjMuNy0uMyAxLjMgMCAuNi4xIDEgLjMgMS4zLjIuMy41LjUgMSAuNS41IDAgLjgtLjIgMS0uNS4yLS4zLjMtLjcuMy0xLjMgMC0uNi0uMS0xLS4zLTEuMy0uMi0uMy0uNS0uNS0xLS41em04LjQtMy4zbC0yLjggNi44aC0yLjhsLTEuMi0yLjljLS4yLS41LS40LTEuMS0uNi0xLjdoLS4xYy0uMi42LS40IDEuMS0uNiAxLjdsLTEuMiAyLjloLTIuOGwyLjgtNi44aDMuNGwyLjggNi44aC0yLjh6bTExLjcgMGwtMi44IDYuOGgtMi44bC0xLjItMi45Yy0uMi0uNS0uNC0xLjEtLjYtMS43aC0uMWMtLjIuNi0uNCAxLjEtLjYgMS43bC0xLjIgMi45aC0yLjhsMi44LTYuOGgzLjRsMi44IDYuOGgtMi44em05LjcgMGgtMi41djYuOGgtMi40VjE0LjloMi40djIuN2gyLjV2Mi4xem0xMC4xIDBoLTIuM2wtMS44IDQuM2gtLjFsLTEuOC00LjNoLTIuM2wzIDYuOGgyLjVsMy02LjhoLTIuM3ptNC4zIDBoLTIuNHY2LjhoMi40di0yLjdoMi41di0yLjFoMi41djIuMWgyLjV2LTIuMWgyLjR2LTIuMWgtMi40VjE0LjloLTIuNXYyLjdoLTIuNXYtMi43eiIvPjwvc3ZnPg==');
+}
+
+.card-icon.discover {
+  background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA3OCA0OCI+PHBhdGggZmlsbD0iIzZmNzI4MCIgZD0iTTAgMGg3OHY0OEgweiIvPjxwYXRoIGZpbGw9IiNmZmYiIGQ9Ik0yOCAyNGMwLTYuNjIgNS4zOC0xMiAxMi0xMnMxMiA1LjM4IDEyIDEyLTUuMzggMTItMTIgMTItMTItNS4zOC0xMi0xMnptMTcuODcgMGwtMy4zNCA0LjY3aC0yLjY3bC0yLTJoLTQuNjZ2NC42N2gtMi42N1YxOS4zM2g3LjMzYzIuMjIgMCA0IDIuMjIgNCA0LjY3ek0zMC42NyAyNGMwIDEuMTEtLjg5IDItMiAyaC0yLjY3di00aDJjMS4xMSAwIDIgLjg5IDIgMnptMTIuNjYgMGMwLTMuMzEtMi4yMi02LTUtNnMtNSAyLjY5LTUgNiAyLjIyIDYgNSA2IDUtMi42OSA1LTZ6bS0yLjY3IDBjMCAxLjg5LTEuMDMgMy4zMy0yLjMzIDMuMzNzLTIuMzMtMS40NC0yLjMzLTMuMzMgMS4wMy0zLjMzIDIuMzMtMy4zMyAyLjMzIDEuNDQgMi4zMyAzLjMzeiIvPjwvc3ZnPg==');
+}
+
+.card-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.cod-info {
+  margin-top: 12px;
+  padding: 12px;
+  background: #f9fafb;
+  border-radius: 8px;
+  color: #6b7280;
+}
+
+/* Review Section */
+.review-section {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.review-box, .shipping-review, .payment-review {
+  background: #f9fafb;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.review-box h3, .shipping-review h3, .payment-review h3 {
+  margin-bottom: 16px;
+  color: #1f2937;
+  font-size: 18px;
+}
+
+.review-items {
+  margin-bottom: 16px;
+}
+
+.review-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.review-item:last-child {
+  border-bottom: none;
+}
+
+.item-info {
+  display: flex;
+  gap: 8px;
+}
+
+.item-name {
+  font-weight: 500;
+}
+
+.item-qty {
+  color: #6b7280;
+}
+
+.item-price {
+  font-weight: 600;
+}
+
+.review-total {
+  text-align: right;
+  padding-top: 16px;
+  border-top: 2px solid #e5e7eb;
+}
+
+.shipping-review p, .payment-review p {
+  margin: 4px 0;
+  color: #4b5563;
+}
+
+.card-review {
+  margin-top: 8px;
+  padding: 12px;
+  background: white;
+  border-radius: 8px;
+}
+
+/* Buttons */
+.wizard-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 24px;
+}
+
+.btn-primary, .btn-secondary {
+  padding: 14px 28px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-primary {
+  background: linear-gradient(90deg, #2B8433, #4CAF50);
+  color: white;
+  border: none;
+  box-shadow: 0 4px 6px rgba(43, 132, 51, 0.3);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: linear-gradient(90deg, #256b29, #45a049);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(43, 132, 51, 0.4);
+}
+
+.btn-primary:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.btn-primary.submitting {
+  opacity: 0.8;
+}
+
+.btn-secondary {
+  background: white;
+  color: #4b5563;
+  border: 2px solid #e5e7eb;
+}
+
+.btn-secondary:hover {
+  background: #f9fafb;
+  border-color: #d1d5db;
+}
+
+/* Spinner */
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .card-details {
+    grid-template-columns: 1fr;
+  }
+  
+  .wizard-buttons {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .btn-primary, .btn-secondary {
+    width: 100%;
+    justify-content: center;
+  }
+}

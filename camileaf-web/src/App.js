@@ -10,6 +10,8 @@ import TeaTimeline from "./HomePage/teaTimeLine";
 import AllProduct from "./AllProductPage/ProductPage";
 import ContactUs from "./ContactUs/ContactUsPage"; 
 import AdminPanel from "./UserManagement/components/AdminLayer";
+import CartPage from "./AllProductPage/CartPage";  // 🟢 import at the top
+
 
 function App() {
   return (
@@ -43,7 +45,9 @@ function App() {
 
           {/* Admin Panel */}
           <Route path="/admin/*" element={<AdminPanel />} />
+                  <Route path="/cart" element={<CartPage />} />
         </Routes>
+
       </div>
     </Router>
   );

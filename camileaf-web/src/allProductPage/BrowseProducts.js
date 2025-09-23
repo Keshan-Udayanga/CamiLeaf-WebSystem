@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";   // 🟢 import navigate
 import "./BrowseProducts.css";
 
 function BrowseProducts({ addToCart }) {
@@ -10,7 +11,9 @@ function BrowseProducts({ addToCart }) {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
 
-  // ✅ Fetch all products from backend
+  const navigate = useNavigate(); // 🟢 create navigate function
+
+  // ✅ Fetch all products
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -23,7 +26,7 @@ function BrowseProducts({ addToCart }) {
     fetchProducts();
   }, []);
 
-  // 🔎 Search + Category Filter
+  // 🔎 Filter
   const filteredProducts = products.filter((product) => {
     const search = searchTerm.toLowerCase().trim();
     const matchesSearch =
@@ -31,14 +34,13 @@ function BrowseProducts({ addToCart }) {
       product.price.toString().includes(search) ||
       product.discount.toString().includes(search);
 
-    // If category not available in backend, keep only "All"
     const matchesCategory =
       selectedCategory === "All" || product.category === selectedCategory;
 
     return matchesSearch && matchesCategory;
   });
 
-  // 🛒 Add to Cart Popup
+  // 🛒 Add to cart
   const handleAddToCartClick = (product) => {
     setSelectedProduct(product);
     setQuantity(1);
@@ -60,6 +62,24 @@ function BrowseProducts({ addToCart }) {
 
   return (
     <div className="browse-container">
+      {/* 🟢 Cart Button */}
+      <div style={{ textAlign: "right", marginBottom: "15px" }}>
+        <button
+          onClick={() => navigate("/cart")}
+          style={{
+            background: "#2e7d32",
+            color: "white",
+            border: "none",
+            padding: "10px 20px",
+            borderRadius: "6px",
+            cursor: "pointer",
+            fontSize: "16px",
+          }}
+        >
+          🛒 Go to Cart
+        </button>
+      </div>
+
       {/* Quantity Selection Popup */}
       {showQuantityPopup && (
         <div className="popup-overlay">
@@ -131,9 +151,7 @@ function BrowseProducts({ addToCart }) {
               </div>
               <div className="product-info">
                 <h3>{product.productName}</h3>
-                <p className="product-price">
-                  Rs. {product.price.toLocaleString()}
-                </p>
+                <p className="product-price">Rs. {product.price.toLocaleString()}</p>
                 <p className="product-stock">Stock: {product.stock}</p>
                 <p className="product-discount">Discount: {product.discount}%</p>
                 <p className="product-date">
