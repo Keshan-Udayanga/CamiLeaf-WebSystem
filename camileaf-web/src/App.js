@@ -2,12 +2,12 @@ import './App.css';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Navbar from "./navbar";
-import Carousel from "./homePage/carousel";
-import ProductsCarousel from "./homePage/homePage";
-import AboutTeaFactory from "./homePage/home_aboutUs";
+import Carousel from "./HomePage/carousel";
+import ProductsCarousel from "./HomePage/homePage";
+import AboutTeaFactory from "./HomePage/home_aboutUs";
 import Footer from "./footer";
-import TeaTimeline from "./homePage/teaTimeLine";
-import AllProduct from "./allProductPage/productPage";
+import TeaTimeline from "./HomePage/teaTimeLine";
+import AllProduct from "./AllProductPage/productPage";
 import ContactUs from "./ContactUs/ContactUsPage"; 
 import AdminPanel from "./UserManagement/components/AdminLayer";
 

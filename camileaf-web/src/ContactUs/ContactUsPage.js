@@ -1,6 +1,6 @@
 import Navbar from "../navbar";
 import Footer from "../footer";
-import Carousel from "../homePage/carousel";
+import Carousel from "../HomePage/carousel";
 import ContactUsContent from "./ContactUsContent";
 import ContactUsForm from "./ContactUsForm";
 import "./navBar.css"; 
