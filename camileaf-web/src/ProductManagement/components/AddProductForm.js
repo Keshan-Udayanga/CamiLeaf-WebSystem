@@ -54,7 +54,12 @@ const ProductForm = ({ onClose, onAdd }) => {
 
         if (response.status === 200) {
           const savedProduct = { ...product, _id: response.data }; // Backend returns ID
-          onAdd(savedProduct); // <-- add to table immediately
+
+          // ✅ only call if onAdd is provided
+          if (typeof onAdd === "function") {
+            onAdd(savedProduct);
+          }
+
           alert("Product added successfully!");
           setForm({
             productName: "",
@@ -65,7 +70,10 @@ const ProductForm = ({ onClose, onAdd }) => {
             productImg: null,
             imagePreview: "",
           });
-          onClose();
+
+          if (typeof onClose === "function") {
+            onClose();
+          }
         }
       } catch (error) {
         console.error("Error adding product:", error);
@@ -78,89 +86,94 @@ const ProductForm = ({ onClose, onAdd }) => {
 
   return (
     <div className="product-form-container">
-  <h3>Add New Product</h3>
-  <form onSubmit={handleSubmit}>
-    <label>
-      Product Name
-      <input
-        type="text"
-        name="productName"
-        value={form.productName}
-        onChange={handleChange}
-        required
-      />
-    </label>
+      <h3>Add New Product</h3>
+      <form onSubmit={handleSubmit}>
+        <label>
+          Product Name
+          <input
+            type="text"
+            name="productName"
+            value={form.productName}
+            onChange={handleChange}
+            required
+          />
+        </label>
 
-    <label>
-      Price (LKR)
-      <input
-        type="number"
-        name="price"
-        value={form.price}
-        onChange={handleChange}
-        required
-      />
-    </label>
+        <label>
+          Price (LKR)
+          <input
+            type="number"
+            name="price"
+            value={form.price}
+            onChange={handleChange}
+            required
+          />
+        </label>
 
-    <label>
-      Stock Count
-      <input
-        type="number"
-        name="stock"
-        value={form.stock}
-        onChange={handleChange}
-        required
-      />
-    </label>
+        <label>
+          Stock Count
+          <input
+            type="number"
+            name="stock"
+            value={form.stock}
+            onChange={handleChange}
+            required
+          />
+        </label>
 
-    <label>
-      Discount (%)
-      <input
-        type="number"
-        name="discount"
-        value={form.discount}
-        onChange={handleChange}
-        placeholder="0"
-      />
-    </label>
+        <label>
+          Discount (%)
+          <input
+            type="number"
+            name="discount"
+            value={form.discount}
+            onChange={handleChange}
+            placeholder="0"
+          />
+        </label>
 
-    <label>
-      Category
-      <select
-        name="category"
-        value={form.category}
-        onChange={handleChange}
-        required
-      >
-        <option value=""></option>
-        <option value="CTC">CTC</option>
-        <option value="Orthodox">Orthodox</option>
-      </select>
-    </label>
+        <label>
+          Category
+          <select
+            name="category"
+            value={form.category}
+            onChange={handleChange}
+            required
+          >
+            <option value=""></option>
+            <option value="CTC">CTC</option>
+            <option value="Orthodox">Orthodox</option>
+          </select>
+        </label>
 
-    <label>
-      Product Image
-      <input
-        type="file"
-        accept="image/*"
-        onChange={handleImageChange}
-        required
-      />
-    </label>
+        <label>
+          Product Image
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+            required
+          />
+        </label>
 
-    {form.imagePreview && (
-      <div className="image-preview">
-        <img src={form.imagePreview} alt="Preview" />
-      </div>
-    )}
+        {form.imagePreview && (
+          <div className="image-preview">
+            <img src={form.imagePreview} alt="Preview" />
+          </div>
+        )}
 
-    <div className="form-actions">
-      <button type="submit" className="btn-save">Save</button>
-      <button type="button" className="btn-cancel" onClick={onClose}>Cancel</button>
+        <div className="form-actions">
+          <button type="submit" className="btn-save">Save</button>
+          <button
+            type="button"
+            className="btn-cancel"
+            onClick={() => typeof onClose === "function" && onClose()}
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
     </div>
-  </form>
-</div>
-
   );
 };
 

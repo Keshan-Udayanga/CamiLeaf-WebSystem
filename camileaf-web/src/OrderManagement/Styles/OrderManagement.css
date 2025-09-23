@@ -1,0 +1,63 @@
+.order-dashboard {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 25px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+}
+
+.order-items-list {
+  margin: 0;
+  padding-left: 15px;
+  list-style-type: disc;
+}
+
+.order-items-list li {
+  margin: 2px 0;
+}
+
+
+.order-dashboard h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 28px;
+  color: #2e7d32;
+}
+
+.dashboard-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.dashboard-table th,
+.dashboard-table td {
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  font-size: 15px;
+  text-align: left;
+}
+
+.dashboard-table th {
+  background: #f4f4f4;
+  color: #333;
+}
+
+.dashboard-table tr:hover {
+  background: #f0fdf4;
+}
+
+.dashboard-table td {
+  color: #555;
+}
+
+.dashboard-table td:nth-child(8) {
+  font-weight: bold;
+  color: #2e7d32;
+}
+
+.dashboard-table td:nth-child(9) {
+  font-weight: 600;
+  color: #ff9800;
+}

@@ -25,6 +25,13 @@ function Sidebar() {
             Product Management
           </NavLink>
         </li>
+                <li><NavLink
+            to="/admin/order-management"
+            className={({ isActive }) => isActive ? "sidebar-link active" : "sidebar-link"}
+          >
+            Order Management
+          </NavLink>
+          </li>
         <li>
           <NavLink
             to="/admin/resource-management"

@@ -1,6 +1,6 @@
 package com.example.demo.Controller.ProductManagement;
 
-import com.example.demo.Entity.ResourceManagement.Product;
+import com.example.demo.Entity.ProductManagement.Product;
 import com.example.demo.Service.ProductManagement.ProductServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +18,7 @@ public class ProductController {
 
     @PostMapping("/add")
     public String addNewProduct(@RequestBody Product product){
+        System.out.println(product.getCategory());
         product.setAddedDate(new Date());
         productServices.addNewProduct(product);
         return product.getId();

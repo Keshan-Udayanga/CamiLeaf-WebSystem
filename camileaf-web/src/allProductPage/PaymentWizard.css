@@ -1,0 +1,348 @@
+/* PaymentWizard.css */
+.payment-wizard {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Progress Bar */
+.progress-container {
+  position: relative;
+  margin-bottom: 40px;
+}
+
+.progress-bar {
+  position: absolute;
+  top: 24px;
+  left: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #2B8433, #8BC34A);
+  transition: width 0.3s ease;
+  z-index: 1;
+}
+
+.steps {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  z-index: 2;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.step-number {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #f3f4f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  margin-bottom: 8px;
+  border: 3px solid #f3f4f6;
+  transition: all 0.3s ease;
+}
+
+.step.active .step-number {
+  background: #2B8433;
+  color: white;
+  border-color: #2B8433;
+  box-shadow: 0 0 0 4px rgba(43, 132, 51, 0.2);
+}
+
+.step.completed .step-number {
+  background: #10b981;
+  color: white;
+  border-color: #10b981;
+}
+
+.step.completed .step-number::after {
+  content: "✓";
+}
+
+.step-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #6b7280;
+}
+
+.step.active .step-label {
+  color: #2B8433;
+}
+
+.step.completed .step-label {
+  color: #10b981;
+}
+
+/* Wizard Content */
+.wizard-content {
+  background: white;
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.wizard-step h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 8px;
+}
+
+.step-description {
+  color: #6b7280;
+  margin-bottom: 24px;
+}
+
+/* Form Styles - WIDER and CENTERED */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* two columns */
+  gap: 16px;
+  margin: 0 auto 24px auto; /* center the grid */
+  max-width: 600px; /* control width */
+  width: 100%;
+}
+
+.full-width {
+  grid-column: 1 / -1;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 16px 20px; /* slightly bigger padding */
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  font-size: 16px;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: #2B8433;
+  box-shadow: 0 0 0 3px rgba(43, 132, 51, 0.2);
+}
+
+.input-group input.error {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
+}
+
+.error-text {
+  color: #ef4444;
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+/* Payment Methods */
+.payment-methods {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.payment-method {
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.payment-method:hover {
+  border-color: #2B8433;
+}
+
+.payment-method.active {
+  border-color: #2B8433;
+  background-color: #f0fdf4;
+}
+
+.method-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.method-header input[type="radio"] {
+  width: 20px;
+  height: 20px;
+  accent-color: #2B8433;
+}
+
+.method-title {
+  font-weight: 600;
+  font-size: 18px;
+}
+
+/* Card Form */
+.card-form {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.input-with-icon {
+  position: relative;
+  width: 100%;
+}
+
+.input-with-icon input {
+  padding-right: 60px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.card-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 24px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.card-icon.visa {
+  background-image: url('data:image/svg+xml;base64,...'); /* keep your existing base64 */
+}
+
+.card-icon.mastercard { background-image: url('data:image/svg+xml;base64,...'); }
+.card-icon.amex { background-image: url('data:image/svg+xml;base64,...'); }
+.card-icon.discover { background-image: url('data:image/svg+xml;base64,...'); }
+
+.card-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+/* Review Section */
+.review-section {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.review-box, .shipping-review, .payment-review {
+  background: #f9fafb;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.review-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.review-item:last-child {
+  border-bottom: none;
+}
+
+.shipping-review p, .payment-review p {
+  margin: 4px 0;
+  color: #4b5563;
+}
+
+/* Buttons */
+.wizard-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 24px;
+}
+
+.btn-primary, .btn-secondary {
+  padding: 14px 28px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-primary {
+  background: linear-gradient(90deg, #2B8433, #4CAF50);
+  color: white;
+  border: none;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: linear-gradient(90deg, #256b29, #45a049);
+  transform: translateY(-2px);
+}
+
+.btn-primary:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background: white;
+  color: #4b5563;
+  border: 2px solid #e5e7eb;
+}
+
+.btn-secondary:hover {
+  background: #f9fafb;
+  border-color: #d1d5db;
+}
+
+/* Spinner */
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+    max-width: 100%;
+  }
+  
+  .card-details {
+    grid-template-columns: 1fr;
+  }
+  
+  .wizard-buttons {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .btn-primary, .btn-secondary {
+    width: 100%;
+    justify-content: center;
+  }
+}
