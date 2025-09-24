@@ -18,7 +18,6 @@ public class ProductController {
 
     @PostMapping("/add")
     public String addNewProduct(@RequestBody Product product){
-        System.out.println(product.getCategory());
         product.setAddedDate(new Date());
         productServices.addNewProduct(product);
         return product.getId();

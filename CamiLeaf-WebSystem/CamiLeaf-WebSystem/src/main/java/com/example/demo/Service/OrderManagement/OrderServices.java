@@ -25,22 +25,12 @@ public class OrderServices {
     public void deleteOrder(String id){orderRepository.deleteById(id);}
 
     //update order details
-    public Order updateOrder(String id , Order updateOrder){
-        Order existingOrder = orderRepository.findById(id).orElseThrow(() -> new RuntimeException("Order not found with id : " + id));
-
-        existingOrder.setFullName(updateOrder.getFullName());
-        existingOrder.setAddress(updateOrder.getAddress());
-        existingOrder.setCity(updateOrder.getCity());
-        existingOrder.setEmail(updateOrder.getEmail());
-        existingOrder.setOrdertype(updateOrder.getOrdertype());
-        existingOrder.setPaymentMethod(updateOrder.getPaymentMethod());
-        existingOrder.setTotal(updateOrder.getTotal());
-        existingOrder.setZip(updateOrder.getZip());
-        existingOrder.setStatus(updateOrder.getStatus());
-
-
-        return orderRepository.save(existingOrder);
+    public Order updateStatus(String id, String status) {
+        Order order = orderRepository.findById(id).orElseThrow(() -> new RuntimeException("Order not found"));
+        order.setStatus(status);
+        return orderRepository.save(order);
     }
+
 
 
 }
