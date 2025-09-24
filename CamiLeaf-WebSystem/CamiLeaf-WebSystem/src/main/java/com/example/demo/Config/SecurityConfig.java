@@ -44,9 +44,12 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/v1/product/getAll").permitAll()
                         .requestMatchers("/api/v1/user/me").hasRole("CUSTOMER")
+                        .requestMatchers("/api/v1/order/add").hasRole("CUSTOMER")
                         .requestMatchers("/api/v1/user/**").hasRole("ADMIN")
                         .requestMatchers("/api/v1/product/**").hasRole("ADMIN")
-                        .requestMatchers("/api/v1/order/**").hasRole("CUSTOMER")
+                        .requestMatchers("/api/v1/order/**").hasRole("ADMIN")
+                        .requestMatchers("/api/v1/resource/**").hasAnyRole("ADMIN", "RESOURCE MANAGER")
+                        .requestMatchers("/api/v1/leafIntake/**").hasAnyRole("ADMIN", "LEAF CLERK")
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session

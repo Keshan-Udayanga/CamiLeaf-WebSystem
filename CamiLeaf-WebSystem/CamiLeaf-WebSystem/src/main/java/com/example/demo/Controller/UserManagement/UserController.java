@@ -7,6 +7,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("api/v1/user")
@@ -16,10 +19,24 @@ public class UserController {
     private UserServices userServices;
 
     @PostMapping(value = "/save")
-    public String createUser(@RequestBody User users){
-        userServices.createUser(users);
-        return users.getId();
+    public ResponseEntity<?> createUser(@RequestBody User user) {
+        try {
+            User savedUser = userServices.createUser(user);
+
+            Map<String, Object> responseBody = new HashMap<>();
+            responseBody.put("id", savedUser.getId());
+            responseBody.put("message", "User created successfully");
+
+            return ResponseEntity.ok(responseBody);
+
+        } catch (RuntimeException e) {
+
+            Map<String, String> errorBody = new HashMap<>();
+            errorBody.put("error", e.getMessage());
+            return ResponseEntity.badRequest().body(errorBody);
+        }
     }
+
 
     @GetMapping(value = "/getAll")
     public Iterable<User> getAllUsers(){

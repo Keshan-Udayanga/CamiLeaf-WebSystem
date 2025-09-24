@@ -20,7 +20,11 @@ public class UserServices {
     private PasswordEncoder passwordEncoder;
 
 
-    public void createUser(User users) {
+    public User createUser(User users) {
+        if(userRepo.existsByEmail(users.getEmail())){
+            throw new RuntimeException("Email already registered");
+        }
+
         Date now = new Date();
         users.setCreatedAt(now);
         users.setLastLogin(null);
@@ -30,6 +34,7 @@ public class UserServices {
         }
 
         userRepo.save(users);
+        return users;
     }
 
     public Iterable<User> getUsers() {

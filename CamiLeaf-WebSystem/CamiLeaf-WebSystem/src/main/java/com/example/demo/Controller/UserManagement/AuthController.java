@@ -79,9 +79,12 @@ public class AuthController {
             User newUser = userServices.signupCustomer(customer);
 
             return ResponseEntity.ok().body(newUser);
-        }catch (RuntimeException e){
+        }catch (RuntimeException e) {
 
-            return ResponseEntity.badRequest().body(e.getMessage());
+            Map<String, String> errorBody = new HashMap<>();
+            errorBody.put("error", e.getMessage());
+            return ResponseEntity.badRequest().body(errorBody);
         }
+
     }
 }
