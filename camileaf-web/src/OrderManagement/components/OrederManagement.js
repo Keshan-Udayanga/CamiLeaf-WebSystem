@@ -1,4 +1,4 @@
-import { BrowserRouter as Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import OrderManagementTable from "./OrderManagementTable";
 import OrderEditForm from "./OrderEditForm";
 
