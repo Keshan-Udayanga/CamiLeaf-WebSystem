@@ -96,8 +96,12 @@ const CustomerSignUp = () => {
             }
             
         } catch (err) {
-            
-            setError("An error occurred during signup.");
+            console.log('error' + err.response);
+            if (err.response && err.response.data && err.response.data.error) {
+                setError(err.response.data.error);
+            } else {
+                setError("An error occurred during signup.");
+            }
             setSuccess("");
         }
     };

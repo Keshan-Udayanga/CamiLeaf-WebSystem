@@ -10,7 +10,10 @@ const AdminProductTable = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [sortType, setSortType] = useState("");
 
-  const navigate = useNavigate(); 
+  const [showConfirm, setShowConfirm] = useState(false); // confirm box visibility
+  const [deleteId, setDeleteId] = useState(null); // store product id to delete
+
+  const navigate = useNavigate();
   const rowsPerPage = 10;
 
   // Fetch all products
@@ -28,13 +31,11 @@ const AdminProductTable = () => {
   }, []);
 
   // Delete product
-  const handleDelete = async (productId) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this product?");
-    if (!confirmDelete) return;
-
+  const handleDelete = async () => {
     try {
-      await api.delete(`/api/v1/product/delete/${productId}`);
-      alert("Product deleted successfully!");
+      await api.delete(`/api/v1/product/delete/${deleteId}`);
+      setShowConfirm(false);
+      setDeleteId(null);
       fetchProducts(); // refresh table
     } catch (error) {
       console.error("Error deleting product:", error);
@@ -68,7 +69,7 @@ const AdminProductTable = () => {
 
       {/* Top Actions */}
       <div className="top-actions">
-        <button className="btn-add" onClick={() => navigate(`/admin/product-management/addProduct`)}>
+        <button className="btn-add" onClick={() => navigate("/admin/product-management/addProduct")}>
           <FaPlus /> Add Product
         </button>
 
@@ -91,7 +92,6 @@ const AdminProductTable = () => {
           </select>
         </div>
       </div>
-
 
       {/* Product Table */}
       <div className="table-wrapper">
@@ -123,7 +123,6 @@ const AdminProductTable = () => {
                 <td>{p.discount}%</td>
                 <td>{p.category}</td>
                 <td style={{ width: "15%" }}>
-                  {/* Navigate to EditProductForm */}
                   <button
                     className="btn-edit"
                     onClick={() => navigate(`/admin/product-management/edit/${p.id || p._id}`)}
@@ -132,7 +131,10 @@ const AdminProductTable = () => {
                   </button>
                   <button
                     className="btn-delete"
-                    onClick={() => handleDelete(p.id || p._id)}
+                    onClick={() => {
+                      setDeleteId(p.id || p._id);
+                      setShowConfirm(true);
+                    }}
                   >
                     Delete
                   </button>
@@ -155,6 +157,19 @@ const AdminProductTable = () => {
           </button>
         ))}
       </div>
+
+      {/* Confirm Delete Modal */}
+      {showConfirm && (
+        <div className="confirm-overlay">
+          <div className="confirm-box">
+            <p>Are you sure you want to delete this product?</p>
+            <div className="confirm-actions">
+              <button className="btn-confirm" onClick={handleDelete}>Yes, Delete</button>
+              <button className="btn-cancel" onClick={() => setShowConfirm(false)}>Cancel</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

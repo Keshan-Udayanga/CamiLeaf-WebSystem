@@ -8,17 +8,6 @@
   font-family: 'Segoe UI', Tahoma, sans-serif;
 }
 
-.order-items-list {
-  margin: 0;
-  padding-left: 15px;
-  list-style-type: disc;
-}
-
-.order-items-list li {
-  margin: 2px 0;
-}
-
-
 .order-dashboard h1 {
   text-align: center;
   margin-bottom: 30px;
@@ -29,6 +18,10 @@
 .dashboard-table {
   width: 100%;
   border-collapse: collapse;
+}
+
+.order-dashboard thead{
+  background-color: #d0a15e;
 }
 
 .dashboard-table th,
@@ -52,12 +45,68 @@
   color: #555;
 }
 
-.dashboard-table td:nth-child(8) {
-  font-weight: bold;
-  color: #2e7d32;
+.order-items-list {
+  margin: 0;
+  padding-left: 15px;
+  list-style-type: disc;
 }
 
-.dashboard-table td:nth-child(9) {
+.order-items-list li {
+  margin: 2px 0;
+}
+
+/* ✅ Status badge styles */
+.status-badge {
   font-weight: 600;
-  color: #ff9800;
+  padding: 6px 12px;
+  border-radius: 6px;
+  text-align: center;
+  display: inline-block;
+}
+
+.status-badge.pending {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.status-badge.processing {
+  background: #cce5ff;
+  color: #004085;
+}
+
+.status-badge.shipped {
+  background: #d1ecf1;
+  color: #0c5460;
+}
+
+.status-badge.completed {
+  background: #d4edda;
+  color: #155724;
+}
+
+/* ✅ Buttons */
+.btn-change {
+  background-color: #4caf50;
+  color: white;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-change:hover {
+  background-color: #388e3c;
+}
+
+.btn-delete {
+  background-color: red;
+  color: white;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-delete:hover {
+  background-color: darkred;
 }

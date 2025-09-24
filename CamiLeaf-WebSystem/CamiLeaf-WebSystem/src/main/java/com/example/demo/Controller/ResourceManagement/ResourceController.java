@@ -37,12 +37,12 @@ public class ResourceController {
         return "Resource Deleted Successfully!";
     }
 
-    @GetMapping("/release/{id}")
+    @PutMapping("/release/{id}")
     public Resource releaseResource(
             @PathVariable String id,
             @RequestBody Map<String, Integer> body) {
 
-        int releaseQty = body.get("releaseQuantity"); // only quantity passed
+        int releaseQty = body.get("releaseQuantity");
         return resourceServices.releaseResource(id, releaseQty);
     }
 

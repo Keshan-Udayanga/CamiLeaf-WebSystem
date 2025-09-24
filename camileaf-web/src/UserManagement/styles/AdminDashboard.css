@@ -8,20 +8,23 @@
 .dashboard h1 {
   margin-bottom: 30px;
   color: #1c3c1e;
+  font-weight: 750;
 }
 
 .cards-container {
   display: flex;
   gap: 30px;
+  width: 100%;
+  margin-top: 30px;
 }
 
 .card {
-  background-color: white;
+  background-color: rgba(182, 182, 182, 0.5);
   color: black;
   padding: 20px;
   border-radius: 12px;
   text-align: center;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
   flex: 1;
   cursor: pointer;
   transition: transform 0.2s ease-in-out;
