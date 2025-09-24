@@ -29,7 +29,7 @@
   flex-wrap: wrap;
 }
 
-.search-input {
+.header-actions .search-input {
   padding: 8px 12px;
   border-radius: 10px;
   border: 1px solid #c8e6c9;
@@ -37,7 +37,11 @@
   transition: 0.3s ease;
 }
 
-.search-input:focus {
+.search-input{
+  border-radius: 50px;
+}
+
+.header-actions .search-input:focus {
   border-color: #43a047;
   box-shadow: 0 0 6px rgba(67, 160, 71, 0.3);
 }

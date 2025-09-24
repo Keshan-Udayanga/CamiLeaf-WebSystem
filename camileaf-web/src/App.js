@@ -7,20 +7,20 @@ import ProductsCarousel from "./HomePage/homePage";
 import AboutTeaFactory from "./HomePage/home_aboutUs";
 import Footer from "./footer";
 import TeaTimeline from "./HomePage/teaTimeLine";
-import AllProduct from "./AllProductPage/productPage";  //  import products page
+import AllProduct from "./AllProductPage/productPage";
 import AdminPanel from "./UserManagement/components/AdminLayer"
 import LoginPage from './UserManagement/components/LoginPage';
 import CustomerSignUp from './UserManagement/components/CustomerSignUp';
 import CartPage from './AllProductPage/CartPage';
 import PaymentWizard from './AllProductPage/PaymentWizard';
-import AboutUs from './AboutUs/AboutUs'
+import AboutUs from './AboutUs/AboutUs';
 import ContactUs from './ContactUs/ContactUsPage';
+import Services from './Services/Services';
 
 function App() {
   return (
     <Router>
-      <div style={{ overflowX: "hidden" }}>
-        
+      <div style={{ overflowX: "hidden" }}>        
 
         <Routes>
           {/* Home Page */}
@@ -44,6 +44,7 @@ function App() {
           {/* About Page */}
           <Route path="/about" element={<AboutUs/>} />
           <Route path="/contact" element={<ContactUs/>} />
+          <Route path="/services" element={<Services/>} />
           <Route path="/admin/*" element={<AdminPanel />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<CustomerSignUp />} />

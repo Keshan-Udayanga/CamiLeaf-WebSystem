@@ -208,7 +208,7 @@
   box-sizing: border-box;
 }
 
-.card-icon {
+.input-with-icon .card-icon {
   position: absolute;
   right: 12px;
   top: 50%;

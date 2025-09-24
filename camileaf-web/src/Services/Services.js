@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from "../navbar";
 import Footer from "../footer";
-import BrowseProducts from "./BrowseProducts";
+import ServicesPage from "./ServicesPage";
 import "./navBar.css"; 
 
 
@@ -10,7 +10,7 @@ function Products() {
     <>
       <Navbar className="products-navbar" />
       {/* <CartPage/> */}
-      <BrowseProducts/>
+      <ServicesPage/>
       <Footer />
     </>
   );

@@ -1,65 +1,66 @@
 import React from "react";
-import { Box, Typography, Link, IconButton, Grid } from "@mui/material";
+import "./Footer.css";
 import { Facebook, Twitter, Instagram, LinkedIn } from "@mui/icons-material";
 
 function Footer() {
   return (
-    <Box
-      component="footer"
-      sx={{
-        backgroundColor: "rgba(0,0,0,0.9)",
-        backdropFilter: "blur(4px)",
-        WebkitBackdropFilter: "blur(4px)",
-        color: "#fff",
-        py: 6,
-        px: { xs: 3, md: 10 },
-      }}
-    >
-      <Grid container spacing={4}>
-        {/* 1st Part */}
-        <Grid item xs={12} md={3}>
-          <Typography variant="h6" gutterBottom>Our Factory</Typography>
-          <Typography variant="body2" sx={{ mb: 2 }}>
-            We are a leading manufacturer of high-quality textile products with over 20 years of experience.
-          </Typography>
-          <Box>
-            <IconButton href="#" sx={{ color: "#fff" }}><Facebook /></IconButton>
-            <IconButton href="#" sx={{ color: "#fff" }}><Twitter /></IconButton>
-            <IconButton href="#" sx={{ color: "#fff" }}><Instagram /></IconButton>
-            <IconButton href="#" sx={{ color: "#fff" }}><LinkedIn /></IconButton>
-          </Box>
-        </Grid>
+    <footer className="footer">
+      <div className="footer-container">
+        {/* 1st Column: About */}
+        <div className="footer-section">
+          <h2 className="footer-title">CamiLeaf Tea Factory</h2>
+          <p className="footer-text">
+            We produce premium Ceylon tea with over 20 years of expertise. Freshness and quality in every leaf.
+          </p>
+          <div className="footer-socials">
+            <a href="#"><Facebook /></a>
+            <a href="#"><Twitter /></a>
+            <a href="#"><Instagram /></a>
+            <a href="#"><LinkedIn /></a>
+          </div>
+        </div>
 
-        {/* 2nd Part */}
-        <Grid item xs={12} md={3}>
-          <Typography variant="h6" gutterBottom>Pages</Typography>
-          <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
-            <Link href="/" underline="hover" color="inherit">Home</Link>
-            <Link href="/#about" underline="hover" color="inherit">About</Link>
-            <Link href="/services" underline="hover" color="inherit">Services</Link>
-            <Link href="/contact" underline="hover" color="inherit">Contact</Link>
-          </Box>
-        </Grid>
+        {/* 2nd Column: Quick Links */}
+        <div className="footer-section">
+          <h2 className="footer-title">Quick Links</h2>
+          <ul className="footer-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/#about">About</a></li>
+            <li><a href="/services">Services</a></li>
+            <li><a href="/products">Products</a></li>
+            <li><a href="/contact">Contact</a></li>
+          </ul>
+        </div>
 
-        {/* 3rd Part */}
-        <Grid item xs={12} md={3}>
-          <Typography variant="h6" gutterBottom>Our Factory Locations</Typography>
-          <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
-            <Typography>Colombo</Typography>
-            <Typography>Kandy</Typography>
-            <Typography>Galle</Typography>
-          </Box>
-        </Grid>
+        {/* 3rd Column: Locations */}
+        <div className="footer-section">
+          <h2 className="footer-title">Our Locations</h2>
+          <ul className="footer-locations">
+            <li>Colombo</li>
+            <li>Kandy</li>
+            <li>Galle</li>
+            <li>Matale</li>
+          </ul>
+        </div>
 
-        {/* 4th Part */}
-        <Grid item xs={12} md={3}>
-          <Typography variant="h6" gutterBottom>Contact Us</Typography>
-          <Typography>123, Main Street, Colombo, Sri Lanka</Typography>
-          <Typography>+94 11 234 5678</Typography>
-          <Typography>info@ourfactory.com</Typography>
-        </Grid>
-      </Grid>
-    </Box>
+        {/* 4th Column: Contact + Newsletter */}
+        <div className="footer-section">
+          <h2 className="footer-title">Contact & Newsletter</h2>
+          <p>123, Main Street, Colombo, Sri Lanka</p>
+          <p>+94 11 234 5678</p>
+          <p>info@camileaf.com</p>
+          <form className="newsletter-form" onSubmit={(e) => e.preventDefault()}>
+            <input type="email" placeholder="Your email address" required />
+            <button type="submit">Subscribe</button>
+          </form>
+        </div>
+      </div>
+
+      {/* Bottom Bar */}
+      <div className="footer-bottom">
+        <p>© {new Date().getFullYear()} CamiLeaf Tea Factory. All rights reserved.</p>
+      </div>
+    </footer>
   );
 }
 

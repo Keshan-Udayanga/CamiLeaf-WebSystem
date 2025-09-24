@@ -103,7 +103,6 @@ function BrowseProducts() {
 
       <div className="filters-container">
         <div className="search-box" style={{ border: "none" }}>
-          <span className="search-icon">🔍</span>
           <input
             type="text"
             placeholder="Search products..."
@@ -142,13 +141,15 @@ function BrowseProducts() {
                 {product.category && <span className="product-category">{product.category}</span>}
               </div>
               <div className="product-info">
-                <h3>{product.productName}</h3>
+                <div className="product-name"><h3>{product.productName}</h3></div>
+                <div className="product-details">
                 <p className="product-price">Rs. {product.price.toLocaleString()}</p>
                 <p className="product-stock">Stock: {product.stock}</p>
                 <p className="product-discount">Discount: {product.discount}%</p>
                 <p className="product-date">
                   Added: {new Date(product.addedDate).toLocaleDateString()}
                 </p>
+                </div>
                 <button
                   className="add-to-cart-btn"
                   onClick={() => handleAddToCartClick(product)}
