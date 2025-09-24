@@ -42,6 +42,14 @@ function Sidebar() {
         </li>
         <li>
           <NavLink
+            to="/admin/leaf-intake"
+            className={({ isActive }) => isActive ? "sidebar-link active" : "sidebar-link"}
+          >
+            Tea leaf Intake
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
             to="/admin/company-reports"
             className={({ isActive }) => isActive ? "sidebar-link active" : "sidebar-link"}
           >

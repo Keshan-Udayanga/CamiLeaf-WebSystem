@@ -44,6 +44,14 @@ function Dashboard() {
           <img src={productManagement} alt="Resource Management" />
           <h3>Resource Management</h3>
         </Link>
+                <Link
+          to="/admin/leaf-intake"
+          className="card"
+          style={{ textDecoration: "none" }}
+        >
+          <img src={productManagement} alt="Tea Leaf Intake" />
+          <h3>Tea leaf Intake</h3>
+        </Link>
         <div className="card">
           <img src={reports} alt="Product Management" />
           <h3>Company Reports</h3>

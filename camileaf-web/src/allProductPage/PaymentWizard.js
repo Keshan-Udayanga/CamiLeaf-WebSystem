@@ -123,19 +123,23 @@ const onBackToCart = () => navigate(-1);
     setPayment((p) => ({ ...p, method }));
 
   const handleConfirm = async () => {
-  setIsSubmitting(true);
-
   const orderData = {
-    ordertype: "Online",       // or any type
-    fullName: shipping.fullName,
-    email: shipping.email,
-    address: shipping.address,
-    city: shipping.city,
-    zip: parseInt(shipping.zip),   // make sure it's a number
-    paymentMethod: payment.method,
-    status: "Pending",
-    total: total
-  };
+  ordertype: "Online",
+  fullName: shipping.fullName,
+  address: shipping.address,
+  city: shipping.city,
+  email: shipping.email,
+  paymentMethod: payment.method,
+  zip: shipping.zip,
+  status: "Pending",
+  total: total,
+  items: cartItems.map(item => ({
+    productId: item.id,
+    productName: item.productName,
+    quantity: item.qty,
+    price: item.price
+  }))
+};
 
   try {
     const response = await axios.post("http://localhost:8081/api/v1/order/add", orderData);
@@ -313,7 +317,7 @@ const onBackToCart = () => navigate(-1);
               <div className="review-box">
                 {cartItems.map((item) => (
                   <div key={item.id} className="review-item">
-                    <span>{item.name} x {item.qty}</span>
+                    <span>{item.productName} x {item.qty}</span>
                     <span>Rs. {item.price * item.qty}</span>
                   </div>
                 ))}

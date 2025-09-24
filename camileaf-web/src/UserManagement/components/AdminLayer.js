@@ -5,8 +5,8 @@ import Dashboard from './AdminDashboard';
 import UserManagement from './UserManagement';
 import AddUserForm from './AddUserForm';
 import AdminProductTable from "../../ProductManagement/components/ProductManagement";
-import OrederManagement from "../../OrderManagement/components/OrderManagementTable";
-
+import OrederManagement from "../../OrderManagement/components/OrederManagement";
+import TeaLeafIntake from "../../TeaLeafIntake/component/TeaLeafIntake";
 import ResourceManagement from "../../ResourceManagement/components/ResourceManagement";
 
 function App() {
@@ -30,6 +30,7 @@ function App() {
           <Route path="/product-management/*" element={<AdminProductTable />} />
           <Route path="/order-management/*" element={<OrederManagement />} />
           <Route path="/resource-management/*" element={<ResourceManagement />} />
+          <Route path="/leaf-intake/*" element={<TeaLeafIntake />} />
         </Routes>
       </main>
     </div>
