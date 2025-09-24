@@ -7,6 +7,8 @@ import api from "../../axiosConfig";
 function AdminOrdersTable() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [filterStatus, setFilterStatus] = useState("all");
+  const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -18,7 +20,7 @@ function AdminOrdersTable() {
       const response = await api.get("/api/v1/order/getAll");
       const data = response.data.map(order => ({
         ...order,
-        items: order.items || [], // ✅ use backend `items`
+        items: order.items || [],
         shipping: {
           fullName: order.fullName || "",
           email: order.email || "",
@@ -48,79 +50,167 @@ function AdminOrdersTable() {
     }
   };
 
-  if (loading) return <p style={{ textAlign: "center", marginTop: "50px" }}>Loading orders...</p>;
+  // Filter orders based on status and search term
+  const filteredOrders = orders.filter(order => {
+    const matchesStatus = filterStatus === "all" || order.status.toLowerCase() === filterStatus;
+    const matchesSearch = order.shipping.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         order.id.toString().includes(searchTerm) ||
+                         order.shipping.email.toLowerCase().includes(searchTerm.toLowerCase());
+    return matchesStatus && matchesSearch;
+  });
+
+  if (loading) return (
+    <div className="loading-container">
+      <div className="loading-spinner"></div>
+      <p>Loading orders...</p>
+    </div>
+  );
 
   return (
     <div className="order-dashboard">
-      <h1>📝 Orders Dashboard</h1>
-      <table className="dashboard-table">
-        <thead style={{background:"#d0a15e"}}>
-          <tr>
-            <th>Order ID</th>
-            <th>Customer Name</th>
-            <th>Email</th>
-            <th>Shipping Address</th>
-            <th>City</th>
-            <th>ZIP</th>
-            <th>Payment Method</th>
-            <th>Items</th>
-            <th>Total</th>
-            <th>Status</th>
-            <th>Change Status</th>
-            <th>Delete</th>
-          </tr>
-        </thead>
-        <tbody>
-          {orders.length > 0 ? (
-            orders.map(order => (
-              <tr key={order.id}>
-                <td>{order.id}</td>
-                <td>{order.shipping.fullName}</td>
-                <td>{order.shipping.email}</td>
-                <td>{order.shipping.address}</td>
-                <td>{order.shipping.city}</td>
-                <td>{order.shipping.zip}</td>
-                <td>{order.payment.method === "card" ? "Credit/Debit Card" : "Cash on Delivery"}</td>
-                <td>
-                  <ul className="order-items-list">
-                    {order.items.map((item, idx) => (
-                      <li key={idx}>
-                        {item.productName} (x{item.quantity})
-                      </li>
-                    ))}
-                  </ul>
-                </td>
-                <td>Rs. {order.total.toLocaleString()}</td>
-                <td className={`status-badge ${order.status.toLowerCase()}`}>
-                  {order.status}
-                </td>
-                <td>
-                  <button
-                    onClick={() => navigate(`/admin/order-management/edit/${order.id}`)}
-                    className="btn-change"
-                  >
-                    Change Status
-                  </button>
-                </td>
-                <td>
-                  <button
-                    onClick={() => deleteOrder(order.id)}
-                    className="btn-delete"
-                  >
-                    Delete
-                  </button>
+      <div className="dashboard-header">
+        <div className="header-content">
+          <h1>
+            Orders Dashboard
+          </h1>
+          <p>Manage and track all customer orders</p>
+        </div>
+        <div className="header-stats">
+          <div className="stat-card">
+            <span className="stat-number">{orders.length}</span>
+            <span className="stat-label">Total Orders</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Controls */}
+      <div className="dashboard-controls">
+        <div className="search-box">
+          <span className="search-icon">🔍</span>
+          <input
+            type="text"
+            placeholder="    Search by name, email, or order ID..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="search-input"
+          />
+        </div>
+        
+        <div className="filter-controls">
+          <select 
+            value={filterStatus} 
+            onChange={(e) => setFilterStatus(e.target.value)}
+            className="filter-select"
+          >
+            <option value="all">All Status</option>
+            <option value="pending">Pending</option>
+            <option value="processing">Processing</option>
+            <option value="shipped">Shipped</option>
+            <option value="completed">Completed</option>
+          </select>
+        </div>
+      </div>
+
+      {/* Table */}
+      <div className="table-container">
+        <table className="dashboard-table">
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Customer</th>
+              <th>Contact</th>
+              <th>Location</th>
+              <th>Payment</th>
+              <th>Items</th>
+              <th>Total</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredOrders.length > 0 ? (
+              filteredOrders.map(order => (
+                <tr key={order.id}>
+                  <td>
+                    <div className="order-id">#{order.id}</div>
+                  </td>
+                  <td>
+                    <div className="customer-info">
+                      <div className="customer-name">{order.shipping.fullName}</div>
+                    </div>
+                  </td>
+                  <td>
+                    <div className="contact-info">
+                      <div className="email">{order.shipping.email}</div>
+                    </div>
+                  </td>
+                  <td>
+                    <div className="location-info">
+                      <div className="city">{order.shipping.city}</div>
+                      <div className="zip">{order.shipping.zip}</div>
+                    </div>
+                  </td>
+                  <td>
+                    <span className={`payment-method ${order.payment.method}`}>
+                      {order.payment.method === "card" ? "Card" : "COD"}
+                    </span>
+                  </td>
+                  <td>
+                    <div className="items-preview">
+                      {order.items.slice(0, 2).map((item, idx) => (
+                        <div key={idx} className="item-tag">
+                          {item.productName} (x{item.quantity})
+                        </div>
+                      ))}
+                      {order.items.length > 2 && (
+                        <div className="more-items">+{order.items.length - 2} more</div>
+                      )}
+                    </div>
+                  </td>
+                  <td>
+                    <div className="total-amount">
+                      Rs. {order.total.toLocaleString()}
+                    </div>
+                  </td>
+                  <td>
+                    <span className={`status-badge ${order.status.toLowerCase()}`}>
+                      {order.status}
+                    </span>
+                  </td>
+                  <td>
+                    <div className="action-buttons">
+                      <button
+                        onClick={() => navigate(`/admin/order-management/edit/${order.id}`)}
+                        className="btn-action btn-edit"
+                        title="Change Status"
+                      >
+                        ✏️
+                      </button>
+                      <button
+                        onClick={() => deleteOrder(order.id)}
+                        className="btn-action btn-delete"
+                        title="Delete Order"
+                      >
+                        🗑️
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="9" className="no-orders">
+                  <div className="no-orders-content">
+                    <span className="no-orders-icon">📭</span>
+                    <p>No orders found</p>
+                    <small>Try adjusting your search or filter</small>
+                  </div>
                 </td>
               </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan="12" style={{ textAlign: "center", color: "#999" }}>
-                No orders available
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </table>
+            )}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

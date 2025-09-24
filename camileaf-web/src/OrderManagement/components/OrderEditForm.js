@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import "../Styles/OrderEditForm.css"; // ✅ Import CSS file
 
 export default function OrderEditForm() {
   const { id } = useParams();
@@ -35,7 +36,7 @@ export default function OrderEditForm() {
   if (loading) return <p>Loading order...</p>;
 
   return (
-    <div style={{ maxWidth: "500px", margin: "50px auto", padding: "20px", border: "1px solid #ccc", borderRadius: "8px" }}>
+    <div className="order-edit-container">
       <h3>Update Order Status</h3>
       <form onSubmit={handleSubmit}>
         <label>
@@ -47,9 +48,9 @@ export default function OrderEditForm() {
             <option value="Completed">Completed</option>
           </select>
         </label>
-        <div style={{ marginTop: "20px" }}>
-          <button type="submit" style={{ marginRight: "10px", backgroundColor: "#4caf50", color: "white" }}>Save</button>
-          <button type="button" onClick={() => navigate("/admin/orders")}>Cancel</button>
+        <div className="form-buttons">
+          <button type="submit" className="save-btn">Save</button>
+          <button type="button" className="cancel-btn" onClick={() => navigate("/admin/orders")}>Cancel</button>
         </div>
       </form>
     </div>
