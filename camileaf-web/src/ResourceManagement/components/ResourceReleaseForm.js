@@ -13,54 +13,72 @@ const ResourceReleaseForm = ({ onUpdate }) => {
     resourceType: resource?.resourceType || "",
     currentQuantity: resource?.quantity || 0,
     releaseQuantity: "",
-    status: "Pending",
+    status: resource?.quantity === 0 ? "Out of Stock" : "Pending",
   });
 
+  const [error, setError] = useState("");
+  const [showConfirm, setShowConfirm] = useState(false); // modal visibility
+  const [confirmMessage, setConfirmMessage] = useState(""); // modal message
+
   const handleChange = (e) => {
-    setRelease({ ...release, [e.target.name]: e.target.value });
+    const value = e.target.value;
+    const numValue = parseInt(value, 10);
+
+    if (value === "" || numValue <= 0) {
+      setError("Quantity must be greater than 0");
+    } else if (numValue > release.currentQuantity) {
+      setError("Release quantity cannot exceed current stock");
+    } else {
+      setError("");
+    }
+
+    setRelease({ ...release, [e.target.name]: value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
+    if (error) return;
 
-    const qtyToRelease = parseInt(release.releaseQuantity, 10);
-
-    if (qtyToRelease <= 0) {
-      alert("Release quantity must be greater than 0!");
+    if (release.currentQuantity === 0) {
+      setConfirmMessage("Cannot release. Resource is out of stock!");
+      setShowConfirm(true);
       return;
     }
 
-    if (qtyToRelease > release.currentQuantity) {
-      alert("Not enough stock to release!");
-      return;
-    }
+    setConfirmMessage(
+      `Are you sure you want to release ${release.releaseQuantity} ${resource.unit} of ${resource.resourceType}?`
+    );
+    setShowConfirm(true);
+  };
 
+  const confirmRelease = async () => {
     try {
+      const qtyToRelease = parseInt(release.releaseQuantity, 10);
       const response = await axios.put(
         `http://localhost:8081/api/v1/resource/release/${release.resourceId}`,
         { releaseQuantity: qtyToRelease }
       );
 
-      alert(
-        `Released ${qtyToRelease} ${resource.unit} of ${resource.resourceType} successfully!`
-      );
-
-      // Update current quantity locally
+      const updatedQuantity = response.data.quantity;
       setRelease({
         ...release,
-        currentQuantity: response.data.quantity,
+        currentQuantity: updatedQuantity,
         releaseQuantity: "",
+        status: updatedQuantity === 0 ? "Out of Stock" : "Pending",
       });
 
-      // Optionally, call a parent callback to refresh the table
       if (onUpdate) onUpdate(response.data);
-
-      // Navigate back if needed
+      setShowConfirm(false);
       navigate("/admin/resource-management");
-    } catch (error) {
-      console.error("Error releasing resource:", error);
-      alert("Failed to release resource. Please try again.");
+    } catch (err) {
+      console.error("Error releasing resource:", err);
+      setConfirmMessage("Failed to release resource. Please try again.");
     }
+  };
+
+  const cancelRelease = () => {
+    setShowConfirm(false);
+    setConfirmMessage("");
   };
 
   return (
@@ -79,7 +97,13 @@ const ResourceReleaseForm = ({ onUpdate }) => {
 
         <label>
           Current Quantity
-          <input type="number" value={release.currentQuantity} disabled />
+          <input
+            type="text"
+            value={
+              release.currentQuantity === 0 ? "Out of Stock" : release.currentQuantity
+            }
+            disabled
+          />
         </label>
 
         <label>
@@ -89,8 +113,11 @@ const ResourceReleaseForm = ({ onUpdate }) => {
             name="releaseQuantity"
             value={release.releaseQuantity}
             onChange={handleChange}
+            className={error ? "error-input" : ""}
             required
+            disabled={release.currentQuantity === 0}
           />
+          {error && <span className="error-text">{error}</span>}
         </label>
 
         <label>
@@ -99,7 +126,11 @@ const ResourceReleaseForm = ({ onUpdate }) => {
         </label>
 
         <div className="form-actions">
-          <button type="submit" className="btn-save">
+          <button
+            type="submit"
+            className="btn-save"
+            disabled={!!error || release.currentQuantity === 0}
+          >
             Submit
           </button>
           <button
@@ -111,6 +142,31 @@ const ResourceReleaseForm = ({ onUpdate }) => {
           </button>
         </div>
       </form>
+
+      {/* Modern Confirmation Modal */}
+      {showConfirm && (
+        <div className="confirm-overlay">
+          <div className="confirm-box">
+            <p>{confirmMessage}</p>
+            <div className="confirm-actions">
+              {release.currentQuantity !== 0 && !error ? (
+                <>
+                  <button className="confirm-btn btn-yes" onClick={confirmRelease}>
+                    OK
+                  </button>
+                  <button className="confirm-btn btn-no" onClick={cancelRelease}>
+                    Cancel
+                  </button>
+                </>
+              ) : (
+                <button className="confirm-btn btn-ok" onClick={cancelRelease}>
+                  OK
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

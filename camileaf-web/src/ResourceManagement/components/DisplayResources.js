@@ -7,9 +7,11 @@ import axios from "axios";
 const ResourceTablePage = () => {
   const [resources, setResources] = useState([]);
   const [search, setSearch] = useState("");
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [deleteId, setDeleteId] = useState(null);
   const navigate = useNavigate();
 
-  // Fetch resources (moved outside useEffect so it can be reused)
+  // Fetch resources
   const fetchResources = async () => {
     try {
       const response = await axios.get("http://localhost:8081/api/v1/resource/getAll");
@@ -23,26 +25,39 @@ const ResourceTablePage = () => {
     fetchResources();
   }, []);
 
-  // Delete resource
-  const handleDelete = async (resourceId) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this resource?");
-    if (!confirmDelete) return;
+  const handleDeleteClick = (id) => {
+    setDeleteId(id);
+    setShowDeleteModal(true);
+  };
 
+  const confirmDelete = async () => {
     try {
-      await axios.get(`http://localhost:8081/api/v1/resource/delete/${resourceId}`);
-      alert("Resource deleted successfully!");
-      fetchResources(); // refresh table after deletion
+      await axios.get(`http://localhost:8081/api/v1/resource/delete/${deleteId}`);
+      setShowDeleteModal(false);
+      setDeleteId(null);
+      fetchResources();
     } catch (error) {
       console.error("Error deleting resource:", error);
       alert("Failed to delete the resource. Please try again.");
     }
   };
 
-  // Filter resources by search
-  const filteredResources = resources.filter((res) =>
-    (res.resourceId ? res.resourceId.toString().toLowerCase() : "").includes(search.toLowerCase()) ||
-    (res.resourceType ? res.resourceType.toLowerCase() : "").includes(search.toLowerCase())
+  const cancelDelete = () => {
+    setShowDeleteModal(false);
+    setDeleteId(null);
+  };
+
+  const filteredResources = resources.filter(
+    (res) =>
+      (res.resourceId ? res.resourceId.toString().toLowerCase() : "").includes(search.toLowerCase()) ||
+      (res.resourceType ? res.resourceType.toLowerCase() : "").includes(search.toLowerCase())
   );
+
+  const getStockStatus = (quantity) => {
+    if (quantity === 0) return <span style={{ color: "red" }}>Out of Stock</span>;
+    if (quantity <= 50) return <span style={{ color: "orange" }}>🔔 Low Stock</span>;
+    return <span style={{ color: "green" }}>In Stock</span>;
+  };
 
   return (
     <div className="table-wrapper">
@@ -72,6 +87,7 @@ const ResourceTablePage = () => {
             <th>Resource Type</th>
             <th>Quantity</th>
             <th>Unit</th>
+            <th>Stock Status</th>
             <th>Received Date</th>
             <th>Last Modified</th>
             <th>Action</th>
@@ -80,7 +96,7 @@ const ResourceTablePage = () => {
         <tbody>
           {filteredResources.length === 0 ? (
             <tr>
-              <td colSpan="7">No resources found.</td>
+              <td colSpan="8">No resources found.</td>
             </tr>
           ) : (
             filteredResources.map((res, index) => (
@@ -89,6 +105,7 @@ const ResourceTablePage = () => {
                 <td>{res.resourceType}</td>
                 <td>{res.quantity}</td>
                 <td>{res.unit}</td>
+                <td>{getStockStatus(res.quantity)}</td>
                 <td>{res.addedDate ? res.addedDate.split("T")[0] : "-"}</td>
                 <td>{res.lastModifiedDate ? res.lastModifiedDate.split("T")[0] : "-"}</td>
                 <td>
@@ -99,9 +116,13 @@ const ResourceTablePage = () => {
                     }
                   >
                     Release
-                  </button> 
-                  <Button variant="contained" color="error" size="small" sx={{ marginLeft: "10px", minWidth: "70px" }}
-                    onClick={() => handleDelete(res.id)}
+                  </button>
+                  <Button
+                    variant="contained"
+                    color="error"
+                    size="small"
+                    sx={{ marginLeft: "10px", minWidth: "70px" }}
+                    onClick={() => handleDeleteClick(res.id)}
                   >
                     Delete
                   </Button>
@@ -111,6 +132,24 @@ const ResourceTablePage = () => {
           )}
         </tbody>
       </table>
+
+      {/* Delete Confirmation Modal */}
+      {showDeleteModal && (
+        <div className="confirm-overlay">
+          <div className="confirm-box">
+            <h4>Confirm Delete</h4>
+            <p>Are you sure you want to delete this resource?</p>
+            <div className="confirm-actions">
+              <button className="confirm-btn btn-yes" onClick={confirmDelete}>
+                OK
+              </button>
+              <button className="confirm-btn btn-no" onClick={cancelDelete}>
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
