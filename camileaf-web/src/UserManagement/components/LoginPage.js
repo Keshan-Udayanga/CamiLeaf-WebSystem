@@ -25,7 +25,7 @@ function LoginPage() {
             if(data.success){
               localStorage.setItem("token", data.token);
               localStorage.setItem("role", data.role);
-
+              
               const from = location.state?.from?.pathname || "/";
               
               switch(data.role){

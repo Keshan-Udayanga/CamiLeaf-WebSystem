@@ -6,18 +6,32 @@ import api from "../axiosConfig";
 function PaymentWizard() {
   const location = useLocation();
   const navigate = useNavigate();
-const onBackToCart = () => navigate(-1);
+  const onBackToCart = () => navigate(-1);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    const role = localStorage.getItem("role");
+  const fetchCustomer = async () => {
+    try {
+      const response = await api.get("/api/v1/user/me");
+      const user = response.data;
 
-    if (!token || role !== "CUSTOMER") {
-      
-      navigate("/login");
+      setShipping({
+        fullName: `${user.firstName} ${user.lastName}`,
+        email: user.email,
+        address: user.address,
+        city: user.city,
+        zip: user.zip,
+      });
+    } catch (err) {
+      alert('catch called' + err);
+      console.error("Failed to fetch customer info:", err);
     }
-  }, [navigate]);
+  };
 
+  fetchCustomer();
+}, []);
+
+
+   
 
    const cartItems = location.state?.cartItems || [];
   const total = location.state?.total || 0;
@@ -42,6 +56,7 @@ const onBackToCart = () => navigate(-1);
 
   // Detect card type
   useEffect(() => {
+    
     if (payment.cardNumber) {
       const cardNumber = payment.cardNumber.replace(/\s/g, "");
       if (/^4/.test(cardNumber)) {

@@ -7,12 +7,13 @@ import ProductsCarousel from "./HomePage/homePage";
 import AboutTeaFactory from "./HomePage/home_aboutUs";
 import Footer from "./footer";
 import TeaTimeline from "./HomePage/teaTimeLine";
-import AllProduct from "./AllProductPage/productPage";  //  import products page
+import AllProduct from "./AllProductPage/productPage";  
 import AdminPanel from "./UserManagement/components/AdminLayer"
 import LoginPage from './UserManagement/components/LoginPage';
 import CustomerSignUp from './UserManagement/components/CustomerSignUp';
 import CartPage from './AllProductPage/CartPage';
 import PaymentWizard from './AllProductPage/PaymentWizard';
+import ProtectedRoute from './ProtectedRoute';
 
 function App() {
   return (
@@ -42,11 +43,27 @@ function App() {
           {/* About Page */}
           <Route path="/about" element={<h1>About Page</h1>} />
           <Route path="/contact" element={<h1>Contact Page</h1>} />
-          <Route path="/admin/*" element={<AdminPanel />} />
+
+          <Route 
+            path="/admin/*" 
+            element={
+            <ProtectedRoute requiredRole="ADMIN">
+            <AdminPanel />
+            </ProtectedRoute>
+            } 
+          />
+
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<CustomerSignUp />} />
           <Route path="/cart" element={<CartPage />} />
-          <Route path="/payment" element={<PaymentWizard />} />
+          <Route 
+            path="/payment" 
+            element={
+            <ProtectedRoute requiredRole="CUSTOMER">
+            <PaymentWizard />
+            </ProtectedRoute>
+            } 
+          />
         </Routes>
 
       </div>

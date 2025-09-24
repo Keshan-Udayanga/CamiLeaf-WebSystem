@@ -1,11 +1,20 @@
 import React from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink, Link, useNavigate } from 'react-router-dom';
 import '../styles/Sidebar.css';
 
 function Sidebar() {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('role');
+    navigate('/login', { replace: true });
+  };
+
   return (
     <div className="sidebar">
-      <Link to="/admin" style={{ textDecoration: 'none' }}>
+      <div className="sidebar-top">
+        <Link to="/admin" style={{ textDecoration: 'none' }}>
         <h2 className="sidebar-title">Admin Panel</h2>
       </Link>
       <ul>
@@ -49,7 +58,17 @@ function Sidebar() {
           </NavLink>
         </li>
       </ul>
+      </div>
+
+      <div className="sidebar-bottom">
+        <button onClick={handleLogout} className="sidebar-logout">
+          Logout
+        </button>
+      </div>
+    
     </div>
+      
+    
   );
 }
 
