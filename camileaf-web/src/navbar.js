@@ -3,16 +3,18 @@ import {
   AppBar,
   Toolbar,
   Box,
-  TextField,
   IconButton,
   Drawer,
   List,
   ListItem,
   ListItemText,
   useMediaQuery,
+  Button,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import logo from "./assets/logo.png";
+import logo from "./assets/web-logo.png";
+import { Link } from "react-router-dom";
+
 
 function Navbar({ className }) {
   const [scrolled, setScrolled] = useState(false);
@@ -67,7 +69,7 @@ function Navbar({ className }) {
               width: "75%",
             }}
           >
-            <Box component="img" src={logo} alt="Logo" sx={{ height: 60, width: "auto", p: 1 }} />
+            <Box component="img" src={logo} alt="Logo" sx={{ height: 80, width: "auto", p: 1 }} />
             
             {!isMobile && (
               <Box
@@ -109,22 +111,8 @@ function Navbar({ className }) {
 
           {/* Right: Search */}
           <Box sx={{ width: isMobile ? "100%" : "auto", mt: isMobile ? 1 : 0 }}>
-            <TextField
-              variant="outlined"
-              size="small"
-              placeholder="Search..."
-              fullWidth={isMobile}
-              sx={{
-                backgroundColor: "#fff",
-                borderRadius: "20px",
-                width: isMobile ? "100%" : 200,
-                "& .MuiOutlinedInput-root": {
-                  "& fieldset": { border: "none" },
-                  "&:hover fieldset": { border: "none" },
-                  "&.Mui-focused fieldset": { border: "none" },
-                },
-              }}
-            />
+            {/* Login button */}
+            <Button sx={{backgroundColor:"white"}}><Link className="btn" sx={{textDecoration:"none"}}>Login</Link></Button>
           </Box>
         </Toolbar>
       </AppBar>

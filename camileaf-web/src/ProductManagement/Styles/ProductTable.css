@@ -1,7 +1,7 @@
 .admin-products-container {
-  padding: 20px;
-  max-width: 1100px;
-  margin: auto;
+  padding: 0px;
+  max-width: 100%;
+  margin: 0px;
 }
 
 h2 {
@@ -15,7 +15,8 @@ h2 {
 .top-actions {
   display: flex;
   gap: 15px;
-  margin-bottom: 20px;
+  margin-bottom: 0px;
+  margin-left: 80px;
   align-items: center;
   flex-wrap: wrap;
 }
@@ -70,6 +71,9 @@ h2 {
 
 /* Table */
 .table-wrapper {
+  width: 100%;
+  margin: 0px;
+  padding: 0px;
   overflow-x: auto;
 }
 

@@ -1,20 +1,78 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import "../Styles/ProductForm.css";
 
 const ProductForm = ({ onClose, onAdd }) => {
+  const navigate = useNavigate();
+
   const [form, setForm] = useState({
     productName: "",
     price: "",
     stock: "",
     discount: "",
-    category: "CTC", // default
+    category: "",
     productImg: null,
     imagePreview: "",
   });
 
+  const [errors, setErrors] = useState({
+    price: "",
+    stock: "",
+    discount: "",
+    category: "",
+  });
+
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    let newErrors = { ...errors };
+
+    // Stock >= 1
+    if (name === "stock") {
+      if (value === "" || parseInt(value) < 1) {
+        newErrors.stock = "Stock must be at least 1";
+      } else {
+        newErrors.stock = "";
+      }
+    }
+
+    // Price > 0
+    if (name === "price") {
+      if (value === "" || parseFloat(value) <= 0) {
+        newErrors.price = "Price must be greater than 0";
+      } else {
+        newErrors.price = "";
+      }
+    }
+
+    // Discount: max 1 decimal place, 0-100
+    if (name === "discount") {
+      if (value === "") {
+        newErrors.discount = "";
+      } else {
+        const parts = value.split(".");
+        const num = parseFloat(value);
+        if (num < 0 || num > 100) {
+          newErrors.discount = "Discount must be between 0 and 100";
+        } else if (parts[1] && parts[1].length > 1) {
+          newErrors.discount = "Only 1 decimal place allowed";
+        } else {
+          newErrors.discount = "";
+        }
+      }
+    }
+
+    // Category required
+    if (name === "category") {
+      if (!value) {
+        newErrors.category = "Please select a category";
+      } else {
+        newErrors.category = "";
+      }
+    }
+
+    setErrors(newErrors);
+    setForm({ ...form, [name]: value });
   };
 
   const handleImageChange = (e) => {
@@ -30,7 +88,14 @@ const ProductForm = ({ onClose, onAdd }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!form.productName || !form.price || !form.stock || !form.productImg) {
+
+    // Check validation errors
+    if (errors.price || errors.stock || errors.discount || errors.category) {
+      alert("Please fix errors before submitting.");
+      return;
+    }
+
+    if (!form.productName || !form.price || !form.stock || !form.category || !form.productImg) {
       alert("Please fill all required fields.");
       return;
     }
@@ -53,14 +118,8 @@ const ProductForm = ({ onClose, onAdd }) => {
         );
 
         if (response.status === 200) {
-          const savedProduct = { ...product, _id: response.data }; // Backend returns ID
+          if (typeof onAdd === "function") onAdd(product);
 
-          // ✅ only call if onAdd is provided
-          if (typeof onAdd === "function") {
-            onAdd(savedProduct);
-          }
-
-          alert("Product added successfully!");
           setForm({
             productName: "",
             price: "",
@@ -71,9 +130,7 @@ const ProductForm = ({ onClose, onAdd }) => {
             imagePreview: "",
           });
 
-          if (typeof onClose === "function") {
-            onClose();
-          }
+          navigate("/admin/product-management/");
         }
       } catch (error) {
         console.error("Error adding product:", error);
@@ -95,6 +152,7 @@ const ProductForm = ({ onClose, onAdd }) => {
             name="productName"
             value={form.productName}
             onChange={handleChange}
+            placeholder="Enter product name"
             required
           />
         </label>
@@ -106,8 +164,13 @@ const ProductForm = ({ onClose, onAdd }) => {
             name="price"
             value={form.price}
             onChange={handleChange}
+            className={errors.price ? "error-input" : ""}
+            min="0.01"
+            step="0.01"
+            placeholder="Enter price"
             required
           />
+          {errors.price && <span className="error-text">{errors.price}</span>}
         </label>
 
         <label>
@@ -117,8 +180,13 @@ const ProductForm = ({ onClose, onAdd }) => {
             name="stock"
             value={form.stock}
             onChange={handleChange}
+            className={errors.stock ? "error-input" : ""}
+            min="1"
+            step="1"
+            placeholder="Enter stock quantity"
             required
           />
+          {errors.stock && <span className="error-text">{errors.stock}</span>}
         </label>
 
         <label>
@@ -128,8 +196,15 @@ const ProductForm = ({ onClose, onAdd }) => {
             name="discount"
             value={form.discount}
             onChange={handleChange}
-            placeholder="0"
+            className={errors.discount ? "error-input" : ""}
+            min="0"
+            max="100"
+            step="0.1"
+            placeholder="Enter discount (max 1 decimal)"
           />
+          {errors.discount && (
+            <span className="error-text">{errors.discount}</span>
+          )}
         </label>
 
         <label>
@@ -138,12 +213,18 @@ const ProductForm = ({ onClose, onAdd }) => {
             name="category"
             value={form.category}
             onChange={handleChange}
+            className={errors.category ? "error-input" : ""}
             required
           >
-            <option value=""></option>
+            <option value="" disabled>
+              --Select Product Category--
+            </option>
             <option value="CTC">CTC</option>
             <option value="Orthodox">Orthodox</option>
           </select>
+          {errors.category && (
+            <span className="error-text">{errors.category}</span>
+          )}
         </label>
 
         <label>
@@ -152,6 +233,7 @@ const ProductForm = ({ onClose, onAdd }) => {
             type="file"
             accept="image/*"
             onChange={handleImageChange}
+            placeholder="Choose product image"
             required
           />
         </label>
@@ -167,7 +249,7 @@ const ProductForm = ({ onClose, onAdd }) => {
           <button
             type="button"
             className="btn-cancel"
-            onClick={() => typeof onClose === "function" && onClose()}
+            onClick={() => navigate("/admin/product-management/")}
           >
             Cancel
           </button>

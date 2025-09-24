@@ -68,7 +68,7 @@ function AdminOrdersTable() {
       <h1>📝 Orders Dashboard</h1>
 
       <table className="dashboard-table">
-        <thead>
+        <thead style={{background:"#d0a15e"}}>
           <tr>
             <th>Order ID</th>
             <th>Customer Name</th>
