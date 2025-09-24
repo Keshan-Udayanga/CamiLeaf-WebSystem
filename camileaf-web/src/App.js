@@ -13,6 +13,8 @@ import LoginPage from './UserManagement/components/LoginPage';
 import CustomerSignUp from './UserManagement/components/CustomerSignUp';
 import CartPage from './AllProductPage/CartPage';
 import PaymentWizard from './AllProductPage/PaymentWizard';
+import AboutUs from './AboutUs/AboutUs'
+import ContactUs from './ContactUs/ContactUsPage';
 
 function App() {
   return (
@@ -40,8 +42,8 @@ function App() {
           <Route path="/products" element={<AllProduct />} />
 
           {/* About Page */}
-          <Route path="/about" element={<h1>About Page</h1>} />
-          <Route path="/contact" element={<h1>Contact Page</h1>} />
+          <Route path="/about" element={<AboutUs/>} />
+          <Route path="/contact" element={<ContactUs/>} />
           <Route path="/admin/*" element={<AdminPanel />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<CustomerSignUp />} />
