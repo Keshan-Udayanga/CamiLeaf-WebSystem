@@ -6,10 +6,9 @@ import "./PaymentWizard.css";
 function PaymentWizard() {
   const location = useLocation();
   const navigate = useNavigate();
-const onBackToCart = () => navigate(-1); 
+  const onBackToCart = () => navigate(-1); 
 
-
-   const cartItems = location.state?.cartItems || [];
+  const cartItems = location.state?.cartItems || [];
   const total = location.state?.total || 0;
 
   const [step, setStep] = useState(1);
@@ -75,13 +74,20 @@ const onBackToCart = () => navigate(-1);
   const validateStep = (step) => {
     const newErrors = {};
     if (step === 1) {
-      if (!shipping.fullName) newErrors.fullName = "Full name required";
-      if (!shipping.email) newErrors.email = "Email required";
-      else if (!/\S+@\S+\.\S+/.test(shipping.email))
-        newErrors.email = "Invalid email";
-      if (!shipping.address) newErrors.address = "Address required";
-      if (!shipping.city) newErrors.city = "City required";
-      if (!shipping.zip) newErrors.zip = "ZIP required";
+      if (!shipping.fullName.trim()) newErrors.fullName = "Full name required";
+      else if (shipping.fullName.trim().length < 2) newErrors.fullName = "Name too short";
+      else if (/^\d+$/.test(shipping.fullName.trim())) newErrors.fullName = "Name cannot be only numbers";
+      
+      if (!shipping.email.trim()) newErrors.email = "Email required";
+      else if (!/\S+@\S+\.\S+/.test(shipping.email)) newErrors.email = "Invalid email";
+      
+      if (!shipping.address.trim()) newErrors.address = "Address required";
+      
+      if (!shipping.city.trim()) newErrors.city = "City required";
+      else if (/^\d+$/.test(shipping.city.trim())) newErrors.city = "City cannot be only numbers";
+      
+      if (!shipping.zip.trim()) newErrors.zip = "ZIP required";
+      else if (!/^\d+$/.test(shipping.zip)) newErrors.zip = "ZIP must be numbers only";
     }
     if (step === 2 && payment.method === "card") {
       if (!payment.cardNumber || payment.cardNumber.replace(/\s/g, "").length < 16)
@@ -123,35 +129,35 @@ const onBackToCart = () => navigate(-1);
     setPayment((p) => ({ ...p, method }));
 
   const handleConfirm = async () => {
-  const orderData = {
-  ordertype: "Online",
-  fullName: shipping.fullName,
-  address: shipping.address,
-  city: shipping.city,
-  email: shipping.email,
-  paymentMethod: payment.method,
-  zip: shipping.zip,
-  status: "Pending",
-  total: total,
-  items: cartItems.map(item => ({
-    productId: item.id,
-    productName: item.productName,
-    quantity: item.qty,
-    price: item.price
-  }))
-};
+    const orderData = {
+      ordertype: "Online",
+      fullName: shipping.fullName,
+      address: shipping.address,
+      city: shipping.city,
+      email: shipping.email,
+      paymentMethod: payment.method,
+      zip: shipping.zip,
+      status: "Pending",
+      total: total,
+      items: cartItems.map(item => ({
+        productId: item.id,
+        productName: item.productName,
+        quantity: item.qty,
+        price: item.price
+      }))
+    };
 
-  try {
-    const response = await axios.post("http://localhost:8081/api/v1/order/add", orderData);
-    alert("✅ Order placed successfully! Order ID: " + response.data);
-    setIsSubmitting(false);
-    navigate("/"); // go back to home or another page
-  } catch (error) {
-    console.error("Error placing order:", error);
-    alert("❌ Failed to place order");
-    setIsSubmitting(false);
-  }
-};
+    try {
+      const response = await axios.post("http://localhost:8081/api/v1/order/add", orderData);
+      alert("✅ Order placed successfully! Order ID: " + response.data);
+      setIsSubmitting(false);
+      navigate("/"); // go back to home or another page
+    } catch (error) {
+      console.error("Error placing order:", error);
+      alert("❌ Failed to place order");
+      setIsSubmitting(false);
+    }
+  };
 
   // Steps
   const steps = ["Shipping", "Payment", "Review"];
