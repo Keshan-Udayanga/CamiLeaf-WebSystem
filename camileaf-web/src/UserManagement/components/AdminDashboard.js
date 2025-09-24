@@ -3,6 +3,8 @@ import '../styles/AdminDashboard.css';
 import userManagement from '../assests/usermg.jpg'
 import productManagement from '../assests/product.jpg'
 import reports from '../assests/report.webp'
+import api from '../../axiosConfig';
+import { useEffect, useState } from 'react';
 
 
 function Dashboard() {
@@ -12,8 +14,25 @@ function Dashboard() {
   const isResourceManager = role === "RESOURCE MANAGER";
   const isLeafClerk = role === "LEAF CLERK";
 
+  const [userName, setUserName] = useState("");
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await api.get("/api/v1/user/me");
+        const user = response.data;
+        setUserName(`${user.firstName} ${user.lastName}`);
+      } catch (err) {
+        console.error("Failed to fetch user info:", err);
+      }
+    };
+
+    fetchUser();
+  }, []);
+
   return (
     <div className="dashboard">
+      {userName && <h2 className="dashboard-username">Hello, {userName} </h2>}
   <h1>Welcome to Admin Panel</h1>
 
   <div className="cards-container">

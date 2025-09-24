@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./CartPage.css";
 
@@ -6,7 +6,14 @@ function CartPage() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const [cartItems, setCartItems] = useState(location.state?.cart || []);
+  //Use local storage to store cart items
+  const [cartItems, setCartItems] = useState(() => {
+  return location.state?.cart || JSON.parse(localStorage.getItem('cart')) || [];
+  });
+
+  useEffect(() => {
+  localStorage.setItem('cart', JSON.stringify(cartItems));
+  }, [cartItems]);
 
   const increaseQty = (id) => {
     setCartItems(cartItems.map(item => item.id === id ? { ...item, qty: item.qty + 1 } : item));

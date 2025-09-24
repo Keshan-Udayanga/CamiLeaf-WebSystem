@@ -54,14 +54,32 @@ const CustomerSignUp = () => {
 
     };
 
+    
     const handlePasswordChange = (e) => {
-        setRePassword(e.target.value);
-        if(password && e.target.value !== password){
-            setPassError('Password does not match');
-        }else{
-            setPassError('');
+        const newPassword = e.target.value;
+        setPassword(newPassword);
+
+        
+        if (repassword && newPassword !== repassword) {
+            setPassError("Passwords do not match");
+        } else {
+            setPassError("");
         }
-    }
+    };
+
+
+    const handleRePasswordChange = (e) => {
+        const newRePassword = e.target.value;
+        setRePassword(newRePassword);
+
+        
+        if (password && newRePassword !== password) {
+            setPassError("Passwords do not match");
+        } else {
+            setPassError("");
+        }
+    };
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -152,7 +170,7 @@ const CustomerSignUp = () => {
                             type="password"
                             placeholder="Enter your Password"
                             value={password}
-                            onChange={(e) => setPassword(e.target.value)}
+                            onChange={handlePasswordChange}
                             required
                         />
                     </div>
@@ -162,7 +180,7 @@ const CustomerSignUp = () => {
                             type="password"
                             placeholder="Re-Enter your Password"
                             value={repassword}
-                            onChange={handlePasswordChange}
+                            onChange={handleRePasswordChange}
                             required
                         />
                     </div>

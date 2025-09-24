@@ -62,7 +62,7 @@ const AddUserForm = () => {
     const phoneRege = /^[0-9]{10}$/;
     
     if(!formData.email){
-      errors.email = 'Emain is required';
+      errors.email = 'Email is required';
     }else if(!formData.email.includes('@')){
       errors.email = 'Invalid Email format';
     }

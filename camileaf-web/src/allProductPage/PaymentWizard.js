@@ -32,9 +32,10 @@ function PaymentWizard() {
 
 
    
+  //load cart from localstorage
+   const cartItems = location.state?.cartItems || JSON.parse(localStorage.getItem("cart")) || [];
+const total = location.state?.total || cartItems.reduce((sum, item) => sum + item.price * item.qty, 0);
 
-   const cartItems = location.state?.cartItems || [];
-  const total = location.state?.total || 0;
 
   const [step, setStep] = useState(1);
   const [shipping, setShipping] = useState({
@@ -177,6 +178,8 @@ function PaymentWizard() {
     const response = await api.post("/api/v1/order/add", orderData);
     alert("✅ Order placed successfully! Order ID: " + response.data);
     setIsSubmitting(false);
+    //clear cart
+    localStorage.removeItem("cart");
     navigate("/"); 
   } catch (error) {
     console.error("Error placing order:", error);

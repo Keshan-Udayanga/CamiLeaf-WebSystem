@@ -18,9 +18,12 @@ function Sidebar() {
 
 
   const handleLogout = () => {
+    const confirmed = window.confirm('Do you want to log out?'); 
+    if (confirmed) {
     localStorage.removeItem('token');
     localStorage.removeItem('role');
     navigate('/login', { replace: true });
+    }
   };
 
   return (
