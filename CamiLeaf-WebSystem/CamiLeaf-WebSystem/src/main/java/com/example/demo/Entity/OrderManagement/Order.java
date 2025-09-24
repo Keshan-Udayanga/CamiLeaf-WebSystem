@@ -3,6 +3,8 @@ package com.example.demo.Entity.OrderManagement;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.List;
+
 @Document(collection = "Order")
 public class Order {
 
@@ -17,20 +19,29 @@ public class Order {
     private String status;
     private int zip;
     private double total;
+    private List<OrderItem> items;
 
     public Order() {}
 
-    public Order( String ordertype, String fullName, String address, String city, String email, String paymentMethod, int zip, String status, double total) {
-
-        this.Ordertype = ordertype;
-        this.fullName = fullName;
+    public Order(String ordertype, String address, String fullName, String city, String email, String paymentMethod, String status, int zip, double total, List<OrderItem> items) {
+        Ordertype = ordertype;
         this.address = address;
+        this.fullName = fullName;
         this.city = city;
         this.email = email;
         this.paymentMethod = paymentMethod;
-        this.zip = zip;
         this.status = status;
+        this.zip = zip;
         this.total = total;
+        this.items = items;
+    }
+
+    public List<OrderItem> getItems() {
+        return items;
+    }
+
+    public void setItems(List<OrderItem> items) {
+        this.items = items;
     }
 
     public String getId() {

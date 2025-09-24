@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin
@@ -33,10 +34,13 @@ public class OrderController {
         return "Delete Successfully";
     }
 
-    //get by Id
-    @GetMapping("/get/{id}")
-    public Order getProduct(@PathVariable String id, @RequestBody Order order){
-        return orderServices.updateOrder(id , order);
+    //update order
+
+    @PutMapping("/update/{id}")
+    public Order updateOrderStatus(@PathVariable String id, @RequestBody Map<String, String> request) {
+        String status = request.get("status");
+        return orderServices.updateStatus(id, status);
     }
+
 
 }

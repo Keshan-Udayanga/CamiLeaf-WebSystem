@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../Styles/OrderManagement.css";
 
 function AdminOrdersTable() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchOrders();
@@ -15,7 +17,7 @@ function AdminOrdersTable() {
       const response = await axios.get("http://localhost:8081/api/v1/order/getAll");
       const data = response.data.map(order => ({
         ...order,
-        cartItems: order.cartItems || [],
+        items: order.items || [], // ✅ use backend `items`
         shipping: {
           fullName: order.fullName || "",
           email: order.email || "",
@@ -25,7 +27,8 @@ function AdminOrdersTable() {
         },
         payment: {
           method: order.paymentMethod || "cod"
-        }
+        },
+        status: order.status || "Pending"
       }));
       setOrders(data);
     } catch (error) {
@@ -35,38 +38,20 @@ function AdminOrdersTable() {
     }
   };
 
-  const updateStatus = async (orderId, newStatus) => {
-    try {
-      await axios.put(`http://localhost:8081/api/v1/order/update/${orderId}`, {
-        status: newStatus
-      });
-      setOrders((prev) =>
-        prev.map((order) =>
-          order.id === orderId ? { ...order, status: newStatus } : order
-        )
-      );
-    } catch (error) {
-      console.error("Error updating status:", error);
-    }
-  };
-
   const deleteOrder = async (orderId) => {
     try {
       await axios.delete(`http://localhost:8081/api/v1/order/delete/${orderId}`);
-      setOrders((prev) => prev.filter((order) => order.id !== orderId));
+      setOrders(prev => prev.filter(order => order.id !== orderId));
     } catch (error) {
       console.error("Error deleting order:", error);
     }
   };
 
-  if (loading) {
-    return <p style={{ textAlign: "center", marginTop: "50px" }}>Loading orders...</p>;
-  }
+  if (loading) return <p style={{ textAlign: "center", marginTop: "50px" }}>Loading orders...</p>;
 
   return (
     <div className="order-dashboard">
       <h1>📝 Orders Dashboard</h1>
-
       <table className="dashboard-table">
         <thead style={{background:"#d0a15e"}}>
           <tr>
@@ -80,12 +65,13 @@ function AdminOrdersTable() {
             <th>Items</th>
             <th>Total</th>
             <th>Status</th>
-            <th>Actions</th>
+            <th>Change Status</th>
+            <th>Delete</th>
           </tr>
         </thead>
         <tbody>
           {orders.length > 0 ? (
-            orders.map((order) => (
+            orders.map(order => (
               <tr key={order.id}>
                 <td>{order.id}</td>
                 <td>{order.shipping.fullName}</td>
@@ -93,41 +79,32 @@ function AdminOrdersTable() {
                 <td>{order.shipping.address}</td>
                 <td>{order.shipping.city}</td>
                 <td>{order.shipping.zip}</td>
-                <td>
-                  {order.payment.method === "card"
-                    ? "Credit/Debit Card"
-                    : "Cash on Delivery"}
-                </td>
+                <td>{order.payment.method === "card" ? "Credit/Debit Card" : "Cash on Delivery"}</td>
                 <td>
                   <ul className="order-items-list">
-                    {order.cartItems.map((item) => (
-                      <li key={item.id}>
-                        {item.name} (x{item.qty})
+                    {order.items.map((item, idx) => (
+                      <li key={idx}>
+                        {item.productName} (x{item.quantity})
                       </li>
                     ))}
                   </ul>
                 </td>
                 <td>Rs. {order.total.toLocaleString()}</td>
-                <td>{order.status || "Pending"}</td>
+                <td className={`status-badge ${order.status.toLowerCase()}`}>
+                  {order.status}
+                </td>
                 <td>
                   <button
-                    onClick={() =>
-                      updateStatus(
-                        order.id,
-                        order.status === "Pending"
-                          ? "Processing"
-                          : order.status === "Processing"
-                          ? "Completed"
-                          : "Pending"
-                      )
-                    }
-                    style={{ marginRight: "5px" }}
+                    onClick={() => navigate(`/admin/order-management/edit/${order.id}`)}
+                    className="btn-change"
                   >
                     Change Status
                   </button>
+                </td>
+                <td>
                   <button
                     onClick={() => deleteOrder(order.id)}
-                    style={{ backgroundColor: "red", color: "white" }}
+                    className="btn-delete"
                   >
                     Delete
                   </button>
@@ -136,7 +113,7 @@ function AdminOrdersTable() {
             ))
           ) : (
             <tr>
-              <td colSpan="11" style={{ textAlign: "center", color: "#999" }}>
+              <td colSpan="12" style={{ textAlign: "center", color: "#999" }}>
                 No orders available
               </td>
             </tr>
