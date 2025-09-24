@@ -100,8 +100,7 @@ const ResourceTablePage = () => {
                   >
                     Release
                   </button> 
-                  <Button
-                    className="delete-btn"
+                  <Button variant="contained" color="error" size="small" sx={{ marginLeft: "10px", minWidth: "70px" }}
                     onClick={() => handleDelete(res.id)}
                   >
                     Delete
