@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/ReleaseForm.css";
+import api from "../../axiosConfig";
 
 const ResourceReleaseForm = ({ onUpdate }) => {
   const location = useLocation();
@@ -54,8 +55,8 @@ const ResourceReleaseForm = ({ onUpdate }) => {
   const confirmRelease = async () => {
     try {
       const qtyToRelease = parseInt(release.releaseQuantity, 10);
-      const response = await axios.put(
-        `http://localhost:8081/api/v1/resource/release/${release.resourceId}`,
+      const response = await api.put(
+        `/api/v1/resource/release/${release.resourceId}`,
         { releaseQuantity: qtyToRelease }
       );
 

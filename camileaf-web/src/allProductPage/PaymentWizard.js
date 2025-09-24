@@ -1,15 +1,41 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import axios from "axios";
 import "./PaymentWizard.css";
+import api from "../axiosConfig";
 
 function PaymentWizard() {
   const location = useLocation();
   const navigate = useNavigate();
-  const onBackToCart = () => navigate(-1); 
+  const onBackToCart = () => navigate(-1);
 
-  const cartItems = location.state?.cartItems || [];
-  const total = location.state?.total || 0;
+  useEffect(() => {
+  const fetchCustomer = async () => {
+    try {
+      const response = await api.get("/api/v1/user/me");
+      const user = response.data;
+
+      setShipping({
+        fullName: `${user.firstName} ${user.lastName}`,
+        email: user.email,
+        address: user.address,
+        city: user.city,
+        zip: user.zip,
+      });
+    } catch (err) {
+      alert('catch called' + err);
+      console.error("Failed to fetch customer info:", err);
+    }
+  };
+
+  fetchCustomer();
+}, []);
+
+
+   
+  //load cart from localstorage
+   const cartItems = location.state?.cartItems || JSON.parse(localStorage.getItem("cart")) || [];
+const total = location.state?.total || cartItems.reduce((sum, item) => sum + item.price * item.qty, 0);
+
 
   const [step, setStep] = useState(1);
   const [shipping, setShipping] = useState({
@@ -31,6 +57,7 @@ function PaymentWizard() {
 
   // Detect card type
   useEffect(() => {
+    
     if (payment.cardNumber) {
       const cardNumber = payment.cardNumber.replace(/\s/g, "");
       if (/^4/.test(cardNumber)) {
@@ -147,17 +174,19 @@ function PaymentWizard() {
       }))
     };
 
-    try {
-      const response = await axios.post("http://localhost:8081/api/v1/order/add", orderData);
-      alert("✅ Order placed successfully! Order ID: " + response.data);
-      setIsSubmitting(false);
-      navigate("/"); // go back to home or another page
-    } catch (error) {
-      console.error("Error placing order:", error);
-      alert("❌ Failed to place order");
-      setIsSubmitting(false);
-    }
-  };
+  try {
+    const response = await api.post("/api/v1/order/add", orderData);
+    alert("✅ Order placed successfully! Order ID: " + response.data);
+    setIsSubmitting(false);
+    //clear cart
+    localStorage.removeItem("cart");
+    navigate("/"); 
+  } catch (error) {
+    console.error("Error placing order:", error);
+    alert("❌ Failed to place order");
+    setIsSubmitting(false);
+  }
+};
 
   // Steps
   const steps = ["Shipping", "Payment", "Review"];

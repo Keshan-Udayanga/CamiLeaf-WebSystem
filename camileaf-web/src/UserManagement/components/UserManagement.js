@@ -5,8 +5,8 @@ import "../styles/UserManagement.css";
 import { TextField, Select, MenuItem, Button, Table, TableHead, TableRow, TableCell, TableBody, IconButton } from "@mui/material";
 import { Add, Edit, Delete } from "@mui/icons-material";
 import { useNavigate } from 'react-router-dom';
-import axios from "axios";
 import { formatDistanceToNow } from 'date-fns';
+import api from "../../axiosConfig";
 
 const UserManagement = () => {
   const [role, setRole] = useState('');     
@@ -15,6 +15,7 @@ const UserManagement = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setcurrentPage] = useState(1);
   const pageSize = 10;
+  const token = localStorage.getItem("token");
 
   const navigate = useNavigate();
 
@@ -23,13 +24,15 @@ const UserManagement = () => {
   };
 
 useEffect(() => {
+  console.log('Token:' + localStorage.getItem("token"));
   (async () => await Load())();
 }, []);
 
 
   async function Load() {
-    const result = await axios.get(
-      "http://localhost:8081/api/v1/user/getAll"
+    console.log(token);
+    const result = await api.get(
+      "/api/v1/user/getAll"
     )
     setUser(result.data);
   }
@@ -44,7 +47,8 @@ useEffect(() => {
     if(!confirmDelete) return;
 
     try{
-      await axios.delete("http://localhost:8081/api/v1/user/delete/" + userId);
+      await api.delete("/api/v1/user/delete/" + userId
+      );
       alert('User deleted successfully!');
       await Load();
     }catch(error){

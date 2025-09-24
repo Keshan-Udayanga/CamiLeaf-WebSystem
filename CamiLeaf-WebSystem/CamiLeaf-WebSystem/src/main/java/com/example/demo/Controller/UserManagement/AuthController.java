@@ -5,6 +5,7 @@ import com.example.demo.DTO.SignUpRequest;
 import com.example.demo.Entity.UserManagement.Customer;
 import com.example.demo.Entity.UserManagement.User;
 import com.example.demo.Service.UserManagement.UserServices;
+import com.example.demo.Utility.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +29,9 @@ public class AuthController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    @Autowired
+    private JWTUtil jwtUtil;
+
     @PostMapping("/login")
     public ResponseEntity<Map<String, Object>> login(@RequestBody LoginRequest loginRequest ){
         Map<String, Object> response = new HashMap<>();
@@ -41,9 +45,12 @@ public class AuthController {
             User user = userServices.getUserByEmail(loginRequest.getEmail())
                     .orElseThrow(() -> new RuntimeException("User not found"));
 
+            String token = jwtUtil.generateToken(user.getEmail(), user.getRole());
+
             response.put("success", true);
             response.put("email", user.getEmail());
             response.put("role", user.getRole().toUpperCase());
+            response.put("token", token);
 
             return ResponseEntity.ok(response);
 
@@ -72,9 +79,12 @@ public class AuthController {
             User newUser = userServices.signupCustomer(customer);
 
             return ResponseEntity.ok().body(newUser);
-        }catch (RuntimeException e){
-            System.out.println(e.getMessage());
-            return ResponseEntity.badRequest().body(e.getMessage());
+        }catch (RuntimeException e) {
+
+            Map<String, String> errorBody = new HashMap<>();
+            errorBody.put("error", e.getMessage());
+            return ResponseEntity.badRequest().body(errorBody);
         }
+
     }
 }

@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import axios from "axios";
 import PhoneInput from "react-phone-number-input";
 import { useNavigate } from 'react-router-dom';
 import { parsePhoneNumberFromString } from 'libphonenumber-js';
 import countries from 'i18n-iso-countries';
 import enLocale from 'i18n-iso-countries/langs/en.json';
 import "react-phone-number-input/style.css";
-import "../styles/CustomerSignUp.css"
+import "../styles/CustomerSignUp.css";
+import api from "../../axiosConfig";
 
 const CustomerSignUp = () => {
     const [firstName, setFName] = useState("");
@@ -54,14 +54,32 @@ const CustomerSignUp = () => {
 
     };
 
+    
     const handlePasswordChange = (e) => {
-        setRePassword(e.target.value);
-        if(password && e.target.value !== password){
-            setPassError('Password does not match');
-        }else{
-            setPassError('');
+        const newPassword = e.target.value;
+        setPassword(newPassword);
+
+        
+        if (repassword && newPassword !== repassword) {
+            setPassError("Passwords do not match");
+        } else {
+            setPassError("");
         }
-    }
+    };
+
+
+    const handleRePasswordChange = (e) => {
+        const newRePassword = e.target.value;
+        setRePassword(newRePassword);
+
+        
+        if (password && newRePassword !== password) {
+            setPassError("Passwords do not match");
+        } else {
+            setPassError("");
+        }
+    };
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -78,7 +96,7 @@ const CustomerSignUp = () => {
 
         try {
             
-            const response = await axios.post("http://localhost:8081/api/auth/signup", {
+            const response = await api.post("/api/auth/signup", {
                 email,
                 password,
                 firstName,
@@ -96,8 +114,12 @@ const CustomerSignUp = () => {
             }
             
         } catch (err) {
-            
-            setError("An error occurred during signup.");
+            console.log('error' + err.response);
+            if (err.response && err.response.data && err.response.data.error) {
+                setError(err.response.data.error);
+            } else {
+                setError("An error occurred during signup.");
+            }
             setSuccess("");
         }
     };
@@ -148,7 +170,7 @@ const CustomerSignUp = () => {
                             type="password"
                             placeholder="Enter your Password"
                             value={password}
-                            onChange={(e) => setPassword(e.target.value)}
+                            onChange={handlePasswordChange}
                             required
                         />
                     </div>
@@ -158,7 +180,7 @@ const CustomerSignUp = () => {
                             type="password"
                             placeholder="Re-Enter your Password"
                             value={repassword}
-                            onChange={handlePasswordChange}
+                            onChange={handleRePasswordChange}
                             required
                         />
                     </div>

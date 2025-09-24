@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/AddResourcesForm.css";
+import api from "../../axiosConfig";
 
 const AddResourceForm = () => {
   const navigate = useNavigate();
@@ -44,7 +45,7 @@ const AddResourceForm = () => {
 
   const confirmAdd = async () => {
     try {
-      await axios.post("http://localhost:8081/api/v1/resource/add", {
+      await api.post("/api/v1/resource/add", {
         resourceType: resource.resourceType,
         quantity: resource.quantity,
         unit: resource.unitOfMeasure,

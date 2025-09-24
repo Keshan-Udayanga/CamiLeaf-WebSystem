@@ -1,44 +1,78 @@
-import {Link} from 'react-router-dom';
-
-import React from 'react';
+import { Link} from 'react-router-dom';
 import '../styles/AdminDashboard.css';
 import userManagement from '../assests/usermg.jpg'
 import productManagement from '../assests/product.jpg'
 import reports from '../assests/report.webp'
+import api from '../../axiosConfig';
+import { useEffect, useState } from 'react';
 
 
 function Dashboard() {
+  const role = localStorage.getItem("role")?.toUpperCase();
+
+  const isAdmin = role === "ADMIN";
+  const isResourceManager = role === "RESOURCE MANAGER";
+  const isLeafClerk = role === "LEAF CLERK";
+
+  const [userName, setUserName] = useState("");
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await api.get("/api/v1/user/me");
+        const user = response.data;
+        setUserName(`${user.firstName} ${user.lastName}`);
+      } catch (err) {
+        console.error("Failed to fetch user info:", err);
+      }
+    };
+
+    fetchUser();
+  }, []);
+
   return (
     <div className="dashboard">
+      {userName && <h2 className="dashboard-username">Hello, {userName} </h2>}
   <h1>Welcome to Admin Panel</h1>
 
   <div className="cards-container">
-    <Link to="/admin/user-management" className="card" style={{ textDecoration: "none" }}>
+    {isAdmin && (
+      <Link to="/admin/user-management" className="card" style={{ textDecoration: "none" }}>
       <img src={userManagement} alt="User Management" />
       <h3>User Management</h3>
     </Link>
-
-    <Link to="/admin/product-management" className="card" style={{ textDecoration: "none" }}>
+    )}
+    
+    {isAdmin && (
+      <Link to="/admin/product-management" className="card" style={{ textDecoration: "none" }}>
       <img src={productManagement} alt="Product Management" />
       <h3>Product Management</h3>
     </Link>
-
-    <Link to="/admin/order-management" className="card" style={{ textDecoration: "none" }}>
+    )}
+    
+    {isAdmin && (
+      <Link to="/admin/order-management" className="card" style={{ textDecoration: "none" }}>
       <img src={productManagement} alt="Order Management" />
       <h3>Order Management</h3>
     </Link>
+    )}
+    
   </div>
 
   <div className="cards-container">
-    <Link to="/admin/resource-management" className="card" style={{ textDecoration: "none" }}>
+    {(isAdmin || isResourceManager) && (
+      <Link to="/admin/resource-management" className="card" style={{ textDecoration: "none" }}>
       <img src={productManagement} alt="Resource Management" />
       <h3>Resource Management</h3>
     </Link>
-
-    <Link to="/admin/leaf-intake" className="card" style={{ textDecoration: "none" }}>
+    )}
+    
+    {(isAdmin || isLeafClerk) && (
+      <Link to="/admin/leaf-intake" className="card" style={{ textDecoration: "none" }}>
       <img src={productManagement} alt="Tea Leaf Intake" />
       <h3>Tea Leaf Intake</h3>
     </Link>
+    )}
 
     <Link to="/admin/company-reports" className="card" style={{ textDecoration: "none" }}>
       <img src={reports} alt="Company Reports" />

@@ -1,3 +1,4 @@
+// App.js
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -7,28 +8,25 @@ import ProductsCarousel from "./HomePage/homePage";
 import AboutTeaFactory from "./HomePage/home_aboutUs";
 import Footer from "./footer";
 import TeaTimeline from "./HomePage/teaTimeLine";
-import AllProduct from "./AllProductPage/productPage";
-import AdminPanel from "./UserManagement/components/AdminLayer"
+import AllProduct from "./AllProductPage/productPage";  // Products page
+import AdminPanel from "./UserManagement/components/AdminLayer";
 import LoginPage from './UserManagement/components/LoginPage';
 import CustomerSignUp from './UserManagement/components/CustomerSignUp';
 import CartPage from './AllProductPage/CartPage';
 import PaymentWizard from './AllProductPage/PaymentWizard';
-import AboutUs from './AboutUs/AboutUs';
-import ContactUs from './ContactUs/ContactUsPage';
-import Services from './Services/Services';
+import ProtectedRoute from './ProtectedRoute'; // ✅ import ProtectedRoute
 
 function App() {
   return (
     <Router>
-      <div style={{ overflowX: "hidden" }}>        
-
+      <div style={{ overflowX: "hidden" }}>
         <Routes>
           {/* Home Page */}
           <Route
             path="/"
             element={
               <>
-              <Navbar />
+                <Navbar />
                 <Carousel />
                 <AboutTeaFactory />
                 <ProductsCarousel />
@@ -42,16 +40,29 @@ function App() {
           <Route path="/products" element={<AllProduct />} />
 
           {/* About Page */}
-          <Route path="/about" element={<AboutUs/>} />
-          <Route path="/contact" element={<ContactUs/>} />
-          <Route path="/services" element={<Services/>} />
+          <Route path="/about" element={<h1>About Page</h1>} />
+          <Route path="/contact" element={<h1>Contact Page</h1>} />
+
+          {/* Admin Panel */}
           <Route path="/admin/*" element={<AdminPanel />} />
+
+          {/* Authentication */}
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<CustomerSignUp />} />
-          <Route path="/cart" element={<CartPage />} />
-          <Route path="/payment" element={<PaymentWizard />} />
-        </Routes>
 
+          {/* Cart Page */}
+          <Route path="/cart" element={<CartPage />} />
+
+          {/* Payment Page (Protected) */}
+          <Route 
+            path="/payment" 
+            element={
+              <ProtectedRoute allowedRoles={["CUSTOMER"]}>
+                <PaymentWizard />
+              </ProtectedRoute>
+            } 
+          />
+        </Routes>
       </div>
     </Router>
   );

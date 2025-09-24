@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../Styles/ProductForm.css";
+import api from "../../axiosConfig";
 
 const ProductForm = ({ onClose, onAdd }) => {
   const navigate = useNavigate();
@@ -95,8 +96,8 @@ const ProductForm = ({ onClose, onAdd }) => {
       };
 
       try {
-        const response = await axios.post(
-          "http://localhost:8081/api/v1/product/add",
+        const response = await api.post(
+          "/api/v1/product/add",
           product
         );
 

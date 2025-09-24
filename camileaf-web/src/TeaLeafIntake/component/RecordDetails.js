@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../Styles/RecordDetails.css";
+import api from "../../axiosConfig";
 
 export default function LeafIntakeTable() {
   const [records, setRecords] = useState([]);
@@ -18,7 +19,7 @@ export default function LeafIntakeTable() {
 
   const fetchRecords = async () => {
     try {
-      const res = await axios.get("http://localhost:8081/api/v1/leafIntake/getAll");
+      const res = await api.get("/api/v1/leafIntake/getAll");
       setRecords(res.data);
     } catch (err) {
       console.error(err);
@@ -32,7 +33,7 @@ export default function LeafIntakeTable() {
     if (!window.confirm(`Are you sure you want to delete the record for ${supplierName}?`)) return;
 
     try {
-      await axios.delete(`http://localhost:8081/api/v1/leafIntake/delete/${id}`);
+      await api.delete(`/api/v1/leafIntake/delete/${id}`);
       setRecords(prev => prev.filter(record => record.id !== id));
     } catch (err) {
       console.error(err);

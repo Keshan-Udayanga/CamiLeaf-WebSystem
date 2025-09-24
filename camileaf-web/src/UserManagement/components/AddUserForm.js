@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../styles/AddUserForm.css';
 import { useNavigate, useLocation } from 'react-router-dom';
+import api from '../../axiosConfig';
 
 
 const AddUserForm = () => {
@@ -61,7 +62,7 @@ const AddUserForm = () => {
     const phoneRege = /^[0-9]{10}$/;
     
     if(!formData.email){
-      errors.email = 'Emain is required';
+      errors.email = 'Email is required';
     }else if(!formData.email.includes('@')){
       errors.email = 'Invalid Email format';
     }
@@ -109,8 +110,8 @@ const AddUserForm = () => {
 
     try {
       if(isEditMode){
-        const response = await axios.put(
-          'http://localhost:8081/api/v1/user/edit/' + formData.id,
+        const response = await api.put(
+          '/api/v1/user/edit/' + formData.id,
           formData
         );
 
@@ -119,14 +120,14 @@ const AddUserForm = () => {
           navigate('/admin/user-management');
         }
       }else{
-      const response = await axios.post(
-        'http://localhost:8081/api/v1/user/save',
+      const response = await api.post(
+        '/api/v1/user/save',
         formData  
       );
 
       if (response.status === 200) {
 
-        alert('User added successfully!');
+        alert(response.data.message);
         setFormData({
           email: '',
           password: '',
@@ -142,9 +143,11 @@ const AddUserForm = () => {
       }
     }
     } catch (error) {
-      console.error('Error adding user:', error);
-      alert('Failed to add user.');
-    }
+       if (error.response && error.response.data && error.response.data.error) {
+         alert(error.response.data.error); 
+      } else {
+        alert('Failed to add user.');
+      }}
   };
 
   return (
@@ -176,7 +179,7 @@ const AddUserForm = () => {
         <option value="" disabled>Select Role</option>
         <option value="Resource Manager">Resource Manager</option>
         <option value="Leaf Clerk">Leaf Clerk</option>
-        
+        <option value="Admin">Admin</option>
       </select>
       {formErrors.role && <span className="error">{formErrors.role}</span>}
 

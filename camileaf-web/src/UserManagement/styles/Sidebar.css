@@ -1,5 +1,8 @@
 
 .sidebar {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   width: 300px;
   height: 100vh; 
   background-color: #1c3c1e;
@@ -8,6 +11,9 @@
   box-sizing: border-box;
 }
 
+.sidebar-bottom {
+  margin-top: auto; 
+}
 
 .sidebar h2 {
   font-size: 1.5rem;
@@ -48,4 +54,21 @@
   background-color: #d0a15e;
   color: #1c3c1e;
   font-weight: bold;
+}
+
+.sidebar-logout {
+  background-color: #2e4e30; 
+  color: #d0a15e;            
+  border: none;
+  padding: 10px 12px;
+  width: 100%;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.sidebar-logout:hover {
+  background-color: #d0a15e; 
+  color: #1c3c1e;            
 }

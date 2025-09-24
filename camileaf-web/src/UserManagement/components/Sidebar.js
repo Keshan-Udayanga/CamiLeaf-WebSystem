@@ -1,63 +1,63 @@
 import React from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink, Link, useNavigate } from 'react-router-dom';
 import '../styles/Sidebar.css';
 
 function Sidebar() {
+  const navigate = useNavigate();
+
+  const role = localStorage.getItem("role")?.toUpperCase();
+
+  const links = [
+  { to: "/admin/user-management", label: "User Management", roles: ["ADMIN"] },
+  { to: "/admin/product-management", label: "Product Management", roles: ["ADMIN"] },
+  { to: "/admin/order-management", label: "Order Management", roles: ["ADMIN"] },
+  { to: "/admin/resource-management", label: "Resource Management", roles: ["ADMIN","RESOURCE MANAGER"] },
+  { to: "/admin/leaf-intake", label: "Tea Leaf Intake", roles: ["ADMIN","LEAF CLERK"] },
+  { to: "/admin/company-reports", label: "Company Reports", roles: ["ADMIN","RESOURCE MANAGER","LEAF CLERK"] },
+  ];
+
+
+  const handleLogout = () => {
+    const confirmed = window.confirm('Do you want to log out?'); 
+    if (confirmed) {
+    localStorage.removeItem('token');
+    localStorage.removeItem('role');
+    navigate('/login', { replace: true });
+    }
+  };
+
   return (
     <div className="sidebar">
-      <Link to="/admin" style={{ textDecoration: 'none' }}>
+      <div className="sidebar-top">
+        <Link to="/admin" style={{ textDecoration: 'none' }}>
         <h2 className="sidebar-title">Admin Panel</h2>
       </Link>
       <ul>
-        <li>
-          <NavLink
-            to="/admin/user-management"
-            className={({ isActive }) => isActive ? "sidebar-link active" : "sidebar-link"}
-          >
-            User Management
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to="/admin/product-management"
-            className={({ isActive }) => isActive ? "sidebar-link active" : "sidebar-link"}
-          >
-            Product Management
-          </NavLink>
-        </li>
-                <li><NavLink
-            to="/admin/order-management"
-            className={({ isActive }) => isActive ? "sidebar-link active" : "sidebar-link"}
-          >
-            Order Management
-          </NavLink>
-          </li>
-        <li>
-          <NavLink
-            to="/admin/resource-management"
-            className={({ isActive }) => isActive ? "sidebar-link active" : "sidebar-link"}
-          >
-            Resource Management
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to="/admin/leaf-intake"
-            className={({ isActive }) => isActive ? "sidebar-link active" : "sidebar-link"}
-          >
-            Tea leaf Intake
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to="/admin/company-reports"
-            className={({ isActive }) => isActive ? "sidebar-link active" : "sidebar-link"}
-          >
-            Company Reports
-          </NavLink>
-        </li>
+        {links.map(link => (
+          link.roles.includes(role) && (
+            <li key={link.to}>
+              <NavLink
+                to={link.to}
+                className={({ isActive }) => isActive ? "sidebar-link active" : "sidebar-link"}
+              >
+                {link.label}
+              </NavLink>
+            </li>
+          )
+        ))}
       </ul>
+
+      </div>
+
+      <div className="sidebar-bottom">
+        <button onClick={handleLogout} className="sidebar-logout">
+          Logout
+        </button>
+      </div>
+    
     </div>
+      
+    
   );
 }
 

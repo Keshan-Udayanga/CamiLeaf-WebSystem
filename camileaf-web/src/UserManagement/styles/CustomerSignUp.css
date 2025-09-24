@@ -1,0 +1,100 @@
+
+.SignUp-Body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #f8f9fa;
+  padding: 40px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: 
+    linear-gradient(
+      rgba(28, 60, 30, 0.7),  
+      rgba(28, 60, 30, 0.7)   
+    ),
+    url('../assests/signup.jpg') no-repeat center center;
+  background-size: cover;
+
+}
+
+.SignUp-Body .form-container {
+  background: #fff;
+  padding: 30px 40px;
+  border-radius: 12px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  width: 420px;
+}
+
+.SignUp-Body h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #1c3c1e;
+}
+
+.SignUp-Body label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  font-size: 14px;
+  color: #333;
+}
+
+.SignUp-Body input,
+.SignUp-Body textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  margin-bottom: 16px;
+  transition: border-color 0.2s ease-in-out;
+}
+
+.SignUp-Body input:focus,
+.SignUp-Body textarea:focus {
+  border-color: #1c3c1e;
+  outline: none;
+}
+
+.SignUp-Body textarea {
+  resize: none;
+  min-height: 80px;
+}
+
+.SignUp-Body .name-container {
+  display: flex;
+  gap: 15px;
+}
+
+.SignUp-Body .name-container > div {
+  flex: 1;
+}
+
+.SignUp-Body button {
+  width: 100%;
+  padding: 12px;
+  background-color: #1c3c1e;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.SignUp-Body button:hover {
+  background-color: #2e4e30;
+}
+
+.SignUp-Body .error {
+  color: red;
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.SignUp-Body .success {
+  color: green;
+  font-size: 13px;
+  margin-bottom: 8px;
+}

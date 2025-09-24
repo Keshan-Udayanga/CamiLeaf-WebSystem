@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "../styles/displayResources.css";
 import { Button } from "@mui/material";
 import axios from "axios";
+import api from "../../axiosConfig";
 
 const ResourceTablePage = () => {
   const [resources, setResources] = useState([]);
@@ -14,7 +15,7 @@ const ResourceTablePage = () => {
   // Fetch resources
   const fetchResources = async () => {
     try {
-      const response = await axios.get("http://localhost:8081/api/v1/resource/getAll");
+      const response = await api.get("/api/v1/resource/getAll");
       setResources(response.data);
     } catch (error) {
       console.error("Error fetching resources:", error);
@@ -32,7 +33,7 @@ const ResourceTablePage = () => {
 
   const confirmDelete = async () => {
     try {
-      await axios.get(`http://localhost:8081/api/v1/resource/delete/${deleteId}`);
+      await api.get(`/api/v1/resource/delete/${deleteId}`);
       setShowDeleteModal(false);
       setDeleteId(null);
       fetchResources();

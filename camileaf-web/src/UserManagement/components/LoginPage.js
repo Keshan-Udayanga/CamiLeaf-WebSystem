@@ -1,12 +1,12 @@
-// src/LoginPage.jsx
 import React, { useState } from "react";
 import "../styles/LoginPage.css";
 import LoginImage from "../assests/teaLogin.jpg"
-import { useNavigate, Link } from "react-router-dom";
-import axios from "axios";
+import { useNavigate, Link, useLocation } from "react-router-dom";
+import api from "../../axiosConfig";
 
 function LoginPage() {
     const navigate = useNavigate();
+    const location = useLocation();
     const [email, setemail] = useState("");
     const [password, setpassword] = useState("");
     const [error, seterror] = useState("");
@@ -15,31 +15,38 @@ function LoginPage() {
         e.preventDefault();
 
         try{
-            const response = await axios.post("http://localhost:8081/api/auth/login",{
+            const response = await api.post("/api/auth/login",{
                 email: email,
                 password: password
             });
 
             const data = await response.data;
             
-            localStorage.setItem("role", data.role);
-            
-            switch(data.role){
-              case "ADMIN":
-                    navigate("/admin");
-                    break;
-                case "LEAF CLERK":
-                    navigate("/leafclerk");
-                    break;
-                case "RESOURCE MANAGER":
-                    navigate("/resourcemanager");
-                    break;
-                case "CUSTOMER":
-                    navigate("/customer");
-                    break;
-                default:
-                    navigate("/login");
+            if(data.success){
+              localStorage.setItem("token", data.token);
+              localStorage.setItem("role", data.role);
+              
+              const from = location.state?.from?.pathname || "/";
+              switch(data.role){
+                case "ADMIN":
+                      navigate("/admin");
+                      break;
+                  case "LEAF CLERK":
+                      navigate("/admin");
+                      break;
+                  case "RESOURCE MANAGER":
+                      navigate("/admin");
+                      break;
+                  case "CUSTOMER":
+                      navigate(from, { replace: true }); 
+                      break;
+                  default:
+                      navigate("/login");
+              }
+            }else{
+              seterror('Login Failed');
             }
+            
         }catch(err){
             if (err.response && err.response.status === 401) {
         seterror("Invalid email or password");

@@ -1,0 +1,118 @@
+
+.login-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f4f4f4;
+  background: 
+    linear-gradient(
+      rgba(28, 60, 30, 0.7),  
+      rgba(28, 60, 30, 0.7)   
+    ),
+    url('../assests/signup.jpg') no-repeat center center;
+  background-size: cover;
+
+}
+
+
+.login-wrapper .login-box {
+  display: flex;
+  width: 900px;
+  max-width: 95%;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+
+.login-wrapper .login-image {
+  flex: 1;
+}
+
+.login-wrapper .login-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
+.login-wrapper .login-form {
+  flex: 1;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.login-wrapper .form-headers h2 {
+  margin: 0;
+  font-size: 2rem;
+  color: #1c3c1e;
+}
+
+.login-wrapper .form-headers p {
+  margin: 8px 0 24px;
+  font-size: 1rem;
+  color: #666;
+}
+
+.login-wrapper .input-group {
+  margin-bottom: 20px;
+}
+
+.login-wrapper .input-group label {
+  display: block;
+  font-size: 0.9rem;
+  margin-bottom: 6px;
+  color: #333;
+}
+
+.login-wrapper .input-group input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.login-wrapper .input-group input:focus {
+  border-color: #1c3c1e;
+  outline: none;
+}
+
+
+.login-wrapper .btn-login {
+  width: 100%;
+  padding: 12px;
+  background-color: #1c3c1e;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.login-wrapper .btn-login:hover {
+  background-color: #2e4e30;
+}
+
+
+.login-wrapper .login-form p {
+  margin-top: 16px;
+  font-size: 0.9rem;
+  color: #444;
+}
+
+.login-wrapper .login-form a {
+  font-weight: bold;
+}
+
+
+.login-wrapper .error {
+  margin-top: 10px;
+  color: red;
+  font-size: 0.9rem;
+}

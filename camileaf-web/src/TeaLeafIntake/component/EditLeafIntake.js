@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../Styles/EditLeafIntake.css";
+import api from "../../axiosConfig";
 
 export default function EditLeafIntake() {
   const { id } = useParams();
@@ -26,8 +27,8 @@ export default function EditLeafIntake() {
   useEffect(() => {
     const fetchRecord = async () => {
       try {
-        const res = await axios.get(
-          `http://localhost:8081/api/v1/leafIntake/get/${id}`
+        const res = await api.get(
+          `/api/v1/leafIntake/get/${id}`
         );
         const record = res.data;
         setFormData({
@@ -102,8 +103,8 @@ export default function EditLeafIntake() {
     setIsSubmitting(true);
 
     try {
-      await axios.put(
-        `http://localhost:8081/api/v1/leafIntake/update/${id}`,
+      await api.put(
+        `/api/v1/leafIntake/update/${id}`,
         {
           ...formData,
           weight: parseFloat(formData.weight),

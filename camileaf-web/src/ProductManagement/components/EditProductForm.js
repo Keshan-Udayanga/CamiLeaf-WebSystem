@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import "../Styles/EditForm.css";
-import axios from "axios";
+import "../Styles/EditForm.css"
+import api from "../../axiosConfig";
 
 const EditProductForm = () => {
   const { id } = useParams();
@@ -31,9 +31,8 @@ const EditProductForm = () => {
     const fetchProduct = async () => {
       try {
         setIsLoading(true);
-        const response = await axios.get(
-          `http://localhost:8081/api/v1/product/get/${id}`
-        );
+        const response = await api.get(`/api/v1/product/get/` + id);
+        
         setForm(response.data);
       } catch (error) {
         console.error("Error fetching product:", error);
@@ -113,7 +112,7 @@ const EditProductForm = () => {
   const confirmUpdate = async () => {
     try {
       setIsLoading(true);
-      await axios.put(`http://localhost:8081/api/v1/product/update/${id}`, {
+      await api.put(`/api/v1/product/update/${id}`, {
         ...form,
         price: parseFloat(form.price),
         stock: parseInt(form.stock),
