@@ -44,24 +44,7 @@ const ProductForm = ({ onClose, onAdd }) => {
         newErrors.price = "";
       }
     }
-
-    // Discount: max 1 decimal place, 0-100
-    if (name === "discount") {
-      if (value === "") {
-        newErrors.discount = "";
-      } else {
-        const parts = value.split(".");
-        const num = parseFloat(value);
-        if (num < 0 || num > 100) {
-          newErrors.discount = "Discount must be between 0 and 100";
-        } else if (parts[1] && parts[1].length > 1) {
-          newErrors.discount = "Only 1 decimal place allowed";
-        } else {
-          newErrors.discount = "";
-        }
-      }
-    }
-
+    
     // Category required
     if (name === "category") {
       if (!value) {
@@ -90,7 +73,7 @@ const ProductForm = ({ onClose, onAdd }) => {
     e.preventDefault();
 
     // Check validation errors
-    if (errors.price || errors.stock || errors.discount || errors.category) {
+    if (errors.price || errors.stock || errors.category) {
       alert("Please fix errors before submitting.");
       return;
     }
@@ -107,7 +90,7 @@ const ProductForm = ({ onClose, onAdd }) => {
         productName: form.productName,
         price: parseFloat(form.price),
         stock: parseInt(form.stock),
-        discount: parseFloat(form.discount || 0),
+        discount: parseFloat(form.discount),
         category: form.category,
       };
 
