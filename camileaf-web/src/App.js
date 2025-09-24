@@ -47,7 +47,7 @@ function App() {
           <Route 
             path="/admin/*" 
             element={
-            <ProtectedRoute requiredRole="ADMIN">
+            <ProtectedRoute allowedRoles={["ADMIN", "RESOURCE MANAGER", "LEAF CLERK"]}>
             <AdminPanel />
             </ProtectedRoute>
             } 
@@ -59,7 +59,7 @@ function App() {
           <Route 
             path="/payment" 
             element={
-            <ProtectedRoute requiredRole="CUSTOMER">
+            <ProtectedRoute allowedRoles={["CUSTOMER"]}>
             <PaymentWizard />
             </ProtectedRoute>
             } 

@@ -11,6 +11,7 @@ import {
 import axios from "axios";
 import { useNavigate } from "react-router-dom"; // ✅ Import useNavigate
 import "../Styles/Record.css";
+import api from "../../axiosConfig";
 
 export default function Record() {
   const navigate = useNavigate(); // ✅ Initialize navigate
@@ -57,7 +58,7 @@ export default function Record() {
     setIsSubmitting(true);
 
     try {
-      await axios.post("http://localhost:8081/api/v1/leafIntake/add", {
+      await api.post("/api/v1/leafIntake/add", {
         supplierId: formData.supplierId,
         supplierName: formData.supplierName,
         intakeDate: formData.intakeDate,

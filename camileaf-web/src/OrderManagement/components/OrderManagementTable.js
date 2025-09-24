@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../Styles/OrderManagement.css";
+import api from "../../axiosConfig";
 
 function AdminOrdersTable() {
   const [orders, setOrders] = useState([]);
@@ -14,7 +15,7 @@ function AdminOrdersTable() {
 
   const fetchOrders = async () => {
     try {
-      const response = await axios.get("http://localhost:8081/api/v1/order/getAll");
+      const response = await api.get("/api/v1/order/getAll");
       const data = response.data.map(order => ({
         ...order,
         items: order.items || [], // ✅ use backend `items`
@@ -40,7 +41,7 @@ function AdminOrdersTable() {
 
   const deleteOrder = async (orderId) => {
     try {
-      await axios.delete(`http://localhost:8081/api/v1/order/delete/${orderId}`);
+      await api.delete(`/api/v1/order/delete/${orderId}`);
       setOrders(prev => prev.filter(order => order.id !== orderId));
     } catch (error) {
       console.error("Error deleting order:", error);

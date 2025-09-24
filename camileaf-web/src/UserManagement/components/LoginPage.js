@@ -27,16 +27,15 @@ function LoginPage() {
               localStorage.setItem("role", data.role);
               
               const from = location.state?.from?.pathname || "/";
-              
               switch(data.role){
                 case "ADMIN":
                       navigate("/admin");
                       break;
                   case "LEAF CLERK":
-                      navigate("/leafclerk");
+                      navigate("/admin");
                       break;
                   case "RESOURCE MANAGER":
-                      navigate("/resourcemanager");
+                      navigate("/admin");
                       break;
                   case "CUSTOMER":
                       navigate(from, { replace: true }); 

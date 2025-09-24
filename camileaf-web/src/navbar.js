@@ -112,7 +112,24 @@ function Navbar({ className }) {
           {/* Right: Search */}
           <Box sx={{ width: isMobile ? "100%" : "auto", mt: isMobile ? 1 : 0 }}>
             {/* Login button */}
-            <Button sx={{backgroundColor:"white"}}><Link className="btn" sx={{textDecoration:"none"}}>Login</Link></Button>
+            <Button
+              sx={{
+                backgroundColor: "#1c3c1e",
+                color: "white",
+                borderRadius: "20px",
+                padding: "6px 20px",
+                textTransform: "none",
+                fontWeight: "bold",
+                "&:hover": {
+                  backgroundColor: "#2e4e30",
+                },
+              }}
+            >
+              <Link to="/login" className="navbar-login-link">
+                Login
+              </Link>
+            </Button>
+
           </Box>
         </Toolbar>
       </AppBar>

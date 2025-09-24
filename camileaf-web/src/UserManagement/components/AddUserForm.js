@@ -127,7 +127,7 @@ const AddUserForm = () => {
 
       if (response.status === 200) {
 
-        alert('User added successfully!');
+        alert(response.data.message);
         setFormData({
           email: '',
           password: '',
@@ -143,9 +143,11 @@ const AddUserForm = () => {
       }
     }
     } catch (error) {
-      console.error('Error adding user:', error);
-      alert('Failed to add user.');
-    }
+       if (error.response && error.response.data && error.response.data.error) {
+         alert(error.response.data.error); 
+      } else {
+        alert('Failed to add user.');
+      }}
   };
 
   return (
@@ -177,7 +179,7 @@ const AddUserForm = () => {
         <option value="" disabled>Select Role</option>
         <option value="Resource Manager">Resource Manager</option>
         <option value="Leaf Clerk">Leaf Clerk</option>
-        
+        <option value="Admin">Admin</option>
       </select>
       {formErrors.role && <span className="error">{formErrors.role}</span>}
 

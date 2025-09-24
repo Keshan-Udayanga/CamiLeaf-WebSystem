@@ -1,13 +1,16 @@
-import React from "react";
+
 import { Navigate, useLocation } from "react-router-dom";
 
-const ProtectedRoute = ({ children, requiredRole }) => {
+const ProtectedRoute = ({ children, allowedRoles }) => {
   const token = localStorage.getItem("token");
   const role = localStorage.getItem("role");
   const location = useLocation();
 
-  if (!token || role?.toUpperCase() !== requiredRole.toUpperCase()) {
-    // Not logged in or wrong role → redirect to login
+  const userRole = role?.toUpperCase();
+
+  const isAuthorized = allowedRoles?.map(r => r.toUpperCase()).includes(userRole);
+ 
+  if (!token || !isAuthorized) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
