@@ -82,6 +82,7 @@ thead {
 th, td {
   padding: 12px 15px;
   text-align: center;
+  color: black;
   font-size: 14px;
   border-bottom: 1px solid #e0e0e0;
 }

@@ -10,8 +10,8 @@ const AdminProductTable = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [sortType, setSortType] = useState("");
 
-  const [showConfirm, setShowConfirm] = useState(false); // confirm box visibility
-  const [deleteId, setDeleteId] = useState(null); // store product id to delete
+  const [showConfirm, setShowConfirm] = useState(false); 
+  const [deleteId, setDeleteId] = useState(null); 
 
   const navigate = useNavigate();
   const rowsPerPage = 10;
