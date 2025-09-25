@@ -16,6 +16,7 @@
 
 .release-form-container label {
   display: flex;
+  color: black;
   flex-direction: column;
   margin-bottom: 15px;
   font-weight: 500;

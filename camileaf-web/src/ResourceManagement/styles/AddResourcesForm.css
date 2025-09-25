@@ -17,6 +17,7 @@
   display: block;
   margin-bottom: 12px;
   font-weight: 500;
+  color: black;
 }
 
 .add-form-container input,select{
