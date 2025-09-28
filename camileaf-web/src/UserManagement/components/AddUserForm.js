@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import '../styles/AddUserForm.css';
 import { useNavigate, useLocation } from 'react-router-dom';
 import api from '../../axiosConfig';
@@ -79,11 +78,12 @@ const AddUserForm = () => {
       errors.lastName = 'Last name is required';
     }
 
-    if(!formData.phoneNumber){
+    if (!formData.phoneNumber) {
       errors.phoneNumber = 'Phone number is required';
-    }else if(!phoneRege.test(formData.phoneNumber)){
+    } else if (formData.role !== "Customer" && !phoneRege.test(formData.phoneNumber)) {
       errors.phoneNumber = 'Phone number must be 10 digits';
     }
+
 
     if(!formData.address.trim()){
       errors.address = 'Address is required';

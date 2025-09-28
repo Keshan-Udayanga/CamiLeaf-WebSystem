@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
 import "../Styles/OrderEditForm.css"; // ✅ Import CSS file
+import api from "../../axiosConfig";
 
 export default function OrderEditForm() {
   const { id } = useParams();
@@ -12,10 +12,11 @@ export default function OrderEditForm() {
   useEffect(() => {
     const fetchOrder = async () => {
       try {
-        const res = await axios.get(`http://localhost:8081/api/v1/order/get/${id}`);
+
+        const res = await api.get(`/api/v1/order/get/${id}`);
         setStatus(res.data.status || "Pending");
       } catch (err) {
-        console.error("Error fetching order:", err);
+        alert("Error fetching order:", err);
       } finally {
         setLoading(false);
       }
@@ -26,7 +27,7 @@ export default function OrderEditForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:8081/api/v1/order/update/${id}`, { status });
+      await api.put(`/api/v1/order/update/${id}`, { status });
       navigate("/admin/order-management"); // go back to table page
     } catch (err) {
       console.error("Error updating status:", err);

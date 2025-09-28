@@ -40,7 +40,7 @@ function Navbar({ className }) {
       localStorage.removeItem("token");
       localStorage.removeItem("role");
       setLoggedIn(false);
-      navigate("/login", { replace: true });
+      navigate("/", { replace: true });
     }
   };
 

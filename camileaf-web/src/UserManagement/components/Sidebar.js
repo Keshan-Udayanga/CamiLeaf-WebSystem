@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { NavLink, Link, useNavigate } from 'react-router-dom';
 import '../styles/Sidebar.css';
 
@@ -22,7 +22,7 @@ function Sidebar() {
     if (confirmed) {
     localStorage.removeItem('token');
     localStorage.removeItem('role');
-    navigate('/login', { replace: true });
+    navigate('/', { replace: true });
     }
   };
 

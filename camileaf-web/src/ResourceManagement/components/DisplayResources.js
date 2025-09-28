@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/displayResources.css";
 import { Button } from "@mui/material";
-import axios from "axios";
 import api from "../../axiosConfig";
 
 const ResourceTablePage = () => {
