@@ -104,7 +104,7 @@ tbody tr:hover {
 }
 
 .release-btn {
-  background: #43a047;
+  background: yellow;
   color: white;
 }
 
@@ -114,12 +114,12 @@ tbody tr:hover {
 }
 
 .delete-btn {
-  background: #f44336;
+  background: #f4f136;
   color: white;
 }
 
 .delete-btn:hover {
-  background: #d32f2f;
+  background: #cbd32f;
   transform: translateY(-2px);
 }
 
