@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../Styles/ProductForm.css";
 import api from "../../axiosConfig";
@@ -87,7 +86,7 @@ const ProductForm = ({ onClose, onAdd }) => {
     const reader = new FileReader();
     reader.onloadend = async () => {
       const product = {
-        productImg: reader.result,
+        productImg: reader.result, 
         productName: form.productName,
         price: parseFloat(form.price),
         stock: parseInt(form.stock),

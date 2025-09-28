@@ -3,10 +3,13 @@ import { Box, Typography } from "@mui/material";
 import bgImg from "../assets/slider.jpg";
 
 const textSlides = [
-  "Welcome to Our Company",
-  "We Provide the Best Services",
-  "Your Success is Our Mission",
+  "Experience the finest Ceylon tea, carefully hand-picked and crafted to deliver unmatched flavor and freshness every time.",
+  "From our lush tea gardens to your cup, CamiLeaf brings premium quality, tradition, and sustainability together.",
+  "Discover a journey of taste and aroma with our ethically sourced, expertly graded Ceylon tea for tea enthusiasts.",
+  "Join our tea lovers community and enjoy premium teas crafted with care, passion, and over 20 years of expertise.",
+  "Savor the essence of Ceylon in every sip, a perfect blend of freshness, quality, and heritage delivered to you."
 ];
+
 
 function Carousel() {
   const settings = {
@@ -51,10 +54,14 @@ function Carousel() {
               key={index}
               variant="h3"
               sx={{
-                backgroundColor: "rgba(0,0,0,0.5)",
+                backgroundColor: "rgba(0,0,0,0.3)",
                 px: 3,
                 py: 1,
                 borderRadius: 2,
+                height:"500px",
+                margin:"auto",
+                padding:"120px 50px",
+                textAlign:"center",
                 fontWeight: "bold",
               }}
             >

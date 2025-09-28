@@ -102,12 +102,10 @@
   background-size: 16px;
 }
 
-.search-box{
+.filters-container .search-box{
   margin-right: 50px;
-}
-
-.search-icon{
-  padding-left: 20px;
+  height: 50px;
+  padding: 12px;
 }
 
 /* Results Info */
@@ -178,11 +176,12 @@
   text-align: center;
 }
 
-.product-info h3 {
+.product-info .product-name {
   margin: 0 0 12px 0;
   color: #2c3e50;
-  font-size: 1.2rem;
-  font-weight: 600;
+  font-size: 1.1rem;
+  font-weight: 500;
+  height: 100px;
 }
 
 .product-price {
@@ -201,7 +200,7 @@
   background: #2B8433;
   color: white;
   border: none;
-  padding: 12px 25px;
+  padding: 8px 0px;
   border-radius: 30px;
   cursor: pointer;
   font-weight: 600;
@@ -209,7 +208,8 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  width: 100%;
+  width: 80%;
+  margin: 15px auto 0px;
   transition: all 0.3s ease;
 }
 

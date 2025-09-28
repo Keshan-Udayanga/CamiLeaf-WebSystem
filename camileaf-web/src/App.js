@@ -13,13 +13,15 @@ import LoginPage from './UserManagement/components/LoginPage';
 import CustomerSignUp from './UserManagement/components/CustomerSignUp';
 import CartPage from './AllProductPage/CartPage';
 import PaymentWizard from './AllProductPage/PaymentWizard';
+import AboutUs from './AboutUs/AboutUs';
+import ContactUs from './ContactUs/ContactUsPage';
+import Services from './Services/Services';
 import ProtectedRoute from './ProtectedRoute';
 
 function App() {
   return (
     <Router>
-      <div style={{ overflowX: "hidden" }}>
-        
+      <div style={{ overflowX: "hidden" }}>        
 
         <Routes>
           {/* Home Page */}
@@ -41,6 +43,10 @@ function App() {
           <Route path="/products" element={<AllProduct />} />
 
           {/* About Page */}
+          <Route path="/about" element={<AboutUs/>} />
+          <Route path="/contact" element={<ContactUs/>} />
+          <Route path="/services" element={<Services/>} />
+          <Route path="/admin/*" element={<AdminPanel />} />
           <Route path="/about" element={<h1>About Page</h1>} />
           <Route path="/contact" element={<h1>Contact Page</h1>} />
 

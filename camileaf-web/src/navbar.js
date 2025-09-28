@@ -126,7 +126,6 @@ function Navbar({ className }) {
             )}
           </Box>
 
-          {/* Right: Search */}
           <Box sx={{ width: isMobile ? "100%" : "auto", mt: isMobile ? 1 : 0 }}>
             {/* Login button */}
             {loggedIn ? (
