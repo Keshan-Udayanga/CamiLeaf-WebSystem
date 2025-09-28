@@ -42,5 +42,11 @@ public class OrderController {
         return orderServices.updateStatus(id, status);
     }
 
+    @GetMapping("/get/{id}")
+    public Order getOrderById(@PathVariable String id) {
+        return orderServices.getOrderById(id); // Add this method in your service layer too
+    }
+
+
 
 }
