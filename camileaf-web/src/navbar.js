@@ -8,19 +8,24 @@ import {
   List,
   ListItem,
   ListItemText,
-  useMediaQuery,
+  Menu,
+  MenuItem,
+  Avatar,
   Button,
+  useMediaQuery,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import logo from "./assets/web-logo.png";
 import { Link, useNavigate } from "react-router-dom";
-
+import api from "./axiosConfig";
 
 function Navbar({ className }) {
   const [scrolled, setScrolled] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const isMobile = useMediaQuery("(max-width:768px)");
   const [loggedIn, setLoggedIn] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [user, setUser] = useState({});
+  const isMobile = useMediaQuery("(max-width:768px)");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -32,26 +37,33 @@ function Navbar({ className }) {
   useEffect(() => {
     const token = localStorage.getItem("token");
     setLoggedIn(!!token);
+
+    if (token) {
+      // Fetch current user profile
+      api.get("/api/v1/user/me")
+        .then(res => setUser(res.data))
+        .catch(err => console.error(err));
+    }
   }, []);
 
+  const handleMenuOpen = (event) => setAnchorEl(event.currentTarget);
+  const handleMenuClose = () => setAnchorEl(null);
+
   const handleLogout = () => {
-    const confirmed = window.confirm("Do you want to log out?");
-    if (confirmed) {
-      localStorage.removeItem("token");
-      localStorage.removeItem("role");
-      setLoggedIn(false);
-      navigate("/", { replace: true });
-    }
+    localStorage.removeItem("token");
+    localStorage.removeItem("role");
+    setLoggedIn(false);
+    setAnchorEl(null);
+    navigate("/", { replace: true });
   };
 
- const navLinks = [
-  { name: "Home", path: "/" },
-  { name: "About", path: "/about" },
-  { name: "Services", path: "/services" },
-  { name: "Products", path: "/products" },
-  { name: "Contact", path: "/contact" }, 
-];
-
+  const navLinks = [
+    { name: "Home", path: "/" },
+    { name: "About", path: "/about" },
+    { name: "Services", path: "/services" },
+    { name: "Products", path: "/products" },
+    { name: "Contact", path: "/contact" },
+  ];
 
   return (
     <>
@@ -77,44 +89,24 @@ function Navbar({ className }) {
             flexWrap: isMobile ? "wrap" : "nowrap",
           }}
         >
-          {/* Left: Logo + Menu Icon / NavLinks */}
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              width: "75%",
-            }}
-          >
-            <Box component="img" src={logo} alt="Logo" sx={{ height: 80, width: "auto", p: 1 }} />
-            
+          {/* Left: Logo + Menu */}
+          <Box sx={{ display: "flex", alignItems: "center", width: "75%" }}>
+            <Box component="img" src={logo} alt="Logo" sx={{ height: 80, p: 1 }} />
+
             {!isMobile && (
-              <Box
-                component="ul"
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  listStyle: "none",
-                  gap: 10,
-                  m: 0,
-                  px: 10,
-                  py: 2,
-                  border: "1px solid white",
-                  borderRadius: "50px",
-                  "& li a": {
-                    fontFamily: "Poppins, sans-serif",
-                    fontSize: "16px",
-                    textDecoration: "none",
-                    color: "#fff",
-                    "&:hover": { color: "#d5a924" },
-                  },
-                }}
-              >
+              <Box component="ul" sx={{
+                display: "flex",
+                listStyle: "none",
+                gap: 10,
+                m: 0,
+                px: 10,
+                py: 2,
+                border: "1px solid white",
+                borderRadius: "50px",
+                "& li a": { color: "#fff", textDecoration: "none", fontWeight: "500", "&:hover": { color: "#d5a924" } }
+              }}>
                 {navLinks.map((link) => (
-                  <li key={link.name}>
-                    <a href={link.path}>{link.name}</a>
-                  </li>
+                  <li key={link.name}><a href={link.path}>{link.name}</a></li>
                 ))}
               </Box>
             )}
@@ -126,23 +118,26 @@ function Navbar({ className }) {
             )}
           </Box>
 
-          <Box sx={{ width: isMobile ? "100%" : "auto", mt: isMobile ? 1 : 0 }}>
-            {/* Login button */}
+          {/* Right: Profile / Login */}
+          <Box sx={{ display: "flex", alignItems: "center", mt: isMobile ? 1 : 0 }}>
             {loggedIn ? (
-              <Button
-                sx={{
-                  backgroundColor: "#1c3c1e",
-                  color: "white",
-                  borderRadius: "20px",
-                  padding: "6px 20px",
-                  textTransform: "none",
-                  fontWeight: "bold",
-                  "&:hover": { backgroundColor: "#2e4e30" },
-                }}
-                onClick={handleLogout}
-              >
-                Logout
-              </Button>
+              <>
+                <IconButton onClick={handleMenuOpen} sx={{ p: 0 }}>
+                  <Avatar>{user.firstName ? user.firstName.charAt(0) : "U"}</Avatar>
+                </IconButton>
+                <Menu
+                  anchorEl={anchorEl}
+                  open={Boolean(anchorEl)}
+                  onClose={handleMenuClose}
+                  anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+                  transformOrigin={{ vertical: "top", horizontal: "right" }}
+                >
+                  <MenuItem onClick={() => { navigate("/profile"); handleMenuClose(); }}>
+                    Profile
+                  </MenuItem>
+                  <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                </Menu>
+              </>
             ) : (
               <Button
                 sx={{
@@ -155,21 +150,16 @@ function Navbar({ className }) {
                   "&:hover": { backgroundColor: "#2e4e30" },
                 }}
               >
-                <Link
-                  to="/login"
-                  className="navbar-login-link"
-                  style={{ color: "white", textDecoration: "none" }}
-                >
+                <Link to="/login" style={{ color: "white", textDecoration: "none" }}>
                   Login
                 </Link>
               </Button>
             )}
-
           </Box>
         </Toolbar>
       </AppBar>
 
-      {/* Drawer for mobile menu */}
+      {/* Mobile Drawer */}
       <Drawer anchor="right" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
         <List sx={{ width: 250 }}>
           {navLinks.map((link) => (

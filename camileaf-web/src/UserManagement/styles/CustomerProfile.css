@@ -1,0 +1,171 @@
+/* ------------------------ Container ------------------------ */
+.customer-profile {
+  display: flex;
+  gap: 2rem;
+  padding: 0; /* full-height sidebar alignment */
+  min-height: 100vh;
+  background: #f5f5f5; /* optional background for content area */
+  box-sizing: border-box;
+}
+
+/* ------------------------ Sidebar ------------------------ */
+.profile-sidebar {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* top items + bottom buttons */
+  flex-shrink: 0;
+  width: 250px;
+  min-height: 100vh; /* full viewport height */
+  padding: 20px;
+  box-sizing: border-box;
+  border-radius: 10px 0 0 10px;
+  background: #60b692; /* sidebar background */
+}
+
+.profile-sidebar h3 {
+  text-align: center;
+  margin-bottom: 1rem;
+  color: #fff;
+}
+
+.profile-sidebar ul {
+  list-style: none;
+  padding: 0;
+  flex-grow: 1; /* push bottom buttons to bottom */
+}
+
+.profile-sidebar li {
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  transition: background 0.2s;
+  color: #fff;
+}
+
+.profile-sidebar li.active,
+.profile-sidebar li:hover {
+  background: #1c3c1e;
+  color: white;
+}
+
+/* ------------------------ Sidebar Bottom Buttons ------------------------ */
+.sidebar-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.btn-back, .btn-logout {
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  background-color: #60b692; /* match sidebar bg */
+  color: white;
+  transition: background 0.2s;
+}
+
+.btn-back:hover, .btn-logout:hover {
+  background-color: #4ca47c; /* slightly darker on hover */
+}
+
+/* ------------------------ Profile Content ------------------------ */
+.profile-content {
+  flex: 1;
+  background: #fff;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+.tab-content label {
+  display: block;
+  margin-top: 1rem;
+  font-weight: 500;
+}
+
+.tab-content input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.tab-content button {
+  margin-top: 1.5rem;
+  padding: 10px 20px;
+  border: none;
+  background-color: #1c3c1e;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.tab-content button:hover {
+  background-color: #2e4e30;
+}
+
+.success-msg {
+  color: green;
+  margin-bottom: 10px;
+}
+
+.error-msg {
+  color: red;
+  margin-bottom: 10px;
+}
+
+/* ------------------------ Responsive ------------------------ */
+@media (max-width: 768px) {
+  .customer-profile {
+    flex-direction: column;
+    min-height: auto;
+  }
+
+  .profile-sidebar {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    border-radius: 0;
+    padding: 10px 20px;
+    min-height: auto;
+  }
+
+  .profile-sidebar ul {
+    flex-direction: row;
+    gap: 10px;
+    flex-grow: 1;
+    overflow-x: auto;
+  }
+
+  .sidebar-bottom {
+    flex-direction: row;
+    gap: 10px;
+  }
+
+  .btn-back, .btn-logout {
+    flex: 1;
+    text-align: center;
+  }
+
+  .profile-content {
+    padding: 1.5rem;
+    border-radius: 0 0 10px 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .tab-content input {
+    padding: 6px;
+  }
+
+  .tab-content button {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+  }
+}

@@ -10,7 +10,6 @@ const textSlides = [
   "Savor the essence of Ceylon in every sip, a perfect blend of freshness, quality, and heritage delivered to you."
 ];
 
-
 function Carousel() {
   const settings = {
     dots: true,
@@ -25,18 +24,18 @@ function Carousel() {
   };
 
   return (
-    <Box sx={{ maxWidth: "100%", overflowX: "hidden", position: "relative" }}>
+    <Box sx={{ position: "relative", width: "100%" }}>
       {/* Background Image */}
       <Box
         sx={{
-          height: "800px",
+          height: { xs: "400px", sm: "600px", md: "800px" }, // responsive height
           backgroundImage: `url(${bgImg})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
-      }}
-      ></Box>
+        }}
+      />
 
-      {/* Text Carousel Overlay */}
+      {/* Text Overlay */}
       <Box
         sx={{
           position: "absolute",
@@ -45,28 +44,27 @@ function Carousel() {
           transform: "translate(-50%, -50%)",
           color: "#fff",
           textAlign: "center",
-          width: "80%",
+          width: { xs: "90%", sm: "80%", md: "70%" },
         }}
       >
         <Slider {...settings}>
           {textSlides.map((text, index) => (
-            <Typography
-              key={index}
-              variant="h3"
-              sx={{
-                backgroundColor: "rgba(0,0,0,0.3)",
-                px: 3,
-                py: 1,
-                borderRadius: 2,
-                height:"500px",
-                margin:"auto",
-                padding:"120px 50px",
-                textAlign:"center",
-                fontWeight: "bold",
-              }}
-            >
-              {text}
-            </Typography>
+            <Box key={index}>
+              <Typography
+                variant="h5"
+                sx={{
+                  backgroundColor: "rgba(0,0,0,0.4)",
+                  px: { xs: 2, sm: 3, md: 5 },
+                  py: { xs: 2, sm: 3, md: 5 },
+                  borderRadius: 2,
+                  fontWeight: "bold",
+                  textAlign: "center",
+                  fontSize: { xs: "1rem", sm: "1.5rem", md: "2rem" },
+                }}
+              >
+                {text}
+              </Typography>
+            </Box>
           ))}
         </Slider>
       </Box>

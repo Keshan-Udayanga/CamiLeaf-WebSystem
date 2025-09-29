@@ -17,6 +17,7 @@ import AboutUs from './AboutUs/AboutUs';
 import ContactUs from './ContactUs/ContactUsPage';
 import Services from './Services/Services';
 import ProtectedRoute from './ProtectedRoute';
+import CustomerProfile from './UserManagement/components/CustomerProfile'
 
 function App() {
   return (
@@ -48,7 +49,8 @@ function App() {
           <Route path="/services" element={<Services/>} />
           <Route path="/admin/*" element={<AdminPanel />} />
           <Route path="/about" element={<h1>About Page</h1>} />
-          <Route path="/contact" element={<h1>Contact Page</h1>} />
+          <Route path="/contact" element={<ContactUs/>} />
+          <Route path="/profile" element={<CustomerProfile />} />
 
           <Route 
             path="/admin/*" 

@@ -110,7 +110,7 @@ export default function Record() {
   };
 
   return (
-    <div>
+    <div className="record-main">
       {/* Hero Section */}
       <section className="hero-section">
         <div className="hero-content">

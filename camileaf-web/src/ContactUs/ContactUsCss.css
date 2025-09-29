@@ -1,4 +1,4 @@
-:root{
+.contact-page{
   --accent: #d5a924;
   --bg: #0f1724;
   --card: #0b1220;
@@ -10,8 +10,8 @@
   --shadow: 0 6px 18px rgba(2,6,23,0.6);
 }
 
-*{box-sizing:border-box}
-body { font-family: "Poppins", system-ui, "Segoe UI" "Helvetica Neue", Arial;
+.contact-page *{box-sizing:border-box}
+.contact-page body{ font-family: "Poppins", system-ui, "Segoe UI" "Helvetica Neue", Arial;
      color: #e6eef8; 
      background: linear-gradient(180deg,#ffffff 0%, #ffffff 100%);
       margin:0; }
