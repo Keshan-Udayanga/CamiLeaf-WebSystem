@@ -77,4 +77,14 @@ public class UserServices {
 
         return userRepo.save(customer);
     }
+
+    public void changePassword(String id, String oldPass, String newPass) {
+        User user = getUserById(id);
+        if (!user.getPassword().equals(oldPass)) {
+            throw new RuntimeException("Old password is incorrect");
+        }
+        user.setPassword(newPass);
+        userRepo.save(user);
+    }
+
 }

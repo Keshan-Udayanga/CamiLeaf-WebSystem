@@ -50,6 +50,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/order/**").hasRole("ADMIN")
                         .requestMatchers("/api/v1/resource/**").hasAnyRole("ADMIN", "RESOURCE MANAGER")
                         .requestMatchers("/api/v1/leafIntake/**").hasAnyRole("ADMIN", "LEAF CLERK")
+                        .requestMatchers("/api/v1/suppliers/**").hasAnyRole("ADMIN", "LEAF CLERK")
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session

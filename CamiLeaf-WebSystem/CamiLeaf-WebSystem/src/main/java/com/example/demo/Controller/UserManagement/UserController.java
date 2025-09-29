@@ -65,4 +65,15 @@ public class UserController {
                 .orElseThrow(() -> new RuntimeException("User not found with email: " + email));
         return ResponseEntity.ok(user);
     }
+
+    @PutMapping("/change-password/{id}")
+    public ResponseEntity<?> changePassword(@PathVariable String id, @RequestBody Map<String, String> body) {
+        try {
+            userServices.changePassword(id, body.get("oldPass"), body.get("newPass"));
+            return ResponseEntity.ok("Password updated");
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
 }
