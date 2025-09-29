@@ -396,3 +396,34 @@ textarea.error-input:focus,
   opacity: 1;
   transform: translateY(0);
 }
+
+.supplier-id-label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.supplier-id-input {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.supplier-id-input input {
+  flex: 1;
+}
+
+.btn-register-supplier {
+  background-color: #1c3c1e;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+}
+
+.btn-register-supplier:hover {
+  background-color: #2e4e30;
+}

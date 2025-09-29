@@ -8,6 +8,7 @@ import AdminProductTable from "../../ProductManagement/components/ProductManagem
 import OrederManagement from "../../OrderManagement/components/OrederManagement";
 import TeaLeafIntake from "../../TeaLeafIntake/component/TeaLeafIntake";
 import ResourceManagement from "../../ResourceManagement/components/ResourceManagement";
+import SupplierRegister from "./SupplierRegister";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
           <Route path="/order-management/*" element={<OrederManagement />} />
           <Route path="/resource-management/*" element={<ResourceManagement />} />
           <Route path="/leaf-intake/*" element={<TeaLeafIntake />} />
+          <Route path="/supplier/register" element={<SupplierRegister />} />
         </Routes>
       </main>
     </div>
