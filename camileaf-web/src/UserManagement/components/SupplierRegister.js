@@ -44,9 +44,13 @@ export default function SupplierRegister() {
     setIsSubmitting(true);
 
     try {
-      await api.post("/api/v1/suppliers/add", formData);
+      const response = await api.post("/api/v1/suppliers/add", formData);
 
-      setNotice({ type: "success", message: "Supplier registered successfully!" });
+      if (response.status === 200 || response.status === 201) {
+      const newSupplier = response.data;
+      alert(`Supplier registered successfully! Supplier ID: ${newSupplier.supplierCode}`);
+      
+    }
 
       setTimeout(() => {
         navigate("/admin/leaf-intake"); 
