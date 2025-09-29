@@ -82,47 +82,48 @@ const CustomerSignUp = () => {
 
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
+    e.preventDefault();
 
-        if (password !== repassword) {
+    if (password !== repassword) {
         setError("Passwords do not match.");
-        return; 
-        }
-        
-        if (!email || !password || !phone || !address) {
-            setError("Please fill in all fields.");
-            return;
-        }
+        return;
+    }
 
-        try {
-            
-            const response = await api.post("/api/auth/signup", {
-                email,
-                password,
-                firstName,
-                lastName,
-                phone,
-                address,
-                country
-            });
+    if (!email || !password || !phone || !address) {
+        setError("Please fill in all fields.");
+        return;
+    }
 
-            if (response.status === 200) {
+    if (phoneError) {
+        setError("Please correct phone number.");
+        return;
+    }
 
-                alert('Registered successfully!');
-        
-                navigate('/login')
-            }
-            
-        } catch (err) {
-            console.log('error' + err.response);
-            if (err.response && err.response.data && err.response.data.error) {
-                setError(err.response.data.error);
-            } else {
-                setError("An error occurred during signup.");
-            }
-            setSuccess("");
+    try {
+        const response = await api.post("/api/auth/signup", {
+            email,
+            password,
+            firstName,
+            lastName,
+            phone,
+            address,
+            country
+        });
+
+        if (response.status === 200) {
+            alert('Registered successfully!');
+            navigate('/login');
         }
-    };
+    } catch (err) {
+        if (err.response?.data?.error) {
+            setError(err.response.data.error);
+        } else {
+            setError("An error occurred during signup.");
+        }
+        setSuccess("");
+    }
+};
+
 
     return (
         <div className="SignUp-Body">

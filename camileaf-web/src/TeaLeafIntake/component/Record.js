@@ -8,7 +8,6 @@ import {
   FiArrowDown,
   FiPlus,
 } from "react-icons/fi";
-import axios from "axios";
 import { useNavigate } from "react-router-dom"; // ✅ Import useNavigate
 import "../Styles/Record.css";
 import api from "../../axiosConfig";
@@ -149,8 +148,9 @@ export default function Record() {
           )}
 
           <form onSubmit={handleSubmit}>
-            <label>
-              Supplier ID
+            <label className="supplier-id-label">
+            Supplier ID
+            <div className="supplier-id-input">
               <input
                 type="text"
                 name="supplierId"
@@ -159,10 +159,17 @@ export default function Record() {
                 className={errors.supplierId ? "error-input" : ""}
                 placeholder="Enter supplier ID"
               />
-              {errors.supplierId && (
-                <span className="error">{errors.supplierId}</span>
-              )}
-            </label>
+              <button
+                type="button"
+                className="btn-register-supplier"
+                onClick={() => navigate("/admin/supplier/register")}
+              >
+                + Register Supplier
+              </button>
+            </div>
+            {errors.supplierId && <span className="error">{errors.supplierId}</span>}
+          </label>
+
 
             <label>
               Supplier Name
