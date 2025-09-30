@@ -80,11 +80,16 @@ public class UserServices {
 
     public void changePassword(String id, String oldPass, String newPass) {
         User user = getUserById(id);
-        if (!user.getPassword().equals(oldPass)) {
+
+
+        if (!passwordEncoder.matches(oldPass, user.getPassword())) {
             throw new RuntimeException("Old password is incorrect");
         }
-        user.setPassword(newPass);
+
+
+        user.setPassword(passwordEncoder.encode(newPass));
         userRepo.save(user);
     }
+
 
 }
