@@ -18,8 +18,8 @@
   margin-top: 30px;
 }
 
-.card {
-  background-color: rgba(182, 182, 182, 0.5);
+.cards-container .card {
+  background-color: rgba(199, 197, 197, 0.5);
   color: black;
   padding: 20px;
   border-radius: 12px;

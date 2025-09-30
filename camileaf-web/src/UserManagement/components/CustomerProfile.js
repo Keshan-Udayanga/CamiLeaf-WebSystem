@@ -45,7 +45,7 @@ const CustomerProfile = () => {
     }
     try {
       await api.put(`/api/v1/user/change-password/${customer.id}`, passwords);
-      setSuccessMsg("Password changed successfully!");
+      alert("Password changed successfully!");
       setPasswords({ oldPass: "", newPass: "", confirmPass: "" });
       setPassError("");
     } catch (err) {
@@ -92,7 +92,7 @@ const CustomerProfile = () => {
             <label>Email:</label>
             <input name="email" value={customer.email || ""} disabled />
             <label>Phone:</label>
-            <input name="phoneNumber" value={customer.phoneNumber || ""} onChange={handleProfileChange} />
+            <input name="phoneNumber" value={customer.phoneNumber || ""} onChange={handleProfileChange} disabled/>
             <label>Address:</label>
             <input name="address" value={customer.address || ""} onChange={handleProfileChange} />
             <label>Country:</label>
