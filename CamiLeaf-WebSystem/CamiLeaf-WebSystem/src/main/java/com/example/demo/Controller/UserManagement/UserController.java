@@ -1,6 +1,8 @@
 package com.example.demo.Controller.UserManagement;
 
+import com.example.demo.DTO.CountryUserCount;
 import com.example.demo.Entity.UserManagement.User;
+import com.example.demo.Service.UserManagement.UserReportService;
 import com.example.demo.Service.UserManagement.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -8,6 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -17,6 +20,12 @@ public class UserController {
 
     @Autowired
     private UserServices userServices;
+
+    private final UserReportService reportService;
+
+    public UserController(UserReportService reportService) {
+        this.reportService = reportService;
+    }
 
     @PostMapping(value = "/save")
     public ResponseEntity<?> createUser(@RequestBody User user) {
@@ -74,6 +83,18 @@ public class UserController {
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+    }
+
+    @DeleteMapping("/remove-inactive")
+    public String removeInactiveUsers() {
+        long removedCount = userServices.removeInactiveUsers();
+        return removedCount + " inactive users removed successfully!";
+    }
+
+
+    @GetMapping("/geographical-distribution")
+    public List<CountryUserCount> getGeoDistribution() {
+        return reportService.getGeographicalDistribution();
     }
 
 }

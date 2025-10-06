@@ -45,7 +45,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/product/getAll").permitAll()
                         .requestMatchers("/api/v1/user/me").permitAll()
                         .requestMatchers("/api/v1/order/add").hasRole("CUSTOMER")
-                        .requestMatchers("/api/v1/user/edit/**").hasRole("CUSTOMER")
+                        .requestMatchers("/api/v1/user/edit/**").hasAnyRole("CUSTOMER","ADMIN")
                         .requestMatchers("/api/v1/user/change-password/**").hasRole("CUSTOMER")
                         .requestMatchers("/api/v1/user/**").hasRole("ADMIN")
                         .requestMatchers("/api/v1/product/**").hasRole("ADMIN")

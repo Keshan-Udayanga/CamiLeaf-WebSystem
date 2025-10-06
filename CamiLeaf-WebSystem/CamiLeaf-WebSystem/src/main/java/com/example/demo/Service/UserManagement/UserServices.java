@@ -8,7 +8,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
+import java.util.Calendar;
 
 @Service
 public class UserServices {
@@ -90,6 +92,31 @@ public class UserServices {
         user.setPassword(passwordEncoder.encode(newPass));
         userRepo.save(user);
     }
+
+    public long removeInactiveUsers() {
+        List<User> inactiveUsers = userRepo.findByStatus("Inactive");
+        long count = inactiveUsers.size();
+        userRepo.deleteByStatus("Inactive");
+        return count;
+    }
+
+    public long autoInactivateUsers(int daysInactive) {
+        Date now = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(now);
+        cal.add(Calendar.DAY_OF_YEAR, -daysInactive);
+        Date thresholdDate = cal.getTime();
+
+        List<User> inactiveUsers = userRepo.findAll().stream()
+                .filter(u -> u.getStatus().equals("Active") && u.getLastLogin() != null && u.getLastLogin().before(thresholdDate))
+                .peek(u -> u.setStatus("Inactive"))
+                .toList();
+
+        userRepo.saveAll(inactiveUsers);
+
+        return inactiveUsers.size();
+    }
+
 
 
 }
