@@ -1,0 +1,33 @@
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import "../styles/CompanyReports.css";
+
+const CompanyReports = () => {
+  const navigate = useNavigate();
+
+  const reports = [
+    { name: "Geographical Distribution", route: "/admin/reports/geographical" },
+    { name: "Sales Report", route: "/admin/reports/sales" },
+    { name: "Inactive Users", route: "/admin/reports/inactive-users" },
+    
+  ];
+
+  return (
+    <div className="reports-container">
+      <h1>Company Reports</h1>
+      <div className="reports-cards">
+        {reports.map((report, idx) => (
+          <div
+            key={idx}
+            className="report-card"
+            onClick={() => navigate(report.route)}
+          >
+            <h3>{report.name}</h3>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default CompanyReports;

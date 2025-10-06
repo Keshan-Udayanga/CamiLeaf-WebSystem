@@ -9,6 +9,8 @@ import OrederManagement from "../../OrderManagement/components/OrederManagement"
 import TeaLeafIntake from "../../TeaLeafIntake/component/TeaLeafIntake";
 import ResourceManagement from "../../ResourceManagement/components/ResourceManagement";
 import SupplierRegister from "./SupplierRegister";
+import CompanyReport from '../../CompanyReport/components/CompanyReport';
+import GeographicalDistribution from '../../CompanyReport/components/GeographicalDistribution';
 
 function App() {
   return (
@@ -33,6 +35,8 @@ function App() {
           <Route path="/resource-management/*" element={<ResourceManagement />} />
           <Route path="/leaf-intake/*" element={<TeaLeafIntake />} />
           <Route path="/supplier/register" element={<SupplierRegister />} />
+          <Route path="/company-reports" element={<CompanyReport />} />
+          <Route path="/reports/geographical" element={<GeographicalDistribution />} />
         </Routes>
       </main>
     </div>

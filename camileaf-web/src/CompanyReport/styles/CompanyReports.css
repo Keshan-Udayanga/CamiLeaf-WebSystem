@@ -1,0 +1,25 @@
+.reports-container {
+  padding: 2rem;
+}
+
+.reports-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.report-card {
+  flex: 1 1 200px;
+  background-color: #1c3c1e;
+  color: white;
+  padding: 30px;
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.report-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}

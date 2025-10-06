@@ -16,6 +16,9 @@ const UserManagement = () => {
   const [currentPage, setcurrentPage] = useState(1);
   const pageSize = 10;
   const token = localStorage.getItem("token");
+  const [loading, setLoading] = useState(false);
+  const [inactiveCount, setInactiveCount] = useState(0);
+
 
   const navigate = useNavigate();
 
@@ -34,6 +37,8 @@ useEffect(() => {
     const result = await api.get(
       "/api/v1/user/getAll"
     )
+    const inactive = result.data.filter(user => user.status === "Inactive").length;
+        setInactiveCount(inactive);
     setUser(result.data);
   }
 
@@ -75,6 +80,26 @@ useEffect(() => {
   );
 
   const totalPages = Math.ceil(filteredUsers.length / pageSize);
+
+  const handleRemoveInactive = async () => {
+    const confirm = window.confirm(
+      "Are you sure you want to remove all inactive users? This action cannot be undone."
+    );
+
+    if (!confirm) return;
+
+    setLoading(true);
+    try {
+      const response = await api.delete('/api/v1/user/remove-inactive');
+      alert(response.data);
+      await Load();
+    } catch (error) {
+      console.error(error);
+      alert("Failed to remove inactive users.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
 
   return (
@@ -127,6 +152,19 @@ useEffect(() => {
         <div className="filters-right">
           <Button
             variant="contained"
+            color="error"
+            onClick={handleRemoveInactive}
+            className="inactive-user-button"
+            disabled={loading || inactiveCount === 0}
+            style={{ marginRight: '10px' }}
+          >
+            {loading 
+              ? 'Removing...' 
+              : `Remove ${inactiveCount} Inactive User${inactiveCount !== 1 ? 's' : ''}`}
+          </Button>
+
+          <Button
+            variant="contained"
             color="secondary"
             startIcon={<Add />}
             className="add-user-button"
@@ -135,6 +173,7 @@ useEffect(() => {
             Add User
           </Button>
         </div>
+
       </div>
 
     

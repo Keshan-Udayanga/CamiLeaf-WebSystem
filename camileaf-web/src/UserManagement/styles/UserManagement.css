@@ -46,6 +46,14 @@
   justify-content: center;
 }
 
+.inactive-user-button{
+  border-radius: 20px !important;
+  padding: 5px 20px !important;
+  display: flex; 
+  align-items: center;
+  justify-content: center;
+}
+
 .user-table {
   background-color: white;
   border-radius: 8px;

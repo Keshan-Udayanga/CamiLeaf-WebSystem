@@ -93,7 +93,7 @@ const AddUserForm = () => {
       errors.role = 'Please select a role';
     }
 
-    if(!formData.status.trim()){
+    if(!formData.status.trim() && isEditMode){
       errors.status = 'Please select a status';
     }
 
@@ -110,16 +110,19 @@ const AddUserForm = () => {
 
     try {
       if(isEditMode){
+        
         const response = await api.put(
           '/api/v1/user/edit/' + formData.id,
           formData
         );
+        
 
         if(response.status === 200){
           alert('User updated successfully!');
           navigate('/admin/user-management');
         }
       }else{
+        formData.status='Active';
       const response = await api.post(
         '/api/v1/user/save',
         formData  
@@ -146,7 +149,8 @@ const AddUserForm = () => {
        if (error.response && error.response.data && error.response.data.error) {
          alert(error.response.data.error); 
       } else {
-        alert('Failed to add user.');
+        
+        alert('Failed to add user.' );
       }}
   };
 
@@ -183,12 +187,17 @@ const AddUserForm = () => {
       </select>
       {formErrors.role && <span className="error">{formErrors.role}</span>}
 
-      <select name="status" value={formData.status} onChange={handleChange} >
+      {isEditMode && (
+        <>
+        <select name="status" value={formData.status} onChange={handleChange} >
         <option value="" disabled>Select Status</option>
         <option value="Active">Active</option>
         <option value="Inactive">Inactive</option>
-      </select>
-      {formErrors.status && <span className="error">{formErrors.status}</span>}
+        </select>
+        {formErrors.status && <span className="error">{formErrors.status}</span>}
+      </>
+      )}
+      
 
       <button  type="submit">{isEditMode ? 'Update' : 'Add User'}</button>
     </form>
