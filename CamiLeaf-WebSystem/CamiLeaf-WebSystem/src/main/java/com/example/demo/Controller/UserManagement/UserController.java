@@ -93,8 +93,10 @@ public class UserController {
 
 
     @GetMapping("/geographical-distribution")
-    public List<CountryUserCount> getGeoDistribution() {
-        return reportService.getGeographicalDistribution();
+    public List<CountryUserCount> getGeoDistribution(
+            @RequestParam(required = false) Integer month,
+            @RequestParam(required = false) Integer year) {
+        return reportService.getGeographicalDistribution(month,year);
     }
 
 }
