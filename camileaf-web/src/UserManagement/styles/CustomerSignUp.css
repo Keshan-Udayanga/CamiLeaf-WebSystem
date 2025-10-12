@@ -22,7 +22,7 @@
   padding: 30px 40px;
   border-radius: 12px;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-  width: 420px;
+  width: 450px;
 }
 
 .SignUp-Body h2 {
@@ -65,8 +65,11 @@
   display: flex;
   gap: 15px;
 }
+.SignUp-Body .name-container input{
+  width: 205px;
+}
 
-.SignUp-Body .name-container > div {
+.SignUp-Body .name-container  div {
   flex: 1;
 }
 
