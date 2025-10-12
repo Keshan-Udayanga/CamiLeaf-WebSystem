@@ -17,6 +17,7 @@ const GeographicalDistribution = () => {
   const [month, setMonth] = useState(new Date().getMonth() + 1); 
   const [year, setYear] = useState(new Date().getFullYear());
   const [loading, setLoading] = useState(false);
+  
 
   const months = [
     "January", "February", "March", "April", "May", "June",
@@ -45,26 +46,23 @@ const GeographicalDistribution = () => {
   };
 
   const handleDownloadReport = async () => {
-    try {
-      const response = await api.get(
-        `/api/v1/user/geographical-distribution/report`,
-        {
-          params: { month, year },
-          responseType: "blob",
-        }
-      );
+  try {
+    const response = await api.get("/api/v1/user/generate-geographical-report", {
+      responseType: "blob",
+      params: { month: month, year: year }
+    });
 
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download", `Geographical_Report_${month}_${year}.pdf`);
-      document.body.appendChild(link);
-      link.click();
-    } catch (error) {
-      console.error("Failed to download report:", error);
-      alert("Error generating report");
-    }
+    const url = window.URL.createObjectURL(new Blob([response.data]));
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", "Geographical_Report.pdf");
+    document.body.appendChild(link);
+    link.click();
+  } catch (err) {
+    console.error("Error generating report:", err);
+  }
   };
+
 
   useEffect(() => {
     fetchData();
