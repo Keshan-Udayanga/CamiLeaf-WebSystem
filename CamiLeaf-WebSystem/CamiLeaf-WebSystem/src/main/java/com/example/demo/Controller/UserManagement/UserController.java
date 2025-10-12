@@ -5,10 +5,13 @@ import com.example.demo.Entity.UserManagement.User;
 import com.example.demo.Service.UserManagement.UserReportService;
 import com.example.demo.Service.UserManagement.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.ByteArrayInputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -98,5 +101,31 @@ public class UserController {
             @RequestParam(required = false) Integer year) {
         return reportService.getGeographicalDistribution(month,year);
     }
+
+    @GetMapping("/generate-geographical-report")
+    public ResponseEntity<byte[]> generateReport(
+            @RequestParam(required = false) Integer month,
+            @RequestParam(required = false) Integer year) {
+
+        List<CountryUserCount> data = reportService.getGeographicalDistribution(month, year);
+
+        ByteArrayInputStream pdf = reportService.generateGeographicalReport(
+                data,
+                "CamiLeaf Tea Factory Pvt Ltd",
+                "123, Main Street, Colombo, Sri Lanka",
+                "+94 11 234 5678",
+                "info@camileaf.com"
+        );
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "inline; filename=geographical_report.pdf");
+
+        return ResponseEntity
+                .ok()
+                .headers(headers)
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(pdf.readAllBytes());
+    }
+
 
 }
