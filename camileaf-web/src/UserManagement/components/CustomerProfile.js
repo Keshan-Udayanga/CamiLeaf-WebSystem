@@ -86,15 +86,34 @@ const CustomerProfile = () => {
           <div className="tab-content">
             {successMsg && <p className="success-msg">{successMsg}</p>}
             <label>First Name:</label>
-            <input name="firstName" value={customer.firstName || ""} onChange={handleProfileChange} />
+            <input
+              name="firstName"
+              value={customer.firstName || ""}
+              onChange={(e) => {
+                const value = e.target.value;
+                if (/^[a-zA-Z\s'-]*$/.test(value)) {
+                  setCustomer({ ...customer, firstName: value });
+                }
+              }}
+            />
+
             <label>Last Name:</label>
-            <input name="lastName" value={customer.lastName || ""} onChange={handleProfileChange} />
+            <input name="lastName" value={customer.lastName || ""} onChange={(e) => {
+                const value = e.target.value;
+                if (/^[a-zA-Z\s'-]*$/.test(value)) {
+                  setCustomer({ ...customer, lastName: value });
+                }}} />
+
             <label>Email:</label>
             <input name="email" value={customer.email || ""} disabled />
             <label>Phone:</label>
             <input name="phoneNumber" value={customer.phoneNumber || ""} onChange={handleProfileChange} disabled/>
             <label>Address:</label>
-            <input name="address" value={customer.address || ""} onChange={handleProfileChange} />
+            <input name="address" value={customer.address || ""} onChange={(e) => {
+                const value = e.target.value;
+                if (/^[a-zA-Z0-9\s,.-]*$/.test(value)) {
+                  setCustomer({ ...customer, address: value });
+                }}}/>
             <label>Country:</label>
             <input name="country" value={customer.country || ""} disabled />
 

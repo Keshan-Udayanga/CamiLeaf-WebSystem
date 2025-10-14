@@ -54,6 +54,29 @@ const CustomerSignUp = () => {
 
     };
 
+    const handleFNameChange = (e) => {
+        const value = e.target.value;
+        if (/^[a-zA-Z\s'-]*$/.test(value)) {
+            setFName(value);
+        }
+    };
+
+    const handleLNameChange = (e) => {
+        const value = e.target.value;
+        if (/^[a-zA-Z\s'-]*$/.test(value)) {
+            setLName(value);
+        }
+    };
+
+    const handleAddressChange = (e) => {
+        const value = e.target.value;
+        if (/^[a-zA-Z0-9\s,.-]*$/.test(value)) {
+            setAddress(value);
+        }
+    };
+
+
+
     
     const handlePasswordChange = (e) => {
         const newPassword = e.target.value;
@@ -150,7 +173,7 @@ const CustomerSignUp = () => {
                                 type="text"
                                 placeholder="First Name"
                                 value={firstName}
-                                onChange={(e) => setFName(e.target.value)}
+                                onChange={handleFNameChange}
                                 required
                             />
                         </div>
@@ -160,7 +183,7 @@ const CustomerSignUp = () => {
                                 type="text"
                                 placeholder="Last Name"
                                 value={lastName}
-                                onChange={(e) => setLName(e.target.value)}
+                                onChange={handleLNameChange}
                                 required
                             />
                         </div>
@@ -204,7 +227,7 @@ const CustomerSignUp = () => {
                         <label>Address:</label>
                         <textarea
                             value={address}
-                            onChange={(e) => setAddress(e.target.value)}
+                            onChange={handleAddressChange}
                             required
                             placeholder="Enter your delivery address"
                         />

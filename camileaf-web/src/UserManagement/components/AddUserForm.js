@@ -32,6 +32,17 @@ const AddUserForm = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+    if (name === 'firstName' || name === 'lastName') {
+    const nameRegex = /^[a-zA-Z\s'-]*$/;
+    if (!nameRegex.test(value)) return; 
+  }
+
+  if (name === 'address') {
+    const addressRegex = /^[a-zA-Z0-9\s,.-]*$/;
+    if (!addressRegex.test(value)) return; 
+  }
+
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
      if (name === "phoneNumber") {
