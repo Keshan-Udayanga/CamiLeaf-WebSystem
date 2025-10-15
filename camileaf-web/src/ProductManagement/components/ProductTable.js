@@ -124,13 +124,13 @@ const AdminProductTable = () => {
                 <td>{p.category}</td>
                 <td style={{ width: "15%" }}>
                   <button
-                    className="btn-edit"
+                    className="butn-edit"
                     onClick={() => navigate(`/admin/product-management/edit/${p.id || p._id}`)}
                   >
                     Edit
                   </button>
                   <button
-                    className="btn-delete"
+                    className="butn-delete"
                     onClick={() => {
                       setDeleteId(p.id || p._id);
                       setShowConfirm(true);

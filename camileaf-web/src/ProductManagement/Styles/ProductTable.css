@@ -112,8 +112,8 @@ h2 {
 }
 
 /* Action Buttons */
-.btn-edit,
-.btn-delete {
+.butn-edit,
+.butn-delete {
   border: none;
   padding: 6px 10px;
   border-radius: 4px;
@@ -122,18 +122,18 @@ h2 {
   transition: background 0.3s ease;
   font-size: 13px;
 }
-.btn-edit {
+.butn-edit {
   background: #2196f3;
   color: white;
 }
-.btn-edit:hover {
+.butn-edit:hover {
   background: #1976d2;
 }
-.btn-delete {
+.butn-delete {
   background: #f44336;
   color: white;
 }
-.btn-delete:hover {
+.butn-delete:hover {
   background: #d32f2f;
 }
 

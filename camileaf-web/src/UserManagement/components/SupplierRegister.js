@@ -118,7 +118,7 @@ export default function SupplierRegister() {
         </label>
 
         <div className="form-actions">
-          <button type="submit" disabled={isSubmitting} className="btn-save">
+          <button type="submit" disabled={isSubmitting} className="btn-reg">
             {isSubmitting ? "Registering..." : "Register Supplier"}
           </button>
           <button type="button" className="btn-cancel" onClick={() => navigate(-1)}>

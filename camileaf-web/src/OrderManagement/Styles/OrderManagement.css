@@ -197,11 +197,13 @@
 .payment-method.card {
   background: #dbeafe;
   color: #1e40af;
+  padding: 15px;
 }
 
 .payment-method.cod {
   background: #f3e8ff;
   color: #7c3aed;
+  padding: 15px;
 }
 
 .items-preview {

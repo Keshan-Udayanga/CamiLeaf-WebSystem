@@ -41,37 +41,40 @@ function AdminOrdersTable() {
   };
 
   const deleteOrder = async (orderId) => {
-    try {
-      await api.delete(`/api/v1/order/delete/${orderId}`);
-      setOrders(prev => prev.filter(order => order.id !== orderId));
-    } catch (error) {
-      console.error("Error deleting order:", error);
+    if (window.confirm("Are you sure you want to delete this order?")) {
+      try {
+        await api.delete(`/api/v1/order/delete/${orderId}`);
+        setOrders(prev => prev.filter(order => order.id !== orderId));
+        alert("✅ Order deleted successfully!");
+      } catch (error) {
+        console.error("Error deleting order:", error);
+        alert("❌ Failed to delete order. Please try again.");
+      }
     }
   };
 
-  // Filter orders based on status and search term
   const filteredOrders = orders.filter(order => {
     const matchesStatus = filterStatus === "all" || order.status.toLowerCase() === filterStatus;
-    const matchesSearch = order.shipping.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         order.id.toString().includes(searchTerm) ||
-                         order.shipping.email.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesSearch =
+      order.shipping.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      order.id.toString().includes(searchTerm) ||
+      order.shipping.email.toLowerCase().includes(searchTerm.toLowerCase());
     return matchesStatus && matchesSearch;
   });
 
-  if (loading) return (
-    <div className="loading-container">
-      <div className="loading-spinner"></div>
-      <p>Loading orders...</p>
-    </div>
-  );
+  if (loading)
+    return (
+      <div className="loading-container">
+        <div className="loading-spinner"></div>
+        <p>Loading orders...</p>
+      </div>
+    );
 
   return (
     <div className="order-dashboard">
       <div className="dashboard-header">
         <div className="header-content">
-          <h1>
-            Orders Dashboard
-          </h1>
+          <h1>Orders Dashboard</h1>
           <p>Manage and track all customer orders</p>
         </div>
         <div className="header-stats">
@@ -94,10 +97,10 @@ function AdminOrdersTable() {
             className="search-input"
           />
         </div>
-        
+
         <div className="filter-controls">
-          <select 
-            value={filterStatus} 
+          <select
+            value={filterStatus}
             onChange={(e) => setFilterStatus(e.target.value)}
             className="filter-select"
           >
@@ -115,7 +118,6 @@ function AdminOrdersTable() {
         <table className="dashboard-table">
           <thead>
             <tr>
-              <th>Order ID</th>
               <th>Customer</th>
               <th>Contact</th>
               <th>Location</th>
@@ -128,14 +130,13 @@ function AdminOrdersTable() {
           </thead>
           <tbody>
             {filteredOrders.length > 0 ? (
-              filteredOrders.map(order => (
+              filteredOrders.map((order) => (
                 <tr key={order.id}>
                   <td>
-                    <div className="order-id">#{order.id}</div>
-                  </td>
-                  <td>
                     <div className="customer-info">
-                      <div className="customer-name">{order.shipping.fullName}</div>
+                      <div className="customer-name">
+                        {order.shipping.fullName}
+                      </div>
                     </div>
                   </td>
                   <td>
@@ -150,7 +151,9 @@ function AdminOrdersTable() {
                     </div>
                   </td>
                   <td>
-                    <span className={`payment-method ${order.payment.method}`}>
+                    <span
+                      className={`payment-method ${order.payment.method}`}
+                    >
                       {order.payment.method === "card" ? "Card" : "COD"}
                     </span>
                   </td>
@@ -162,7 +165,9 @@ function AdminOrdersTable() {
                         </div>
                       ))}
                       {order.items.length > 2 && (
-                        <div className="more-items">+{order.items.length - 2} more</div>
+                        <div className="more-items">
+                          +{order.items.length - 2} more
+                        </div>
                       )}
                     </div>
                   </td>
@@ -172,14 +177,20 @@ function AdminOrdersTable() {
                     </div>
                   </td>
                   <td>
-                    <span className={`status-badge ${order.status.toLowerCase()}`}>
+                    <span
+                      className={`status-badge ${order.status.toLowerCase()}`}
+                    >
                       {order.status}
                     </span>
                   </td>
                   <td>
                     <div className="action-buttons">
                       <button
-                        onClick={() => navigate(`/admin/order-management/edit/${order.id}`)}
+                        onClick={() =>
+                          navigate(
+                            `/admin/order-management/edit/${order.id}`
+                          )
+                        }
                         className="btn-action btn-edit"
                         title="Change Status"
                       >
@@ -198,7 +209,7 @@ function AdminOrdersTable() {
               ))
             ) : (
               <tr>
-                <td colSpan="9" className="no-orders">
+                <td colSpan="8" className="no-orders">
                   <div className="no-orders-content">
                     <span className="no-orders-icon">📭</span>
                     <p>No orders found</p>

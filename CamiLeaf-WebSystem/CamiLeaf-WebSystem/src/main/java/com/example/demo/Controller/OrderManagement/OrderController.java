@@ -5,8 +5,8 @@ import com.example.demo.Service.OrderManagement.OrderServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin
@@ -17,36 +17,64 @@ public class OrderController {
     private OrderServices orderServices;
 
     @PostMapping("/add")
-    public String addNewOrder(@RequestBody Order order){
-
+    public String addNewOrder(@RequestBody Order order) {
         orderServices.addNewOrder(order);
         return order.getId();
     }
 
-    //get all
+    // Get all orders
     @GetMapping("/getAll")
-    public List<Order> getAllOrder(){return orderServices.getAllOrders();}
+    public List<Order> getAllOrder() {
+        return orderServices.getAllOrders();
+    }
 
-    //delete
+    // Delete order
     @DeleteMapping("/delete/{id}")
-    public String deleteOrder(@PathVariable String id){
+    public String deleteOrder(@PathVariable String id) {
         orderServices.deleteOrder(id);
         return "Delete Successfully";
     }
 
-    //update order
-
+    // Update order status
     @PutMapping("/update/{id}")
     public Order updateOrderStatus(@PathVariable String id, @RequestBody Map<String, String> request) {
         String status = request.get("status");
         return orderServices.updateStatus(id, status);
     }
 
+    // Get order by ID
     @GetMapping("/get/{id}")
     public Order getOrderById(@PathVariable String id) {
-        return orderServices.getOrderById(id); // Add this method in your service layer too
+        return orderServices.getOrderById(id);
     }
 
+    // 📊 Sales Summary Report API
+    @GetMapping("/report/sales-summary")
+    public Map<String, Object> getSalesSummary() {
+        List<Order> orders = orderServices.getAllOrders();
 
+        // Total orders & total sales
+        long totalOrders = orders.size();
+        double totalSales = orders.stream()
+                .mapToDouble(Order::getTotal)
+                .sum();
 
+        // Group by payment method (optional analytics)
+        Map<String, Long> paymentSummary = orders.stream()
+                .collect(Collectors.groupingBy(Order::getPaymentMethod, Collectors.counting()));
+
+        // Group by status (optional)
+        Map<String, Long> statusSummary = orders.stream()
+                .collect(Collectors.groupingBy(Order::getStatus, Collectors.counting()));
+
+        // Prepare summary map
+        Map<String, Object> summary = new HashMap<>();
+        summary.put("totalOrders", totalOrders);
+        summary.put("totalSales", totalSales);
+        summary.put("paymentSummary", paymentSummary);
+        summary.put("statusSummary", statusSummary);
+        summary.put("orders", orders);
+
+        return summary;
+    }
 }

@@ -11,6 +11,10 @@ import ResourceManagement from "../../ResourceManagement/components/ResourceMana
 import SupplierRegister from "./SupplierRegister";
 import CompanyReport from '../../CompanyReport/components/CompanyReport';
 import GeographicalDistribution from '../../CompanyReport/components/GeographicalDistribution';
+import SalesSummary from '../../CompanyReport/components/SalesSummary';
+import LeafIntakeSummary from '../../CompanyReport/components/LeafIntakeSummary';
+import ProductSummary from '../../CompanyReport/components/ProductSummary';
+import ResourceSummary from '../../CompanyReport/components/ResourceSummary';
 
 function App() {
   return (
@@ -37,6 +41,10 @@ function App() {
           <Route path="/supplier/register" element={<SupplierRegister />} />
           <Route path="/company-reports" element={<CompanyReport />} />
           <Route path="/reports/geographical" element={<GeographicalDistribution />} />
+          <Route path="/reports/salesSummary" element={<SalesSummary />} />
+          <Route path="/reports/intake-report" element={<LeafIntakeSummary />} />
+          <Route path="/reports/product-report" element={<ProductSummary />} />
+          <Route path="/reports/resource-report" element={<ResourceSummary />} />
         </Routes>
       </main>
     </div>
