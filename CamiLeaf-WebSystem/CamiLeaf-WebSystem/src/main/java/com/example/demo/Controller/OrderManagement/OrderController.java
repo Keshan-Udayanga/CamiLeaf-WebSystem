@@ -3,6 +3,7 @@ package com.example.demo.Controller.OrderManagement;
 import com.example.demo.Entity.OrderManagement.Order;
 import com.example.demo.Service.OrderManagement.OrderServices;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -45,6 +46,13 @@ public class OrderController {
     @GetMapping("/get/{id}")
     public Order getOrderById(@PathVariable String id) {
         return orderServices.getOrderById(id); // Add this method in your service layer too
+    }
+
+    @GetMapping("/orders/{userId}")
+    public ResponseEntity<List<Order>> getOrdersByUser(@PathVariable String userId) {
+
+        List<Order> orders = orderServices.getOrdersByUser(userId);
+        return ResponseEntity.ok(orders);
     }
 
 

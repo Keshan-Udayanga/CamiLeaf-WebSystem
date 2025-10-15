@@ -1,8 +1,11 @@
 package com.example.demo.Entity.OrderManagement;
 
+import com.example.demo.Entity.UserManagement.User;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Date;
 import java.util.List;
 
 @Document(collection = "Order")
@@ -21,9 +24,22 @@ public class Order {
     private double total;
     private List<OrderItem> items;
 
+    private String userId;
+
+    @CreatedDate
+    private Date orderDate;
+
+    public Date getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderDate(Date orderDate) {
+        this.orderDate = orderDate;
+    }
+
     public Order() {}
 
-    public Order(String ordertype, String address, String fullName, String city, String email, String paymentMethod, String status, int zip, double total, List<OrderItem> items) {
+    public Order(String ordertype, String address, String fullName, String city, String email, String paymentMethod, String status, int zip, double total, List<OrderItem> items, String userId) {
         Ordertype = ordertype;
         this.address = address;
         this.fullName = fullName;
@@ -34,6 +50,15 @@ public class Order {
         this.zip = zip;
         this.total = total;
         this.items = items;
+        this.userId = userId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public List<OrderItem> getItems() {
