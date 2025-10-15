@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import "../Styles/OrderEditForm.css"; // ✅ Import CSS file
+import "../Styles/OrderEditForm.css";
 import api from "../../axiosConfig";
 
 export default function OrderEditForm() {
@@ -12,7 +12,6 @@ export default function OrderEditForm() {
   useEffect(() => {
     const fetchOrder = async () => {
       try {
-
         const res = await api.get(`/api/v1/order/get/${id}`);
         setStatus(res.data.status || "Pending");
       } catch (err) {
@@ -28,32 +27,58 @@ export default function OrderEditForm() {
     e.preventDefault();
     try {
       await api.put(`/api/v1/order/update/${id}`, { status });
-      navigate("/admin/order-management"); // go back to table page
+      alert("✅ Order updated successfully!");
+      navigate("/admin/order-management");
     } catch (err) {
       console.error("Error updating status:", err);
+      alert("❌ Failed to update order. Please try again.");
     }
   };
 
-  if (loading) return <p>Loading order...</p>;
+  if (loading)
+    return (
+      <div className="loading-container">
+        <div className="loading-spinner"></div>
+        <p>Loading order...</p>
+      </div>
+    );
 
   return (
-    <div className="order-edit-container">
-      <h3>Update Order Status</h3>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Status
-          <select value={status} onChange={(e) => setStatus(e.target.value)}>
-            <option value="Pending">Pending</option>
-            <option value="Processing">Processing</option>
-            <option value="Shipped">Shipped</option>
-            <option value="Completed">Completed</option>
-          </select>
-        </label>
-        <div className="form-buttons">
-          <button type="submit" className="save-btn">Save</button>
-          <button type="button" className="cancel-btn" onClick={() => navigate("/admin/orders")}>Cancel</button>
+    <div className="order-edit-wrapper">
+      <div className="order-edit-container">
+        <div className="form-header">
+          <h2>Update Order Status</h2>
         </div>
-      </form>
+
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label className="form-label">Order Status</label>
+            <select
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
+              className="form-select"
+            >
+              <option value="Pending">Pending</option>
+              <option value="Processing">Processing</option>
+              <option value="Shipped">Shipped</option>
+              <option value="Completed">Completed</option>
+            </select>
+          </div>
+
+          <div className="form-buttons">
+            <button
+              type="button"
+              className="cancel-btn"
+              onClick={() => navigate("/admin/orders")}
+            >
+              Cancel
+            </button>
+            <button type="submit" className="save-btn">
+              Update Status
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

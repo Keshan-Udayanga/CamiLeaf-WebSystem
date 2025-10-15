@@ -7,8 +7,11 @@ const CompanyReports = () => {
 
   const reports = [
     { name: "Geographical Distribution", route: "/admin/reports/geographical" },
-    { name: "Sales Report", route: "/admin/reports/sales" },
+    { name: "Sales Report", route: "/admin/reports/salesSummary" },
     { name: "Inactive Users", route: "/admin/reports/inactive-users" },
+    { name: "Leaf Intake Report", route: "/admin/reports/intake-report" },
+    { name: "Products Summary", route: "/admin/reports/product-report" },
+    { name: "Resources Summary", route: "/admin/reports/resource-report" },
     
   ];
 

@@ -60,7 +60,7 @@ h2 {
   gap: 10px;
 }
 
-.btn-save {
+.btn-reg {
   flex: 1;
   background: #1c3c1e;
   color: white;
@@ -70,7 +70,7 @@ h2 {
   cursor: pointer;
   font-weight: bold;
 }
-.btn-save:hover {
+.btn-reg:hover {
   background: #2e4e30;
 }
 
