@@ -159,6 +159,47 @@
   }
 }
 
+.orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.order-card {
+  background-color: #ffffff;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  color: #444;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 0.5rem;
+}
+
+.order-items {
+  margin-top: 0.5rem;
+}
+
+.order-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  padding: 0.2rem 0;
+}
+
+.order-total {
+  text-align: right;
+  font-weight: bold;
+  margin-top: 0.5rem;
+  color: #2E8B57;
+}
+
+
 @media (max-width: 480px) {
   .tab-content input {
     padding: 6px;

@@ -20,6 +20,7 @@ function PaymentWizard() {
         address: user.address,
         city: user.city,
         zip: user.zip,
+        userId: user.id
       });
     } catch (err) {
       alert('catch called' + err);
@@ -156,6 +157,7 @@ const total = location.state?.total || cartItems.reduce((sum, item) => sum + ite
     setPayment((p) => ({ ...p, method }));
 
   const handleConfirm = async () => {
+    console.log(shipping.userId)
     const orderData = {
       ordertype: "Online",
       fullName: shipping.fullName,
@@ -171,7 +173,9 @@ const total = location.state?.total || cartItems.reduce((sum, item) => sum + ite
         productName: item.productName,
         quantity: item.qty,
         price: item.price
-      }))
+      })),
+      userId: shipping.userId
+
     };
 
   try {
