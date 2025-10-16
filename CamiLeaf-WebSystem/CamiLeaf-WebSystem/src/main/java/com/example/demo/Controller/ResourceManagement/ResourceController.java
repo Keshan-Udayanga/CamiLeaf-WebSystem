@@ -49,6 +49,7 @@ public class ResourceController {
     public ResponseEntity<String> deleteResource(@PathVariable String id) {
         try {
             resourceServices.deleteResourceItems(id);
+            System.out.println(id);
             return ResponseEntity.ok("Resource Deleted Successfully!");
         } catch (Exception e) {
             e.printStackTrace();

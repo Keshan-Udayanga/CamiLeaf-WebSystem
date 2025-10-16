@@ -61,14 +61,18 @@
 }
 
 /* Summary Cards */
-.summary-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+.summary-cards-1 {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
   gap: 30px;
-  margin-bottom: 50px;
+  flex-wrap: nowrap; 
+  margin-bottom: 50px; 
 }
 
+
 .summary-card {
+  flex: 1;
   background: white;
   padding: 35px 30px;
   border-radius: 20px;
@@ -90,7 +94,7 @@
   background: linear-gradient(90deg, var(--card-color), transparent);
 }
 
-.summary-card.products { --card-color: #667eea; }
+.summary-card.products { --card-color: #ea6685; }
 .summary-card.stock { --card-color: #48bb78; }
 .summary-card.categories { --card-color: #ed8936; }
 .summary-card.value { --card-color: #9f7aea; }
@@ -495,11 +499,17 @@
 /* Responsive Design */
 @media (max-width: 1024px) {
   .summary-cards {
-    grid-template-columns: repeat(2, 1fr);
+    flex-wrap: wrap; /* Wrap when screen smaller */
   }
-  
-  .statistics-grid {
-    grid-template-columns: 1fr;
+
+  .summary-card {
+    flex: 1 1 45%; /* Two per row on tablets */
+  }
+}
+
+@media (max-width: 600px) {
+  .summary-card {
+    flex: 1 1 100%; /* One per row on phones */
   }
 }
 
@@ -571,7 +581,6 @@
 /* Dark Mode Support */
 @media (prefers-color-scheme: dark) {
   .product-summary-container {
-    background: #1a202c;
     color: #e2e8f0;
   }
   

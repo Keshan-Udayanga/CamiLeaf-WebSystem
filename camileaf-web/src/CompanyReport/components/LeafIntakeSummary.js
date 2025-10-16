@@ -41,14 +41,21 @@ export default function LeafIntakeSummary() {
             doc.setFillColor(63, 81, 181);
             doc.rect(0, 0, pageWidth, 50, 'F');
 
-            // Title
             doc.setTextColor(255, 255, 255);
-            doc.setFontSize(18);
+            doc.setFontSize(15); 
             doc.setFont('helvetica', 'bold');
-            doc.text("TEA FACTORY - LEAF INTAKE SUMMARY", pageWidth / 2, 20, { align: 'center' });
-
-            doc.setFontSize(12);
-            doc.text(`Generated on: ${new Date().toLocaleDateString()}`, pageWidth / 2, 30, { align: 'center' });
+            doc.text("CamiLeaf Tea Factory Pvt Ltd", pageWidth / 2, 15, { align: 'center' });
+            
+            doc.setFontSize(10); // Smaller subtitle
+            doc.setFont('helvetica', 'normal');
+            doc.text("Contact: +94 11 234 5678 | Email: info@camileaf.com", pageWidth / 2, 20, { align: 'center' }); 
+            
+            doc.setFontSize(13); // Smaller subtitle
+            doc.setFont('helvetica', 'normal');
+            doc.text("Leaf Intake Summary", pageWidth / 2, 25, { align: 'center' }); 
+            
+            doc.setFontSize(9);
+            doc.text(`Generated on: ${new Date().toLocaleDateString()}`, pageWidth / 2, 32, { align: 'center' });
 
             // Summary Section
             doc.setFillColor(245, 245, 245);

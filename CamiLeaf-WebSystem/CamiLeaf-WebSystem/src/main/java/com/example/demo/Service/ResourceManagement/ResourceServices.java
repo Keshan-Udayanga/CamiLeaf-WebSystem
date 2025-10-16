@@ -29,6 +29,7 @@ public class ResourceServices {
 
     // Delete a resource by ID
     public void deleteResourceItems(String id) {
+        System.out.println(id);
         if (!resourceRepository.existsById(id)) {
             throw new RuntimeException("Resource not found with ID: " + id);
         }

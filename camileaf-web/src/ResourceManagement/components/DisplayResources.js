@@ -32,7 +32,7 @@ const ResourceTablePage = () => {
 
   const confirmDelete = async () => {
     try {
-      await api.get(`/api/v1/resource/delete/${deleteId}`);
+      await api.delete(`/api/v1/resource/delete/${deleteId}`);
       setShowDeleteModal(false);
       setDeleteId(null);
       fetchResources();

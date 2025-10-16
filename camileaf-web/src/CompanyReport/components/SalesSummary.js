@@ -33,12 +33,20 @@ export default function SalesSummary() {
     doc.rect(0, 0, pageWidth, 50, 'F');
     
     doc.setTextColor(255, 255, 255);
-    doc.setFontSize(18);
-    doc.setFont('helvetica', 'bold');
-    doc.text("Tea Factory - Sales Report", pageWidth / 2, 25, { align: 'center' });
-    
-    doc.setFontSize(10);
-    doc.text(`Generated: ${new Date().toLocaleDateString()}`, pageWidth / 2, 35, { align: 'center' });
+      doc.setFontSize(15); 
+      doc.setFont('helvetica', 'bold');
+      doc.text("CamiLeaf Tea Factory Pvt Ltd", pageWidth / 2, 15, { align: 'center' });
+      
+      doc.setFontSize(10); // Smaller subtitle
+      doc.setFont('helvetica', 'normal');
+      doc.text("Contact: +94 11 234 5678 | Email: info@camileaf.com", pageWidth / 2, 20, { align: 'center' }); 
+      
+      doc.setFontSize(13); // Smaller subtitle
+      doc.setFont('helvetica', 'normal');
+      doc.text("Sales Summary Report", pageWidth / 2, 27, { align: 'center' }); 
+      
+      doc.setFontSize(9);
+      doc.text(`Generated on: ${new Date().toLocaleDateString()}`, pageWidth / 2, 32, { align: 'center' });
 
     // Summary
     doc.setTextColor(0, 0, 0);
@@ -68,11 +76,6 @@ export default function SalesSummary() {
       alternateRowStyles: { fillColor: [245, 245, 245] }
     });
 
-    // Footer
-    const finalY = doc.lastAutoTable.finalY + 10;
-    doc.setFontSize(10);
-    doc.setTextColor(100);
-    doc.text("Confidential - Tea Factory Ltd", pageWidth / 2, finalY, { align: 'center' });
 
     doc.save("Sales_Report.pdf");
   };
