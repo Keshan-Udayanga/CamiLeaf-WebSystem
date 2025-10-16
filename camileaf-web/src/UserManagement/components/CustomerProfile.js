@@ -10,6 +10,8 @@ const CustomerProfile = () => {
   const [passwords, setPasswords] = useState({ oldPass: "", newPass: "", confirmPass: "" });
   const [passError, setPassError] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
+  const [orders, setOrders] = useState([]);
+  const [loadingOrders, setLoadingOrders] = useState(false)
 
   useEffect(() => {
     const fetchCustomer = async () => {
@@ -22,6 +24,25 @@ const CustomerProfile = () => {
     };
     fetchCustomer();
   }, []);
+
+  useEffect(() => {
+    if (activeTab === "orders" && customer.id) {
+      fetchOrders();
+    }
+  }, [activeTab, customer]);
+
+  const fetchOrders = async () => {
+    setLoadingOrders(true);
+    try {
+      const res = await api.get(`/api/v1/order/orders/${customer.id}`);
+      setOrders(res.data);
+    } catch (err) {
+      alert("Error fetching orders:", err);
+    } finally {
+      setLoadingOrders(false);
+    }
+  };
+
 
   const handleProfileChange = (e) => {
     const { name, value } = e.target;
@@ -136,7 +157,37 @@ const CustomerProfile = () => {
 
         {activeTab === "orders" && (
           <div className="tab-content">
-            <p>Order history will be displayed here.</p>
+            <h3>Your Orders</h3>
+
+            {loadingOrders ? (
+              <p>Loading orders...</p>
+            ) : orders.length === 0 ? (
+              <p>No orders found.</p>
+            ) : (
+              <div className="orders-list">
+                {orders.map((order) => (
+                  <div key={order.id} className="order-card">
+                    <div className="order-header">
+                      <span><b>Order ID:</b> #{order.id}</span>
+                      <span><b>Date:</b> {new Date(order.orderDate).toLocaleDateString()}</span>
+                      <span><b>Status:</b> {order.status}</span>
+                    </div>
+                    <div className="order-items">
+                      {order.items.map((item, index) => (
+                        <div key={index} className="order-item">
+                          <span>{item.productName}</span>
+                          <span>Qty: {item.quantity}</span>
+                          <span>Rs. {item.price * item.quantity}</span>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="order-total">
+                      <b>Total: Rs. {order.total}</b>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         )}
       </div>

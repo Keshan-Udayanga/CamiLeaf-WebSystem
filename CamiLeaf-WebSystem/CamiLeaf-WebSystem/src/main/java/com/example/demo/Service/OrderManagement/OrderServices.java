@@ -37,4 +37,8 @@ public class OrderServices {
                 .orElseThrow(() -> new RuntimeException("Order not found"));
     }
 
+    public List<Order> getOrdersByUser(String userId) {
+        return orderRepository.findByUserId(userId);
+    }
+
 }

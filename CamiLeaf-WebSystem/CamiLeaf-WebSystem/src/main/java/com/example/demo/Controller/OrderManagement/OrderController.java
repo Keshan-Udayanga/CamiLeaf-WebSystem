@@ -3,9 +3,12 @@ package com.example.demo.Controller.OrderManagement;
 import com.example.demo.Entity.OrderManagement.Order;
 import com.example.demo.Service.OrderManagement.OrderServices;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -17,38 +20,31 @@ public class OrderController {
     private OrderServices orderServices;
 
     @PostMapping("/add")
-    public String addNewOrder(@RequestBody Order order) {
+    public String addNewOrder(@RequestBody Order order){
+
         orderServices.addNewOrder(order);
         return order.getId();
     }
 
-    // Get all orders
+    //get all
     @GetMapping("/getAll")
-    public List<Order> getAllOrder() {
-        return orderServices.getAllOrders();
-    }
+    public List<Order> getAllOrder(){return orderServices.getAllOrders();}
 
-    // Delete order
+    //delete
     @DeleteMapping("/delete/{id}")
-    public String deleteOrder(@PathVariable String id) {
+    public String deleteOrder(@PathVariable String id){
         orderServices.deleteOrder(id);
         return "Delete Successfully";
     }
 
-    // Update order status
+    //update order
+
     @PutMapping("/update/{id}")
     public Order updateOrderStatus(@PathVariable String id, @RequestBody Map<String, String> request) {
         String status = request.get("status");
         return orderServices.updateStatus(id, status);
     }
 
-    // Get order by ID
-    @GetMapping("/get/{id}")
-    public Order getOrderById(@PathVariable String id) {
-        return orderServices.getOrderById(id);
-    }
-
-    // 📊 Sales Summary Report API
     @GetMapping("/report/sales-summary")
     public Map<String, Object> getSalesSummary() {
         List<Order> orders = orderServices.getAllOrders();
@@ -77,4 +73,17 @@ public class OrderController {
 
         return summary;
     }
+
+    @GetMapping("/get/{id}")
+    public Order getOrderById(@PathVariable String id) {
+        return orderServices.getOrderById(id); // Add this method in your service layer too
+    }
+
+    @GetMapping("/orders/{userId}")
+    public ResponseEntity<List<Order>> getOrdersByUser(@PathVariable String userId) {
+
+        List<Order> orders = orderServices.getOrdersByUser(userId);
+        return ResponseEntity.ok(orders);
+    }
+
 }

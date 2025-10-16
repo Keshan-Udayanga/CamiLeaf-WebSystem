@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import api from "../../axiosConfig";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
-import "../styles/LeafIntakeSummary.css"; // We'll create this CSS file
+import "../styles/LeafIntakeSummary.css"; 
 
 export default function LeafIntakeSummary() {
     
