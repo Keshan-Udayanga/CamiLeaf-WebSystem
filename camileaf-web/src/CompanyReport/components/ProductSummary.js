@@ -36,7 +36,6 @@ export default function ProductSummary() {
     try {
       const doc = new jsPDF();
       const pageWidth = doc.internal.pageSize.getWidth();
-      const pageHeight = doc.internal.pageSize.getHeight();
       
       // Reduced header height from 60 to 40
       doc.setFillColor(63, 81, 181);
