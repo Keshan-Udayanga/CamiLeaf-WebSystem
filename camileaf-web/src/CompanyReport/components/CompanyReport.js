@@ -12,6 +12,7 @@ const CompanyReports = () => {
     { name: "Products Summary", route: "/admin/reports/product-report" },
     { name: "Resources Summary", route: "/admin/reports/resource-report" },
     
+    
   ];
 
   return (
